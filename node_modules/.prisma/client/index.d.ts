@@ -1,0 +1,18312 @@
+
+/**
+ * Client
+**/
+
+import * as runtime from '@prisma/client/runtime/library.js';
+import $Types = runtime.Types // general types
+import $Public = runtime.Types.Public
+import $Utils = runtime.Types.Utils
+import $Extensions = runtime.Types.Extensions
+import $Result = runtime.Types.Result
+
+export type PrismaPromise<T> = $Public.PrismaPromise<T>
+
+
+/**
+ * Model User
+ * 
+ */
+export type User = $Result.DefaultSelection<Prisma.$UserPayload>
+/**
+ * Model Habit
+ * 
+ */
+export type Habit = $Result.DefaultSelection<Prisma.$HabitPayload>
+/**
+ * Model HabitLog
+ * 
+ */
+export type HabitLog = $Result.DefaultSelection<Prisma.$HabitLogPayload>
+/**
+ * Model Badge
+ * 
+ */
+export type Badge = $Result.DefaultSelection<Prisma.$BadgePayload>
+/**
+ * Model UserBadge
+ * 
+ */
+export type UserBadge = $Result.DefaultSelection<Prisma.$UserBadgePayload>
+/**
+ * Model Challenge
+ * 
+ */
+export type Challenge = $Result.DefaultSelection<Prisma.$ChallengePayload>
+/**
+ * Model UserChallenge
+ * 
+ */
+export type UserChallenge = $Result.DefaultSelection<Prisma.$UserChallengePayload>
+/**
+ * Model AIInsight
+ * 
+ */
+export type AIInsight = $Result.DefaultSelection<Prisma.$AIInsightPayload>
+/**
+ * Model Friend
+ * 
+ */
+export type Friend = $Result.DefaultSelection<Prisma.$FriendPayload>
+/**
+ * Model SocialPost
+ * 
+ */
+export type SocialPost = $Result.DefaultSelection<Prisma.$SocialPostPayload>
+
+/**
+ * ##  Prisma Client ʲˢ
+ * 
+ * Type-safe database client for TypeScript & Node.js
+ * @example
+ * ```
+ * const prisma = new PrismaClient()
+ * // Fetch zero or more Users
+ * const users = await prisma.user.findMany()
+ * ```
+ *
+ * 
+ * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client).
+ */
+export class PrismaClient<
+  ClientOptions extends Prisma.PrismaClientOptions = Prisma.PrismaClientOptions,
+  U = 'log' extends keyof ClientOptions ? ClientOptions['log'] extends Array<Prisma.LogLevel | Prisma.LogDefinition> ? Prisma.GetEvents<ClientOptions['log']> : never : never,
+  ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs
+> {
+  [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['other'] }
+
+    /**
+   * ##  Prisma Client ʲˢ
+   * 
+   * Type-safe database client for TypeScript & Node.js
+   * @example
+   * ```
+   * const prisma = new PrismaClient()
+   * // Fetch zero or more Users
+   * const users = await prisma.user.findMany()
+   * ```
+   *
+   * 
+   * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client).
+   */
+
+  constructor(optionsArg ?: Prisma.Subset<ClientOptions, Prisma.PrismaClientOptions>);
+  $on<V extends U>(eventType: V, callback: (event: V extends 'query' ? Prisma.QueryEvent : Prisma.LogEvent) => void): void;
+
+  /**
+   * Connect with the database
+   */
+  $connect(): $Utils.JsPromise<void>;
+
+  /**
+   * Disconnect from the database
+   */
+  $disconnect(): $Utils.JsPromise<void>;
+
+  /**
+   * Add a middleware
+   * @deprecated since 4.16.0. For new code, prefer client extensions instead.
+   * @see https://pris.ly/d/extensions
+   */
+  $use(cb: Prisma.Middleware): void
+
+/**
+   * Executes a prepared raw query and returns the number of affected rows.
+   * @example
+   * ```
+   * const result = await prisma.$executeRaw`UPDATE User SET cool = ${true} WHERE email = ${'user@email.com'};`
+   * ```
+   * 
+   * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/raw-database-access).
+   */
+  $executeRaw<T = unknown>(query: TemplateStringsArray | Prisma.Sql, ...values: any[]): Prisma.PrismaPromise<number>;
+
+  /**
+   * Executes a raw query and returns the number of affected rows.
+   * Susceptible to SQL injections, see documentation.
+   * @example
+   * ```
+   * const result = await prisma.$executeRawUnsafe('UPDATE User SET cool = $1 WHERE email = $2 ;', true, 'user@email.com')
+   * ```
+   * 
+   * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/raw-database-access).
+   */
+  $executeRawUnsafe<T = unknown>(query: string, ...values: any[]): Prisma.PrismaPromise<number>;
+
+  /**
+   * Performs a prepared raw query and returns the `SELECT` data.
+   * @example
+   * ```
+   * const result = await prisma.$queryRaw`SELECT * FROM User WHERE id = ${1} OR email = ${'user@email.com'};`
+   * ```
+   * 
+   * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/raw-database-access).
+   */
+  $queryRaw<T = unknown>(query: TemplateStringsArray | Prisma.Sql, ...values: any[]): Prisma.PrismaPromise<T>;
+
+  /**
+   * Performs a raw query and returns the `SELECT` data.
+   * Susceptible to SQL injections, see documentation.
+   * @example
+   * ```
+   * const result = await prisma.$queryRawUnsafe('SELECT * FROM User WHERE id = $1 OR email = $2;', 1, 'user@email.com')
+   * ```
+   * 
+   * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/raw-database-access).
+   */
+  $queryRawUnsafe<T = unknown>(query: string, ...values: any[]): Prisma.PrismaPromise<T>;
+
+
+  /**
+   * Allows the running of a sequence of read/write operations that are guaranteed to either succeed or fail as a whole.
+   * @example
+   * ```
+   * const [george, bob, alice] = await prisma.$transaction([
+   *   prisma.user.create({ data: { name: 'George' } }),
+   *   prisma.user.create({ data: { name: 'Bob' } }),
+   *   prisma.user.create({ data: { name: 'Alice' } }),
+   * ])
+   * ```
+   * 
+   * Read more in our [docs](https://www.prisma.io/docs/concepts/components/prisma-client/transactions).
+   */
+  $transaction<P extends Prisma.PrismaPromise<any>[]>(arg: [...P], options?: { isolationLevel?: Prisma.TransactionIsolationLevel }): $Utils.JsPromise<runtime.Types.Utils.UnwrapTuple<P>>
+
+  $transaction<R>(fn: (prisma: Omit<PrismaClient, runtime.ITXClientDenyList>) => $Utils.JsPromise<R>, options?: { maxWait?: number, timeout?: number, isolationLevel?: Prisma.TransactionIsolationLevel }): $Utils.JsPromise<R>
+
+
+  $extends: $Extensions.ExtendsHook<"extends", Prisma.TypeMapCb, ExtArgs>
+
+      /**
+   * `prisma.user`: Exposes CRUD operations for the **User** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Users
+    * const users = await prisma.user.findMany()
+    * ```
+    */
+  get user(): Prisma.UserDelegate<ExtArgs>;
+
+  /**
+   * `prisma.habit`: Exposes CRUD operations for the **Habit** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Habits
+    * const habits = await prisma.habit.findMany()
+    * ```
+    */
+  get habit(): Prisma.HabitDelegate<ExtArgs>;
+
+  /**
+   * `prisma.habitLog`: Exposes CRUD operations for the **HabitLog** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more HabitLogs
+    * const habitLogs = await prisma.habitLog.findMany()
+    * ```
+    */
+  get habitLog(): Prisma.HabitLogDelegate<ExtArgs>;
+
+  /**
+   * `prisma.badge`: Exposes CRUD operations for the **Badge** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Badges
+    * const badges = await prisma.badge.findMany()
+    * ```
+    */
+  get badge(): Prisma.BadgeDelegate<ExtArgs>;
+
+  /**
+   * `prisma.userBadge`: Exposes CRUD operations for the **UserBadge** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more UserBadges
+    * const userBadges = await prisma.userBadge.findMany()
+    * ```
+    */
+  get userBadge(): Prisma.UserBadgeDelegate<ExtArgs>;
+
+  /**
+   * `prisma.challenge`: Exposes CRUD operations for the **Challenge** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Challenges
+    * const challenges = await prisma.challenge.findMany()
+    * ```
+    */
+  get challenge(): Prisma.ChallengeDelegate<ExtArgs>;
+
+  /**
+   * `prisma.userChallenge`: Exposes CRUD operations for the **UserChallenge** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more UserChallenges
+    * const userChallenges = await prisma.userChallenge.findMany()
+    * ```
+    */
+  get userChallenge(): Prisma.UserChallengeDelegate<ExtArgs>;
+
+  /**
+   * `prisma.aIInsight`: Exposes CRUD operations for the **AIInsight** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more AIInsights
+    * const aIInsights = await prisma.aIInsight.findMany()
+    * ```
+    */
+  get aIInsight(): Prisma.AIInsightDelegate<ExtArgs>;
+
+  /**
+   * `prisma.friend`: Exposes CRUD operations for the **Friend** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Friends
+    * const friends = await prisma.friend.findMany()
+    * ```
+    */
+  get friend(): Prisma.FriendDelegate<ExtArgs>;
+
+  /**
+   * `prisma.socialPost`: Exposes CRUD operations for the **SocialPost** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more SocialPosts
+    * const socialPosts = await prisma.socialPost.findMany()
+    * ```
+    */
+  get socialPost(): Prisma.SocialPostDelegate<ExtArgs>;
+}
+
+export namespace Prisma {
+  export import DMMF = runtime.DMMF
+
+  export type PrismaPromise<T> = $Public.PrismaPromise<T>
+
+  /**
+   * Validator
+   */
+  export import validator = runtime.Public.validator
+
+  /**
+   * Prisma Errors
+   */
+  export import PrismaClientKnownRequestError = runtime.PrismaClientKnownRequestError
+  export import PrismaClientUnknownRequestError = runtime.PrismaClientUnknownRequestError
+  export import PrismaClientRustPanicError = runtime.PrismaClientRustPanicError
+  export import PrismaClientInitializationError = runtime.PrismaClientInitializationError
+  export import PrismaClientValidationError = runtime.PrismaClientValidationError
+  export import NotFoundError = runtime.NotFoundError
+
+  /**
+   * Re-export of sql-template-tag
+   */
+  export import sql = runtime.sqltag
+  export import empty = runtime.empty
+  export import join = runtime.join
+  export import raw = runtime.raw
+  export import Sql = runtime.Sql
+
+
+
+  /**
+   * Decimal.js
+   */
+  export import Decimal = runtime.Decimal
+
+  export type DecimalJsLike = runtime.DecimalJsLike
+
+  /**
+   * Metrics 
+   */
+  export type Metrics = runtime.Metrics
+  export type Metric<T> = runtime.Metric<T>
+  export type MetricHistogram = runtime.MetricHistogram
+  export type MetricHistogramBucket = runtime.MetricHistogramBucket
+
+  /**
+  * Extensions
+  */
+  export import Extension = $Extensions.UserArgs
+  export import getExtensionContext = runtime.Extensions.getExtensionContext
+  export import Args = $Public.Args
+  export import Payload = $Public.Payload
+  export import Result = $Public.Result
+  export import Exact = $Public.Exact
+
+  /**
+   * Prisma Client JS version: 5.22.0
+   * Query Engine version: 605197351a3c8bdd595af2d2a9bc3025bca48ea2
+   */
+  export type PrismaVersion = {
+    client: string
+  }
+
+  export const prismaVersion: PrismaVersion 
+
+  /**
+   * Utility Types
+   */
+
+
+  export import JsonObject = runtime.JsonObject
+  export import JsonArray = runtime.JsonArray
+  export import JsonValue = runtime.JsonValue
+  export import InputJsonObject = runtime.InputJsonObject
+  export import InputJsonArray = runtime.InputJsonArray
+  export import InputJsonValue = runtime.InputJsonValue
+
+  /**
+   * Types of the values used to represent different kinds of `null` values when working with JSON fields.
+   * 
+   * @see https://www.prisma.io/docs/concepts/components/prisma-client/working-with-fields/working-with-json-fields#filtering-on-a-json-field
+   */
+  namespace NullTypes {
+    /**
+    * Type of `Prisma.DbNull`.
+    * 
+    * You cannot use other instances of this class. Please use the `Prisma.DbNull` value.
+    * 
+    * @see https://www.prisma.io/docs/concepts/components/prisma-client/working-with-fields/working-with-json-fields#filtering-on-a-json-field
+    */
+    class DbNull {
+      private DbNull: never
+      private constructor()
+    }
+
+    /**
+    * Type of `Prisma.JsonNull`.
+    * 
+    * You cannot use other instances of this class. Please use the `Prisma.JsonNull` value.
+    * 
+    * @see https://www.prisma.io/docs/concepts/components/prisma-client/working-with-fields/working-with-json-fields#filtering-on-a-json-field
+    */
+    class JsonNull {
+      private JsonNull: never
+      private constructor()
+    }
+
+    /**
+    * Type of `Prisma.AnyNull`.
+    * 
+    * You cannot use other instances of this class. Please use the `Prisma.AnyNull` value.
+    * 
+    * @see https://www.prisma.io/docs/concepts/components/prisma-client/working-with-fields/working-with-json-fields#filtering-on-a-json-field
+    */
+    class AnyNull {
+      private AnyNull: never
+      private constructor()
+    }
+  }
+
+  /**
+   * Helper for filtering JSON entries that have `null` on the database (empty on the db)
+   * 
+   * @see https://www.prisma.io/docs/concepts/components/prisma-client/working-with-fields/working-with-json-fields#filtering-on-a-json-field
+   */
+  export const DbNull: NullTypes.DbNull
+
+  /**
+   * Helper for filtering JSON entries that have JSON `null` values (not empty on the db)
+   * 
+   * @see https://www.prisma.io/docs/concepts/components/prisma-client/working-with-fields/working-with-json-fields#filtering-on-a-json-field
+   */
+  export const JsonNull: NullTypes.JsonNull
+
+  /**
+   * Helper for filtering JSON entries that are `Prisma.DbNull` or `Prisma.JsonNull`
+   * 
+   * @see https://www.prisma.io/docs/concepts/components/prisma-client/working-with-fields/working-with-json-fields#filtering-on-a-json-field
+   */
+  export const AnyNull: NullTypes.AnyNull
+
+  type SelectAndInclude = {
+    select: any
+    include: any
+  }
+
+  type SelectAndOmit = {
+    select: any
+    omit: any
+  }
+
+  /**
+   * Get the type of the value, that the Promise holds.
+   */
+  export type PromiseType<T extends PromiseLike<any>> = T extends PromiseLike<infer U> ? U : T;
+
+  /**
+   * Get the return type of a function which returns a Promise.
+   */
+  export type PromiseReturnType<T extends (...args: any) => $Utils.JsPromise<any>> = PromiseType<ReturnType<T>>
+
+  /**
+   * From T, pick a set of properties whose keys are in the union K
+   */
+  type Prisma__Pick<T, K extends keyof T> = {
+      [P in K]: T[P];
+  };
+
+
+  export type Enumerable<T> = T | Array<T>;
+
+  export type RequiredKeys<T> = {
+    [K in keyof T]-?: {} extends Prisma__Pick<T, K> ? never : K
+  }[keyof T]
+
+  export type TruthyKeys<T> = keyof {
+    [K in keyof T as T[K] extends false | undefined | null ? never : K]: K
+  }
+
+  export type TrueKeys<T> = TruthyKeys<Prisma__Pick<T, RequiredKeys<T>>>
+
+  /**
+   * Subset
+   * @desc From `T` pick properties that exist in `U`. Simple version of Intersection
+   */
+  export type Subset<T, U> = {
+    [key in keyof T]: key extends keyof U ? T[key] : never;
+  };
+
+  /**
+   * SelectSubset
+   * @desc From `T` pick properties that exist in `U`. Simple version of Intersection.
+   * Additionally, it validates, if both select and include are present. If the case, it errors.
+   */
+  export type SelectSubset<T, U> = {
+    [key in keyof T]: key extends keyof U ? T[key] : never
+  } &
+    (T extends SelectAndInclude
+      ? 'Please either choose `select` or `include`.'
+      : T extends SelectAndOmit
+        ? 'Please either choose `select` or `omit`.'
+        : {})
+
+  /**
+   * Subset + Intersection
+   * @desc From `T` pick properties that exist in `U` and intersect `K`
+   */
+  export type SubsetIntersection<T, U, K> = {
+    [key in keyof T]: key extends keyof U ? T[key] : never
+  } &
+    K
+
+  type Without<T, U> = { [P in Exclude<keyof T, keyof U>]?: never };
+
+  /**
+   * XOR is needed to have a real mutually exclusive union type
+   * https://stackoverflow.com/questions/42123407/does-typescript-support-mutually-exclusive-types
+   */
+  type XOR<T, U> =
+    T extends object ?
+    U extends object ?
+      (Without<T, U> & U) | (Without<U, T> & T)
+    : U : T
+
+
+  /**
+   * Is T a Record?
+   */
+  type IsObject<T extends any> = T extends Array<any>
+  ? False
+  : T extends Date
+  ? False
+  : T extends Uint8Array
+  ? False
+  : T extends BigInt
+  ? False
+  : T extends object
+  ? True
+  : False
+
+
+  /**
+   * If it's T[], return T
+   */
+  export type UnEnumerate<T extends unknown> = T extends Array<infer U> ? U : T
+
+  /**
+   * From ts-toolbelt
+   */
+
+  type __Either<O extends object, K extends Key> = Omit<O, K> &
+    {
+      // Merge all but K
+      [P in K]: Prisma__Pick<O, P & keyof O> // With K possibilities
+    }[K]
+
+  type EitherStrict<O extends object, K extends Key> = Strict<__Either<O, K>>
+
+  type EitherLoose<O extends object, K extends Key> = ComputeRaw<__Either<O, K>>
+
+  type _Either<
+    O extends object,
+    K extends Key,
+    strict extends Boolean
+  > = {
+    1: EitherStrict<O, K>
+    0: EitherLoose<O, K>
+  }[strict]
+
+  type Either<
+    O extends object,
+    K extends Key,
+    strict extends Boolean = 1
+  > = O extends unknown ? _Either<O, K, strict> : never
+
+  export type Union = any
+
+  type PatchUndefined<O extends object, O1 extends object> = {
+    [K in keyof O]: O[K] extends undefined ? At<O1, K> : O[K]
+  } & {}
+
+  /** Helper Types for "Merge" **/
+  export type IntersectOf<U extends Union> = (
+    U extends unknown ? (k: U) => void : never
+  ) extends (k: infer I) => void
+    ? I
+    : never
+
+  export type Overwrite<O extends object, O1 extends object> = {
+      [K in keyof O]: K extends keyof O1 ? O1[K] : O[K];
+  } & {};
+
+  type _Merge<U extends object> = IntersectOf<Overwrite<U, {
+      [K in keyof U]-?: At<U, K>;
+  }>>;
+
+  type Key = string | number | symbol;
+  type AtBasic<O extends object, K extends Key> = K extends keyof O ? O[K] : never;
+  type AtStrict<O extends object, K extends Key> = O[K & keyof O];
+  type AtLoose<O extends object, K extends Key> = O extends unknown ? AtStrict<O, K> : never;
+  export type At<O extends object, K extends Key, strict extends Boolean = 1> = {
+      1: AtStrict<O, K>;
+      0: AtLoose<O, K>;
+  }[strict];
+
+  export type ComputeRaw<A extends any> = A extends Function ? A : {
+    [K in keyof A]: A[K];
+  } & {};
+
+  export type OptionalFlat<O> = {
+    [K in keyof O]?: O[K];
+  } & {};
+
+  type _Record<K extends keyof any, T> = {
+    [P in K]: T;
+  };
+
+  // cause typescript not to expand types and preserve names
+  type NoExpand<T> = T extends unknown ? T : never;
+
+  // this type assumes the passed object is entirely optional
+  type AtLeast<O extends object, K extends string> = NoExpand<
+    O extends unknown
+    ? | (K extends keyof O ? { [P in K]: O[P] } & O : O)
+      | {[P in keyof O as P extends K ? K : never]-?: O[P]} & O
+    : never>;
+
+  type _Strict<U, _U = U> = U extends unknown ? U & OptionalFlat<_Record<Exclude<Keys<_U>, keyof U>, never>> : never;
+
+  export type Strict<U extends object> = ComputeRaw<_Strict<U>>;
+  /** End Helper Types for "Merge" **/
+
+  export type Merge<U extends object> = ComputeRaw<_Merge<Strict<U>>>;
+
+  /**
+  A [[Boolean]]
+  */
+  export type Boolean = True | False
+
+  // /**
+  // 1
+  // */
+  export type True = 1
+
+  /**
+  0
+  */
+  export type False = 0
+
+  export type Not<B extends Boolean> = {
+    0: 1
+    1: 0
+  }[B]
+
+  export type Extends<A1 extends any, A2 extends any> = [A1] extends [never]
+    ? 0 // anything `never` is false
+    : A1 extends A2
+    ? 1
+    : 0
+
+  export type Has<U extends Union, U1 extends Union> = Not<
+    Extends<Exclude<U1, U>, U1>
+  >
+
+  export type Or<B1 extends Boolean, B2 extends Boolean> = {
+    0: {
+      0: 0
+      1: 1
+    }
+    1: {
+      0: 1
+      1: 1
+    }
+  }[B1][B2]
+
+  export type Keys<U extends Union> = U extends unknown ? keyof U : never
+
+  type Cast<A, B> = A extends B ? A : B;
+
+  export const type: unique symbol;
+
+
+
+  /**
+   * Used by group by
+   */
+
+  export type GetScalarType<T, O> = O extends object ? {
+    [P in keyof T]: P extends keyof O
+      ? O[P]
+      : never
+  } : never
+
+  type FieldPaths<
+    T,
+    U = Omit<T, '_avg' | '_sum' | '_count' | '_min' | '_max'>
+  > = IsObject<T> extends True ? U : T
+
+  type GetHavingFields<T> = {
+    [K in keyof T]: Or<
+      Or<Extends<'OR', K>, Extends<'AND', K>>,
+      Extends<'NOT', K>
+    > extends True
+      ? // infer is only needed to not hit TS limit
+        // based on the brilliant idea of Pierre-Antoine Mills
+        // https://github.com/microsoft/TypeScript/issues/30188#issuecomment-478938437
+        T[K] extends infer TK
+        ? GetHavingFields<UnEnumerate<TK> extends object ? Merge<UnEnumerate<TK>> : never>
+        : never
+      : {} extends FieldPaths<T[K]>
+      ? never
+      : K
+  }[keyof T]
+
+  /**
+   * Convert tuple to union
+   */
+  type _TupleToUnion<T> = T extends (infer E)[] ? E : never
+  type TupleToUnion<K extends readonly any[]> = _TupleToUnion<K>
+  type MaybeTupleToUnion<T> = T extends any[] ? TupleToUnion<T> : T
+
+  /**
+   * Like `Pick`, but additionally can also accept an array of keys
+   */
+  type PickEnumerable<T, K extends Enumerable<keyof T> | keyof T> = Prisma__Pick<T, MaybeTupleToUnion<K>>
+
+  /**
+   * Exclude all keys with underscores
+   */
+  type ExcludeUnderscoreKeys<T extends string> = T extends `_${string}` ? never : T
+
+
+  export type FieldRef<Model, FieldType> = runtime.FieldRef<Model, FieldType>
+
+  type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRef<Model, FieldType>
+
+
+  export const ModelName: {
+    User: 'User',
+    Habit: 'Habit',
+    HabitLog: 'HabitLog',
+    Badge: 'Badge',
+    UserBadge: 'UserBadge',
+    Challenge: 'Challenge',
+    UserChallenge: 'UserChallenge',
+    AIInsight: 'AIInsight',
+    Friend: 'Friend',
+    SocialPost: 'SocialPost'
+  };
+
+  export type ModelName = (typeof ModelName)[keyof typeof ModelName]
+
+
+  export type Datasources = {
+    db?: Datasource
+  }
+
+  interface TypeMapCb extends $Utils.Fn<{extArgs: $Extensions.InternalArgs, clientOptions: PrismaClientOptions }, $Utils.Record<string, any>> {
+    returns: Prisma.TypeMap<this['params']['extArgs'], this['params']['clientOptions']>
+  }
+
+  export type TypeMap<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> = {
+    meta: {
+      modelProps: "user" | "habit" | "habitLog" | "badge" | "userBadge" | "challenge" | "userChallenge" | "aIInsight" | "friend" | "socialPost"
+      txIsolationLevel: Prisma.TransactionIsolationLevel
+    }
+    model: {
+      User: {
+        payload: Prisma.$UserPayload<ExtArgs>
+        fields: Prisma.UserFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.UserFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.UserFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload>
+          }
+          findFirst: {
+            args: Prisma.UserFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.UserFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload>
+          }
+          findMany: {
+            args: Prisma.UserFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload>[]
+          }
+          create: {
+            args: Prisma.UserCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload>
+          }
+          createMany: {
+            args: Prisma.UserCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.UserCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload>[]
+          }
+          delete: {
+            args: Prisma.UserDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload>
+          }
+          update: {
+            args: Prisma.UserUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload>
+          }
+          deleteMany: {
+            args: Prisma.UserDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.UserUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.UserUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload>
+          }
+          aggregate: {
+            args: Prisma.UserAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateUser>
+          }
+          groupBy: {
+            args: Prisma.UserGroupByArgs<ExtArgs>
+            result: $Utils.Optional<UserGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.UserCountArgs<ExtArgs>
+            result: $Utils.Optional<UserCountAggregateOutputType> | number
+          }
+        }
+      }
+      Habit: {
+        payload: Prisma.$HabitPayload<ExtArgs>
+        fields: Prisma.HabitFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.HabitFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HabitPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.HabitFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HabitPayload>
+          }
+          findFirst: {
+            args: Prisma.HabitFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HabitPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.HabitFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HabitPayload>
+          }
+          findMany: {
+            args: Prisma.HabitFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HabitPayload>[]
+          }
+          create: {
+            args: Prisma.HabitCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HabitPayload>
+          }
+          createMany: {
+            args: Prisma.HabitCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.HabitCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HabitPayload>[]
+          }
+          delete: {
+            args: Prisma.HabitDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HabitPayload>
+          }
+          update: {
+            args: Prisma.HabitUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HabitPayload>
+          }
+          deleteMany: {
+            args: Prisma.HabitDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.HabitUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.HabitUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HabitPayload>
+          }
+          aggregate: {
+            args: Prisma.HabitAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateHabit>
+          }
+          groupBy: {
+            args: Prisma.HabitGroupByArgs<ExtArgs>
+            result: $Utils.Optional<HabitGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.HabitCountArgs<ExtArgs>
+            result: $Utils.Optional<HabitCountAggregateOutputType> | number
+          }
+        }
+      }
+      HabitLog: {
+        payload: Prisma.$HabitLogPayload<ExtArgs>
+        fields: Prisma.HabitLogFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.HabitLogFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HabitLogPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.HabitLogFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HabitLogPayload>
+          }
+          findFirst: {
+            args: Prisma.HabitLogFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HabitLogPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.HabitLogFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HabitLogPayload>
+          }
+          findMany: {
+            args: Prisma.HabitLogFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HabitLogPayload>[]
+          }
+          create: {
+            args: Prisma.HabitLogCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HabitLogPayload>
+          }
+          createMany: {
+            args: Prisma.HabitLogCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.HabitLogCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HabitLogPayload>[]
+          }
+          delete: {
+            args: Prisma.HabitLogDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HabitLogPayload>
+          }
+          update: {
+            args: Prisma.HabitLogUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HabitLogPayload>
+          }
+          deleteMany: {
+            args: Prisma.HabitLogDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.HabitLogUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.HabitLogUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HabitLogPayload>
+          }
+          aggregate: {
+            args: Prisma.HabitLogAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateHabitLog>
+          }
+          groupBy: {
+            args: Prisma.HabitLogGroupByArgs<ExtArgs>
+            result: $Utils.Optional<HabitLogGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.HabitLogCountArgs<ExtArgs>
+            result: $Utils.Optional<HabitLogCountAggregateOutputType> | number
+          }
+        }
+      }
+      Badge: {
+        payload: Prisma.$BadgePayload<ExtArgs>
+        fields: Prisma.BadgeFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.BadgeFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BadgePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.BadgeFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BadgePayload>
+          }
+          findFirst: {
+            args: Prisma.BadgeFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BadgePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.BadgeFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BadgePayload>
+          }
+          findMany: {
+            args: Prisma.BadgeFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BadgePayload>[]
+          }
+          create: {
+            args: Prisma.BadgeCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BadgePayload>
+          }
+          createMany: {
+            args: Prisma.BadgeCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.BadgeCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BadgePayload>[]
+          }
+          delete: {
+            args: Prisma.BadgeDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BadgePayload>
+          }
+          update: {
+            args: Prisma.BadgeUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BadgePayload>
+          }
+          deleteMany: {
+            args: Prisma.BadgeDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.BadgeUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.BadgeUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BadgePayload>
+          }
+          aggregate: {
+            args: Prisma.BadgeAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateBadge>
+          }
+          groupBy: {
+            args: Prisma.BadgeGroupByArgs<ExtArgs>
+            result: $Utils.Optional<BadgeGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.BadgeCountArgs<ExtArgs>
+            result: $Utils.Optional<BadgeCountAggregateOutputType> | number
+          }
+        }
+      }
+      UserBadge: {
+        payload: Prisma.$UserBadgePayload<ExtArgs>
+        fields: Prisma.UserBadgeFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.UserBadgeFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserBadgePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.UserBadgeFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserBadgePayload>
+          }
+          findFirst: {
+            args: Prisma.UserBadgeFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserBadgePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.UserBadgeFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserBadgePayload>
+          }
+          findMany: {
+            args: Prisma.UserBadgeFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserBadgePayload>[]
+          }
+          create: {
+            args: Prisma.UserBadgeCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserBadgePayload>
+          }
+          createMany: {
+            args: Prisma.UserBadgeCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.UserBadgeCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserBadgePayload>[]
+          }
+          delete: {
+            args: Prisma.UserBadgeDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserBadgePayload>
+          }
+          update: {
+            args: Prisma.UserBadgeUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserBadgePayload>
+          }
+          deleteMany: {
+            args: Prisma.UserBadgeDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.UserBadgeUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.UserBadgeUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserBadgePayload>
+          }
+          aggregate: {
+            args: Prisma.UserBadgeAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateUserBadge>
+          }
+          groupBy: {
+            args: Prisma.UserBadgeGroupByArgs<ExtArgs>
+            result: $Utils.Optional<UserBadgeGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.UserBadgeCountArgs<ExtArgs>
+            result: $Utils.Optional<UserBadgeCountAggregateOutputType> | number
+          }
+        }
+      }
+      Challenge: {
+        payload: Prisma.$ChallengePayload<ExtArgs>
+        fields: Prisma.ChallengeFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ChallengeFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChallengePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ChallengeFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChallengePayload>
+          }
+          findFirst: {
+            args: Prisma.ChallengeFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChallengePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ChallengeFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChallengePayload>
+          }
+          findMany: {
+            args: Prisma.ChallengeFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChallengePayload>[]
+          }
+          create: {
+            args: Prisma.ChallengeCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChallengePayload>
+          }
+          createMany: {
+            args: Prisma.ChallengeCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.ChallengeCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChallengePayload>[]
+          }
+          delete: {
+            args: Prisma.ChallengeDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChallengePayload>
+          }
+          update: {
+            args: Prisma.ChallengeUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChallengePayload>
+          }
+          deleteMany: {
+            args: Prisma.ChallengeDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ChallengeUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.ChallengeUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChallengePayload>
+          }
+          aggregate: {
+            args: Prisma.ChallengeAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateChallenge>
+          }
+          groupBy: {
+            args: Prisma.ChallengeGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ChallengeGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ChallengeCountArgs<ExtArgs>
+            result: $Utils.Optional<ChallengeCountAggregateOutputType> | number
+          }
+        }
+      }
+      UserChallenge: {
+        payload: Prisma.$UserChallengePayload<ExtArgs>
+        fields: Prisma.UserChallengeFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.UserChallengeFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserChallengePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.UserChallengeFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserChallengePayload>
+          }
+          findFirst: {
+            args: Prisma.UserChallengeFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserChallengePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.UserChallengeFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserChallengePayload>
+          }
+          findMany: {
+            args: Prisma.UserChallengeFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserChallengePayload>[]
+          }
+          create: {
+            args: Prisma.UserChallengeCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserChallengePayload>
+          }
+          createMany: {
+            args: Prisma.UserChallengeCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.UserChallengeCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserChallengePayload>[]
+          }
+          delete: {
+            args: Prisma.UserChallengeDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserChallengePayload>
+          }
+          update: {
+            args: Prisma.UserChallengeUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserChallengePayload>
+          }
+          deleteMany: {
+            args: Prisma.UserChallengeDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.UserChallengeUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.UserChallengeUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserChallengePayload>
+          }
+          aggregate: {
+            args: Prisma.UserChallengeAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateUserChallenge>
+          }
+          groupBy: {
+            args: Prisma.UserChallengeGroupByArgs<ExtArgs>
+            result: $Utils.Optional<UserChallengeGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.UserChallengeCountArgs<ExtArgs>
+            result: $Utils.Optional<UserChallengeCountAggregateOutputType> | number
+          }
+        }
+      }
+      AIInsight: {
+        payload: Prisma.$AIInsightPayload<ExtArgs>
+        fields: Prisma.AIInsightFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.AIInsightFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AIInsightPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.AIInsightFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AIInsightPayload>
+          }
+          findFirst: {
+            args: Prisma.AIInsightFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AIInsightPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.AIInsightFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AIInsightPayload>
+          }
+          findMany: {
+            args: Prisma.AIInsightFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AIInsightPayload>[]
+          }
+          create: {
+            args: Prisma.AIInsightCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AIInsightPayload>
+          }
+          createMany: {
+            args: Prisma.AIInsightCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.AIInsightCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AIInsightPayload>[]
+          }
+          delete: {
+            args: Prisma.AIInsightDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AIInsightPayload>
+          }
+          update: {
+            args: Prisma.AIInsightUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AIInsightPayload>
+          }
+          deleteMany: {
+            args: Prisma.AIInsightDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.AIInsightUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.AIInsightUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AIInsightPayload>
+          }
+          aggregate: {
+            args: Prisma.AIInsightAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateAIInsight>
+          }
+          groupBy: {
+            args: Prisma.AIInsightGroupByArgs<ExtArgs>
+            result: $Utils.Optional<AIInsightGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.AIInsightCountArgs<ExtArgs>
+            result: $Utils.Optional<AIInsightCountAggregateOutputType> | number
+          }
+        }
+      }
+      Friend: {
+        payload: Prisma.$FriendPayload<ExtArgs>
+        fields: Prisma.FriendFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.FriendFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FriendPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.FriendFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FriendPayload>
+          }
+          findFirst: {
+            args: Prisma.FriendFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FriendPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.FriendFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FriendPayload>
+          }
+          findMany: {
+            args: Prisma.FriendFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FriendPayload>[]
+          }
+          create: {
+            args: Prisma.FriendCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FriendPayload>
+          }
+          createMany: {
+            args: Prisma.FriendCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.FriendCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FriendPayload>[]
+          }
+          delete: {
+            args: Prisma.FriendDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FriendPayload>
+          }
+          update: {
+            args: Prisma.FriendUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FriendPayload>
+          }
+          deleteMany: {
+            args: Prisma.FriendDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.FriendUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.FriendUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FriendPayload>
+          }
+          aggregate: {
+            args: Prisma.FriendAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateFriend>
+          }
+          groupBy: {
+            args: Prisma.FriendGroupByArgs<ExtArgs>
+            result: $Utils.Optional<FriendGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.FriendCountArgs<ExtArgs>
+            result: $Utils.Optional<FriendCountAggregateOutputType> | number
+          }
+        }
+      }
+      SocialPost: {
+        payload: Prisma.$SocialPostPayload<ExtArgs>
+        fields: Prisma.SocialPostFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.SocialPostFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SocialPostPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.SocialPostFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SocialPostPayload>
+          }
+          findFirst: {
+            args: Prisma.SocialPostFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SocialPostPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.SocialPostFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SocialPostPayload>
+          }
+          findMany: {
+            args: Prisma.SocialPostFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SocialPostPayload>[]
+          }
+          create: {
+            args: Prisma.SocialPostCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SocialPostPayload>
+          }
+          createMany: {
+            args: Prisma.SocialPostCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.SocialPostCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SocialPostPayload>[]
+          }
+          delete: {
+            args: Prisma.SocialPostDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SocialPostPayload>
+          }
+          update: {
+            args: Prisma.SocialPostUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SocialPostPayload>
+          }
+          deleteMany: {
+            args: Prisma.SocialPostDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.SocialPostUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.SocialPostUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SocialPostPayload>
+          }
+          aggregate: {
+            args: Prisma.SocialPostAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateSocialPost>
+          }
+          groupBy: {
+            args: Prisma.SocialPostGroupByArgs<ExtArgs>
+            result: $Utils.Optional<SocialPostGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.SocialPostCountArgs<ExtArgs>
+            result: $Utils.Optional<SocialPostCountAggregateOutputType> | number
+          }
+        }
+      }
+    }
+  } & {
+    other: {
+      payload: any
+      operations: {
+        $executeRaw: {
+          args: [query: TemplateStringsArray | Prisma.Sql, ...values: any[]],
+          result: any
+        }
+        $executeRawUnsafe: {
+          args: [query: string, ...values: any[]],
+          result: any
+        }
+        $queryRaw: {
+          args: [query: TemplateStringsArray | Prisma.Sql, ...values: any[]],
+          result: any
+        }
+        $queryRawUnsafe: {
+          args: [query: string, ...values: any[]],
+          result: any
+        }
+      }
+    }
+  }
+  export const defineExtension: $Extensions.ExtendsHook<"define", Prisma.TypeMapCb, $Extensions.DefaultArgs>
+  export type DefaultPrismaClient = PrismaClient
+  export type ErrorFormat = 'pretty' | 'colorless' | 'minimal'
+  export interface PrismaClientOptions {
+    /**
+     * Overwrites the datasource url from your schema.prisma file
+     */
+    datasources?: Datasources
+    /**
+     * Overwrites the datasource url from your schema.prisma file
+     */
+    datasourceUrl?: string
+    /**
+     * @default "colorless"
+     */
+    errorFormat?: ErrorFormat
+    /**
+     * @example
+     * ```
+     * // Defaults to stdout
+     * log: ['query', 'info', 'warn', 'error']
+     * 
+     * // Emit as events
+     * log: [
+     *   { emit: 'stdout', level: 'query' },
+     *   { emit: 'stdout', level: 'info' },
+     *   { emit: 'stdout', level: 'warn' }
+     *   { emit: 'stdout', level: 'error' }
+     * ]
+     * ```
+     * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/logging#the-log-option).
+     */
+    log?: (LogLevel | LogDefinition)[]
+    /**
+     * The default values for transactionOptions
+     * maxWait ?= 2000
+     * timeout ?= 5000
+     */
+    transactionOptions?: {
+      maxWait?: number
+      timeout?: number
+      isolationLevel?: Prisma.TransactionIsolationLevel
+    }
+  }
+
+
+  /* Types for Logging */
+  export type LogLevel = 'info' | 'query' | 'warn' | 'error'
+  export type LogDefinition = {
+    level: LogLevel
+    emit: 'stdout' | 'event'
+  }
+
+  export type GetLogType<T extends LogLevel | LogDefinition> = T extends LogDefinition ? T['emit'] extends 'event' ? T['level'] : never : never
+  export type GetEvents<T extends any> = T extends Array<LogLevel | LogDefinition> ?
+    GetLogType<T[0]> | GetLogType<T[1]> | GetLogType<T[2]> | GetLogType<T[3]>
+    : never
+
+  export type QueryEvent = {
+    timestamp: Date
+    query: string
+    params: string
+    duration: number
+    target: string
+  }
+
+  export type LogEvent = {
+    timestamp: Date
+    message: string
+    target: string
+  }
+  /* End Types for Logging */
+
+
+  export type PrismaAction =
+    | 'findUnique'
+    | 'findUniqueOrThrow'
+    | 'findMany'
+    | 'findFirst'
+    | 'findFirstOrThrow'
+    | 'create'
+    | 'createMany'
+    | 'createManyAndReturn'
+    | 'update'
+    | 'updateMany'
+    | 'upsert'
+    | 'delete'
+    | 'deleteMany'
+    | 'executeRaw'
+    | 'queryRaw'
+    | 'aggregate'
+    | 'count'
+    | 'runCommandRaw'
+    | 'findRaw'
+    | 'groupBy'
+
+  /**
+   * These options are being passed into the middleware as "params"
+   */
+  export type MiddlewareParams = {
+    model?: ModelName
+    action: PrismaAction
+    args: any
+    dataPath: string[]
+    runInTransaction: boolean
+  }
+
+  /**
+   * The `T` type makes sure, that the `return proceed` is not forgotten in the middleware implementation
+   */
+  export type Middleware<T = any> = (
+    params: MiddlewareParams,
+    next: (params: MiddlewareParams) => $Utils.JsPromise<T>,
+  ) => $Utils.JsPromise<T>
+
+  // tested in getLogLevel.test.ts
+  export function getLogLevel(log: Array<LogLevel | LogDefinition>): LogLevel | undefined;
+
+  /**
+   * `PrismaClient` proxy available in interactive transactions.
+   */
+  export type TransactionClient = Omit<Prisma.DefaultPrismaClient, runtime.ITXClientDenyList>
+
+  export type Datasource = {
+    url?: string
+  }
+
+  /**
+   * Count Types
+   */
+
+
+  /**
+   * Count Type UserCountOutputType
+   */
+
+  export type UserCountOutputType = {
+    habits: number
+    habitLogs: number
+    badges: number
+    challenges: number
+    insights: number
+    posts: number
+    friends: number
+    friendOf: number
+    challenges_created: number
+  }
+
+  export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    habits?: boolean | UserCountOutputTypeCountHabitsArgs
+    habitLogs?: boolean | UserCountOutputTypeCountHabitLogsArgs
+    badges?: boolean | UserCountOutputTypeCountBadgesArgs
+    challenges?: boolean | UserCountOutputTypeCountChallengesArgs
+    insights?: boolean | UserCountOutputTypeCountInsightsArgs
+    posts?: boolean | UserCountOutputTypeCountPostsArgs
+    friends?: boolean | UserCountOutputTypeCountFriendsArgs
+    friendOf?: boolean | UserCountOutputTypeCountFriendOfArgs
+    challenges_created?: boolean | UserCountOutputTypeCountChallenges_createdArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserCountOutputType
+     */
+    select?: UserCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountHabitsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: HabitWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountHabitLogsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: HabitLogWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountBadgesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UserBadgeWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountChallengesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UserChallengeWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountInsightsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AIInsightWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountPostsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SocialPostWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountFriendsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: FriendWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountFriendOfArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: FriendWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountChallenges_createdArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ChallengeWhereInput
+  }
+
+
+  /**
+   * Count Type HabitCountOutputType
+   */
+
+  export type HabitCountOutputType = {
+    logs: number
+    insights: number
+    posts: number
+  }
+
+  export type HabitCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    logs?: boolean | HabitCountOutputTypeCountLogsArgs
+    insights?: boolean | HabitCountOutputTypeCountInsightsArgs
+    posts?: boolean | HabitCountOutputTypeCountPostsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * HabitCountOutputType without action
+   */
+  export type HabitCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HabitCountOutputType
+     */
+    select?: HabitCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * HabitCountOutputType without action
+   */
+  export type HabitCountOutputTypeCountLogsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: HabitLogWhereInput
+  }
+
+  /**
+   * HabitCountOutputType without action
+   */
+  export type HabitCountOutputTypeCountInsightsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AIInsightWhereInput
+  }
+
+  /**
+   * HabitCountOutputType without action
+   */
+  export type HabitCountOutputTypeCountPostsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SocialPostWhereInput
+  }
+
+
+  /**
+   * Count Type BadgeCountOutputType
+   */
+
+  export type BadgeCountOutputType = {
+    users: number
+    posts: number
+  }
+
+  export type BadgeCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    users?: boolean | BadgeCountOutputTypeCountUsersArgs
+    posts?: boolean | BadgeCountOutputTypeCountPostsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * BadgeCountOutputType without action
+   */
+  export type BadgeCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BadgeCountOutputType
+     */
+    select?: BadgeCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * BadgeCountOutputType without action
+   */
+  export type BadgeCountOutputTypeCountUsersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UserBadgeWhereInput
+  }
+
+  /**
+   * BadgeCountOutputType without action
+   */
+  export type BadgeCountOutputTypeCountPostsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SocialPostWhereInput
+  }
+
+
+  /**
+   * Count Type ChallengeCountOutputType
+   */
+
+  export type ChallengeCountOutputType = {
+    participants: number
+  }
+
+  export type ChallengeCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    participants?: boolean | ChallengeCountOutputTypeCountParticipantsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * ChallengeCountOutputType without action
+   */
+  export type ChallengeCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ChallengeCountOutputType
+     */
+    select?: ChallengeCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * ChallengeCountOutputType without action
+   */
+  export type ChallengeCountOutputTypeCountParticipantsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UserChallengeWhereInput
+  }
+
+
+  /**
+   * Models
+   */
+
+  /**
+   * Model User
+   */
+
+  export type AggregateUser = {
+    _count: UserCountAggregateOutputType | null
+    _avg: UserAvgAggregateOutputType | null
+    _sum: UserSumAggregateOutputType | null
+    _min: UserMinAggregateOutputType | null
+    _max: UserMaxAggregateOutputType | null
+  }
+
+  export type UserAvgAggregateOutputType = {
+    id: number | null
+    level: number | null
+    totalPoints: number | null
+    currentStreak: number | null
+    longestStreak: number | null
+  }
+
+  export type UserSumAggregateOutputType = {
+    id: number | null
+    level: number | null
+    totalPoints: number | null
+    currentStreak: number | null
+    longestStreak: number | null
+  }
+
+  export type UserMinAggregateOutputType = {
+    id: number | null
+    username: string | null
+    avatar: string | null
+    level: number | null
+    totalPoints: number | null
+    currentStreak: number | null
+    longestStreak: number | null
+    createdAt: Date | null
+  }
+
+  export type UserMaxAggregateOutputType = {
+    id: number | null
+    username: string | null
+    avatar: string | null
+    level: number | null
+    totalPoints: number | null
+    currentStreak: number | null
+    longestStreak: number | null
+    createdAt: Date | null
+  }
+
+  export type UserCountAggregateOutputType = {
+    id: number
+    username: number
+    avatar: number
+    level: number
+    totalPoints: number
+    currentStreak: number
+    longestStreak: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type UserAvgAggregateInputType = {
+    id?: true
+    level?: true
+    totalPoints?: true
+    currentStreak?: true
+    longestStreak?: true
+  }
+
+  export type UserSumAggregateInputType = {
+    id?: true
+    level?: true
+    totalPoints?: true
+    currentStreak?: true
+    longestStreak?: true
+  }
+
+  export type UserMinAggregateInputType = {
+    id?: true
+    username?: true
+    avatar?: true
+    level?: true
+    totalPoints?: true
+    currentStreak?: true
+    longestStreak?: true
+    createdAt?: true
+  }
+
+  export type UserMaxAggregateInputType = {
+    id?: true
+    username?: true
+    avatar?: true
+    level?: true
+    totalPoints?: true
+    currentStreak?: true
+    longestStreak?: true
+    createdAt?: true
+  }
+
+  export type UserCountAggregateInputType = {
+    id?: true
+    username?: true
+    avatar?: true
+    level?: true
+    totalPoints?: true
+    currentStreak?: true
+    longestStreak?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type UserAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which User to aggregate.
+     */
+    where?: UserWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Users to fetch.
+     */
+    orderBy?: UserOrderByWithRelationInput | UserOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: UserWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Users from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Users.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Users
+    **/
+    _count?: true | UserCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: UserAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: UserSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: UserMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: UserMaxAggregateInputType
+  }
+
+  export type GetUserAggregateType<T extends UserAggregateArgs> = {
+        [P in keyof T & keyof AggregateUser]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateUser[P]>
+      : GetScalarType<T[P], AggregateUser[P]>
+  }
+
+
+
+
+  export type UserGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UserWhereInput
+    orderBy?: UserOrderByWithAggregationInput | UserOrderByWithAggregationInput[]
+    by: UserScalarFieldEnum[] | UserScalarFieldEnum
+    having?: UserScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: UserCountAggregateInputType | true
+    _avg?: UserAvgAggregateInputType
+    _sum?: UserSumAggregateInputType
+    _min?: UserMinAggregateInputType
+    _max?: UserMaxAggregateInputType
+  }
+
+  export type UserGroupByOutputType = {
+    id: number
+    username: string
+    avatar: string | null
+    level: number
+    totalPoints: number
+    currentStreak: number
+    longestStreak: number
+    createdAt: Date
+    _count: UserCountAggregateOutputType | null
+    _avg: UserAvgAggregateOutputType | null
+    _sum: UserSumAggregateOutputType | null
+    _min: UserMinAggregateOutputType | null
+    _max: UserMaxAggregateOutputType | null
+  }
+
+  type GetUserGroupByPayload<T extends UserGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<UserGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof UserGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], UserGroupByOutputType[P]>
+            : GetScalarType<T[P], UserGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type UserSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    username?: boolean
+    avatar?: boolean
+    level?: boolean
+    totalPoints?: boolean
+    currentStreak?: boolean
+    longestStreak?: boolean
+    createdAt?: boolean
+    habits?: boolean | User$habitsArgs<ExtArgs>
+    habitLogs?: boolean | User$habitLogsArgs<ExtArgs>
+    badges?: boolean | User$badgesArgs<ExtArgs>
+    challenges?: boolean | User$challengesArgs<ExtArgs>
+    insights?: boolean | User$insightsArgs<ExtArgs>
+    posts?: boolean | User$postsArgs<ExtArgs>
+    friends?: boolean | User$friendsArgs<ExtArgs>
+    friendOf?: boolean | User$friendOfArgs<ExtArgs>
+    challenges_created?: boolean | User$challenges_createdArgs<ExtArgs>
+    _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["user"]>
+
+  export type UserSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    username?: boolean
+    avatar?: boolean
+    level?: boolean
+    totalPoints?: boolean
+    currentStreak?: boolean
+    longestStreak?: boolean
+    createdAt?: boolean
+  }, ExtArgs["result"]["user"]>
+
+  export type UserSelectScalar = {
+    id?: boolean
+    username?: boolean
+    avatar?: boolean
+    level?: boolean
+    totalPoints?: boolean
+    currentStreak?: boolean
+    longestStreak?: boolean
+    createdAt?: boolean
+  }
+
+  export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    habits?: boolean | User$habitsArgs<ExtArgs>
+    habitLogs?: boolean | User$habitLogsArgs<ExtArgs>
+    badges?: boolean | User$badgesArgs<ExtArgs>
+    challenges?: boolean | User$challengesArgs<ExtArgs>
+    insights?: boolean | User$insightsArgs<ExtArgs>
+    posts?: boolean | User$postsArgs<ExtArgs>
+    friends?: boolean | User$friendsArgs<ExtArgs>
+    friendOf?: boolean | User$friendOfArgs<ExtArgs>
+    challenges_created?: boolean | User$challenges_createdArgs<ExtArgs>
+    _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+
+  export type $UserPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "User"
+    objects: {
+      habits: Prisma.$HabitPayload<ExtArgs>[]
+      habitLogs: Prisma.$HabitLogPayload<ExtArgs>[]
+      badges: Prisma.$UserBadgePayload<ExtArgs>[]
+      challenges: Prisma.$UserChallengePayload<ExtArgs>[]
+      insights: Prisma.$AIInsightPayload<ExtArgs>[]
+      posts: Prisma.$SocialPostPayload<ExtArgs>[]
+      friends: Prisma.$FriendPayload<ExtArgs>[]
+      friendOf: Prisma.$FriendPayload<ExtArgs>[]
+      challenges_created: Prisma.$ChallengePayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      username: string
+      avatar: string | null
+      level: number
+      totalPoints: number
+      currentStreak: number
+      longestStreak: number
+      createdAt: Date
+    }, ExtArgs["result"]["user"]>
+    composites: {}
+  }
+
+  type UserGetPayload<S extends boolean | null | undefined | UserDefaultArgs> = $Result.GetResult<Prisma.$UserPayload, S>
+
+  type UserCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<UserFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: UserCountAggregateInputType | true
+    }
+
+  export interface UserDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['User'], meta: { name: 'User' } }
+    /**
+     * Find zero or one User that matches the filter.
+     * @param {UserFindUniqueArgs} args - Arguments to find a User
+     * @example
+     * // Get one User
+     * const user = await prisma.user.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends UserFindUniqueArgs>(args: SelectSubset<T, UserFindUniqueArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one User that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {UserFindUniqueOrThrowArgs} args - Arguments to find a User
+     * @example
+     * // Get one User
+     * const user = await prisma.user.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends UserFindUniqueOrThrowArgs>(args: SelectSubset<T, UserFindUniqueOrThrowArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first User that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserFindFirstArgs} args - Arguments to find a User
+     * @example
+     * // Get one User
+     * const user = await prisma.user.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends UserFindFirstArgs>(args?: SelectSubset<T, UserFindFirstArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first User that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserFindFirstOrThrowArgs} args - Arguments to find a User
+     * @example
+     * // Get one User
+     * const user = await prisma.user.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends UserFindFirstOrThrowArgs>(args?: SelectSubset<T, UserFindFirstOrThrowArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more Users that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Users
+     * const users = await prisma.user.findMany()
+     * 
+     * // Get first 10 Users
+     * const users = await prisma.user.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const userWithIdOnly = await prisma.user.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends UserFindManyArgs>(args?: SelectSubset<T, UserFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a User.
+     * @param {UserCreateArgs} args - Arguments to create a User.
+     * @example
+     * // Create one User
+     * const User = await prisma.user.create({
+     *   data: {
+     *     // ... data to create a User
+     *   }
+     * })
+     * 
+     */
+    create<T extends UserCreateArgs>(args: SelectSubset<T, UserCreateArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many Users.
+     * @param {UserCreateManyArgs} args - Arguments to create many Users.
+     * @example
+     * // Create many Users
+     * const user = await prisma.user.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends UserCreateManyArgs>(args?: SelectSubset<T, UserCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Users and returns the data saved in the database.
+     * @param {UserCreateManyAndReturnArgs} args - Arguments to create many Users.
+     * @example
+     * // Create many Users
+     * const user = await prisma.user.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Users and only return the `id`
+     * const userWithIdOnly = await prisma.user.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends UserCreateManyAndReturnArgs>(args?: SelectSubset<T, UserCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a User.
+     * @param {UserDeleteArgs} args - Arguments to delete one User.
+     * @example
+     * // Delete one User
+     * const User = await prisma.user.delete({
+     *   where: {
+     *     // ... filter to delete one User
+     *   }
+     * })
+     * 
+     */
+    delete<T extends UserDeleteArgs>(args: SelectSubset<T, UserDeleteArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one User.
+     * @param {UserUpdateArgs} args - Arguments to update one User.
+     * @example
+     * // Update one User
+     * const user = await prisma.user.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends UserUpdateArgs>(args: SelectSubset<T, UserUpdateArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more Users.
+     * @param {UserDeleteManyArgs} args - Arguments to filter Users to delete.
+     * @example
+     * // Delete a few Users
+     * const { count } = await prisma.user.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends UserDeleteManyArgs>(args?: SelectSubset<T, UserDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Users.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Users
+     * const user = await prisma.user.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends UserUpdateManyArgs>(args: SelectSubset<T, UserUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one User.
+     * @param {UserUpsertArgs} args - Arguments to update or create a User.
+     * @example
+     * // Update or create a User
+     * const user = await prisma.user.upsert({
+     *   create: {
+     *     // ... data to create a User
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the User we want to update
+     *   }
+     * })
+     */
+    upsert<T extends UserUpsertArgs>(args: SelectSubset<T, UserUpsertArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of Users.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserCountArgs} args - Arguments to filter Users to count.
+     * @example
+     * // Count the number of Users
+     * const count = await prisma.user.count({
+     *   where: {
+     *     // ... the filter for the Users we want to count
+     *   }
+     * })
+    **/
+    count<T extends UserCountArgs>(
+      args?: Subset<T, UserCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], UserCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a User.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends UserAggregateArgs>(args: Subset<T, UserAggregateArgs>): Prisma.PrismaPromise<GetUserAggregateType<T>>
+
+    /**
+     * Group by User.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends UserGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: UserGroupByArgs['orderBy'] }
+        : { orderBy?: UserGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, UserGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetUserGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the User model
+   */
+  readonly fields: UserFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for User.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__UserClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    habits<T extends User$habitsArgs<ExtArgs> = {}>(args?: Subset<T, User$habitsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$HabitPayload<ExtArgs>, T, "findMany"> | Null>
+    habitLogs<T extends User$habitLogsArgs<ExtArgs> = {}>(args?: Subset<T, User$habitLogsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$HabitLogPayload<ExtArgs>, T, "findMany"> | Null>
+    badges<T extends User$badgesArgs<ExtArgs> = {}>(args?: Subset<T, User$badgesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserBadgePayload<ExtArgs>, T, "findMany"> | Null>
+    challenges<T extends User$challengesArgs<ExtArgs> = {}>(args?: Subset<T, User$challengesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserChallengePayload<ExtArgs>, T, "findMany"> | Null>
+    insights<T extends User$insightsArgs<ExtArgs> = {}>(args?: Subset<T, User$insightsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AIInsightPayload<ExtArgs>, T, "findMany"> | Null>
+    posts<T extends User$postsArgs<ExtArgs> = {}>(args?: Subset<T, User$postsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SocialPostPayload<ExtArgs>, T, "findMany"> | Null>
+    friends<T extends User$friendsArgs<ExtArgs> = {}>(args?: Subset<T, User$friendsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FriendPayload<ExtArgs>, T, "findMany"> | Null>
+    friendOf<T extends User$friendOfArgs<ExtArgs> = {}>(args?: Subset<T, User$friendOfArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FriendPayload<ExtArgs>, T, "findMany"> | Null>
+    challenges_created<T extends User$challenges_createdArgs<ExtArgs> = {}>(args?: Subset<T, User$challenges_createdArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ChallengePayload<ExtArgs>, T, "findMany"> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the User model
+   */ 
+  interface UserFieldRefs {
+    readonly id: FieldRef<"User", 'Int'>
+    readonly username: FieldRef<"User", 'String'>
+    readonly avatar: FieldRef<"User", 'String'>
+    readonly level: FieldRef<"User", 'Int'>
+    readonly totalPoints: FieldRef<"User", 'Int'>
+    readonly currentStreak: FieldRef<"User", 'Int'>
+    readonly longestStreak: FieldRef<"User", 'Int'>
+    readonly createdAt: FieldRef<"User", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * User findUnique
+   */
+  export type UserFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    /**
+     * Filter, which User to fetch.
+     */
+    where: UserWhereUniqueInput
+  }
+
+  /**
+   * User findUniqueOrThrow
+   */
+  export type UserFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    /**
+     * Filter, which User to fetch.
+     */
+    where: UserWhereUniqueInput
+  }
+
+  /**
+   * User findFirst
+   */
+  export type UserFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    /**
+     * Filter, which User to fetch.
+     */
+    where?: UserWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Users to fetch.
+     */
+    orderBy?: UserOrderByWithRelationInput | UserOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Users.
+     */
+    cursor?: UserWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Users from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Users.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Users.
+     */
+    distinct?: UserScalarFieldEnum | UserScalarFieldEnum[]
+  }
+
+  /**
+   * User findFirstOrThrow
+   */
+  export type UserFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    /**
+     * Filter, which User to fetch.
+     */
+    where?: UserWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Users to fetch.
+     */
+    orderBy?: UserOrderByWithRelationInput | UserOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Users.
+     */
+    cursor?: UserWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Users from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Users.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Users.
+     */
+    distinct?: UserScalarFieldEnum | UserScalarFieldEnum[]
+  }
+
+  /**
+   * User findMany
+   */
+  export type UserFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    /**
+     * Filter, which Users to fetch.
+     */
+    where?: UserWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Users to fetch.
+     */
+    orderBy?: UserOrderByWithRelationInput | UserOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Users.
+     */
+    cursor?: UserWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Users from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Users.
+     */
+    skip?: number
+    distinct?: UserScalarFieldEnum | UserScalarFieldEnum[]
+  }
+
+  /**
+   * User create
+   */
+  export type UserCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    /**
+     * The data needed to create a User.
+     */
+    data: XOR<UserCreateInput, UserUncheckedCreateInput>
+  }
+
+  /**
+   * User createMany
+   */
+  export type UserCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Users.
+     */
+    data: UserCreateManyInput | UserCreateManyInput[]
+  }
+
+  /**
+   * User createManyAndReturn
+   */
+  export type UserCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many Users.
+     */
+    data: UserCreateManyInput | UserCreateManyInput[]
+  }
+
+  /**
+   * User update
+   */
+  export type UserUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    /**
+     * The data needed to update a User.
+     */
+    data: XOR<UserUpdateInput, UserUncheckedUpdateInput>
+    /**
+     * Choose, which User to update.
+     */
+    where: UserWhereUniqueInput
+  }
+
+  /**
+   * User updateMany
+   */
+  export type UserUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Users.
+     */
+    data: XOR<UserUpdateManyMutationInput, UserUncheckedUpdateManyInput>
+    /**
+     * Filter which Users to update
+     */
+    where?: UserWhereInput
+  }
+
+  /**
+   * User upsert
+   */
+  export type UserUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    /**
+     * The filter to search for the User to update in case it exists.
+     */
+    where: UserWhereUniqueInput
+    /**
+     * In case the User found by the `where` argument doesn't exist, create a new User with this data.
+     */
+    create: XOR<UserCreateInput, UserUncheckedCreateInput>
+    /**
+     * In case the User was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<UserUpdateInput, UserUncheckedUpdateInput>
+  }
+
+  /**
+   * User delete
+   */
+  export type UserDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    /**
+     * Filter which User to delete.
+     */
+    where: UserWhereUniqueInput
+  }
+
+  /**
+   * User deleteMany
+   */
+  export type UserDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Users to delete
+     */
+    where?: UserWhereInput
+  }
+
+  /**
+   * User.habits
+   */
+  export type User$habitsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Habit
+     */
+    select?: HabitSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HabitInclude<ExtArgs> | null
+    where?: HabitWhereInput
+    orderBy?: HabitOrderByWithRelationInput | HabitOrderByWithRelationInput[]
+    cursor?: HabitWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: HabitScalarFieldEnum | HabitScalarFieldEnum[]
+  }
+
+  /**
+   * User.habitLogs
+   */
+  export type User$habitLogsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HabitLog
+     */
+    select?: HabitLogSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HabitLogInclude<ExtArgs> | null
+    where?: HabitLogWhereInput
+    orderBy?: HabitLogOrderByWithRelationInput | HabitLogOrderByWithRelationInput[]
+    cursor?: HabitLogWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: HabitLogScalarFieldEnum | HabitLogScalarFieldEnum[]
+  }
+
+  /**
+   * User.badges
+   */
+  export type User$badgesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserBadge
+     */
+    select?: UserBadgeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserBadgeInclude<ExtArgs> | null
+    where?: UserBadgeWhereInput
+    orderBy?: UserBadgeOrderByWithRelationInput | UserBadgeOrderByWithRelationInput[]
+    cursor?: UserBadgeWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: UserBadgeScalarFieldEnum | UserBadgeScalarFieldEnum[]
+  }
+
+  /**
+   * User.challenges
+   */
+  export type User$challengesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserChallenge
+     */
+    select?: UserChallengeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserChallengeInclude<ExtArgs> | null
+    where?: UserChallengeWhereInput
+    orderBy?: UserChallengeOrderByWithRelationInput | UserChallengeOrderByWithRelationInput[]
+    cursor?: UserChallengeWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: UserChallengeScalarFieldEnum | UserChallengeScalarFieldEnum[]
+  }
+
+  /**
+   * User.insights
+   */
+  export type User$insightsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AIInsight
+     */
+    select?: AIInsightSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AIInsightInclude<ExtArgs> | null
+    where?: AIInsightWhereInput
+    orderBy?: AIInsightOrderByWithRelationInput | AIInsightOrderByWithRelationInput[]
+    cursor?: AIInsightWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: AIInsightScalarFieldEnum | AIInsightScalarFieldEnum[]
+  }
+
+  /**
+   * User.posts
+   */
+  export type User$postsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SocialPost
+     */
+    select?: SocialPostSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SocialPostInclude<ExtArgs> | null
+    where?: SocialPostWhereInput
+    orderBy?: SocialPostOrderByWithRelationInput | SocialPostOrderByWithRelationInput[]
+    cursor?: SocialPostWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: SocialPostScalarFieldEnum | SocialPostScalarFieldEnum[]
+  }
+
+  /**
+   * User.friends
+   */
+  export type User$friendsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Friend
+     */
+    select?: FriendSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FriendInclude<ExtArgs> | null
+    where?: FriendWhereInput
+    orderBy?: FriendOrderByWithRelationInput | FriendOrderByWithRelationInput[]
+    cursor?: FriendWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: FriendScalarFieldEnum | FriendScalarFieldEnum[]
+  }
+
+  /**
+   * User.friendOf
+   */
+  export type User$friendOfArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Friend
+     */
+    select?: FriendSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FriendInclude<ExtArgs> | null
+    where?: FriendWhereInput
+    orderBy?: FriendOrderByWithRelationInput | FriendOrderByWithRelationInput[]
+    cursor?: FriendWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: FriendScalarFieldEnum | FriendScalarFieldEnum[]
+  }
+
+  /**
+   * User.challenges_created
+   */
+  export type User$challenges_createdArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Challenge
+     */
+    select?: ChallengeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChallengeInclude<ExtArgs> | null
+    where?: ChallengeWhereInput
+    orderBy?: ChallengeOrderByWithRelationInput | ChallengeOrderByWithRelationInput[]
+    cursor?: ChallengeWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ChallengeScalarFieldEnum | ChallengeScalarFieldEnum[]
+  }
+
+  /**
+   * User without action
+   */
+  export type UserDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Habit
+   */
+
+  export type AggregateHabit = {
+    _count: HabitCountAggregateOutputType | null
+    _avg: HabitAvgAggregateOutputType | null
+    _sum: HabitSumAggregateOutputType | null
+    _min: HabitMinAggregateOutputType | null
+    _max: HabitMaxAggregateOutputType | null
+  }
+
+  export type HabitAvgAggregateOutputType = {
+    id: number | null
+    userId: number | null
+    targetDaysPerWeek: number | null
+  }
+
+  export type HabitSumAggregateOutputType = {
+    id: number | null
+    userId: number | null
+    targetDaysPerWeek: number | null
+  }
+
+  export type HabitMinAggregateOutputType = {
+    id: number | null
+    userId: number | null
+    name: string | null
+    description: string | null
+    category: string | null
+    color: string | null
+    icon: string | null
+    frequency: string | null
+    targetDaysPerWeek: number | null
+    reminderTime: string | null
+    isArchived: boolean | null
+    createdAt: Date | null
+  }
+
+  export type HabitMaxAggregateOutputType = {
+    id: number | null
+    userId: number | null
+    name: string | null
+    description: string | null
+    category: string | null
+    color: string | null
+    icon: string | null
+    frequency: string | null
+    targetDaysPerWeek: number | null
+    reminderTime: string | null
+    isArchived: boolean | null
+    createdAt: Date | null
+  }
+
+  export type HabitCountAggregateOutputType = {
+    id: number
+    userId: number
+    name: number
+    description: number
+    category: number
+    color: number
+    icon: number
+    frequency: number
+    targetDaysPerWeek: number
+    reminderTime: number
+    isArchived: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type HabitAvgAggregateInputType = {
+    id?: true
+    userId?: true
+    targetDaysPerWeek?: true
+  }
+
+  export type HabitSumAggregateInputType = {
+    id?: true
+    userId?: true
+    targetDaysPerWeek?: true
+  }
+
+  export type HabitMinAggregateInputType = {
+    id?: true
+    userId?: true
+    name?: true
+    description?: true
+    category?: true
+    color?: true
+    icon?: true
+    frequency?: true
+    targetDaysPerWeek?: true
+    reminderTime?: true
+    isArchived?: true
+    createdAt?: true
+  }
+
+  export type HabitMaxAggregateInputType = {
+    id?: true
+    userId?: true
+    name?: true
+    description?: true
+    category?: true
+    color?: true
+    icon?: true
+    frequency?: true
+    targetDaysPerWeek?: true
+    reminderTime?: true
+    isArchived?: true
+    createdAt?: true
+  }
+
+  export type HabitCountAggregateInputType = {
+    id?: true
+    userId?: true
+    name?: true
+    description?: true
+    category?: true
+    color?: true
+    icon?: true
+    frequency?: true
+    targetDaysPerWeek?: true
+    reminderTime?: true
+    isArchived?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type HabitAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Habit to aggregate.
+     */
+    where?: HabitWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Habits to fetch.
+     */
+    orderBy?: HabitOrderByWithRelationInput | HabitOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: HabitWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Habits from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Habits.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Habits
+    **/
+    _count?: true | HabitCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: HabitAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: HabitSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: HabitMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: HabitMaxAggregateInputType
+  }
+
+  export type GetHabitAggregateType<T extends HabitAggregateArgs> = {
+        [P in keyof T & keyof AggregateHabit]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateHabit[P]>
+      : GetScalarType<T[P], AggregateHabit[P]>
+  }
+
+
+
+
+  export type HabitGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: HabitWhereInput
+    orderBy?: HabitOrderByWithAggregationInput | HabitOrderByWithAggregationInput[]
+    by: HabitScalarFieldEnum[] | HabitScalarFieldEnum
+    having?: HabitScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: HabitCountAggregateInputType | true
+    _avg?: HabitAvgAggregateInputType
+    _sum?: HabitSumAggregateInputType
+    _min?: HabitMinAggregateInputType
+    _max?: HabitMaxAggregateInputType
+  }
+
+  export type HabitGroupByOutputType = {
+    id: number
+    userId: number
+    name: string
+    description: string | null
+    category: string
+    color: string
+    icon: string
+    frequency: string
+    targetDaysPerWeek: number
+    reminderTime: string | null
+    isArchived: boolean
+    createdAt: Date
+    _count: HabitCountAggregateOutputType | null
+    _avg: HabitAvgAggregateOutputType | null
+    _sum: HabitSumAggregateOutputType | null
+    _min: HabitMinAggregateOutputType | null
+    _max: HabitMaxAggregateOutputType | null
+  }
+
+  type GetHabitGroupByPayload<T extends HabitGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<HabitGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof HabitGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], HabitGroupByOutputType[P]>
+            : GetScalarType<T[P], HabitGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type HabitSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    name?: boolean
+    description?: boolean
+    category?: boolean
+    color?: boolean
+    icon?: boolean
+    frequency?: boolean
+    targetDaysPerWeek?: boolean
+    reminderTime?: boolean
+    isArchived?: boolean
+    createdAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    logs?: boolean | Habit$logsArgs<ExtArgs>
+    insights?: boolean | Habit$insightsArgs<ExtArgs>
+    posts?: boolean | Habit$postsArgs<ExtArgs>
+    _count?: boolean | HabitCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["habit"]>
+
+  export type HabitSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    name?: boolean
+    description?: boolean
+    category?: boolean
+    color?: boolean
+    icon?: boolean
+    frequency?: boolean
+    targetDaysPerWeek?: boolean
+    reminderTime?: boolean
+    isArchived?: boolean
+    createdAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["habit"]>
+
+  export type HabitSelectScalar = {
+    id?: boolean
+    userId?: boolean
+    name?: boolean
+    description?: boolean
+    category?: boolean
+    color?: boolean
+    icon?: boolean
+    frequency?: boolean
+    targetDaysPerWeek?: boolean
+    reminderTime?: boolean
+    isArchived?: boolean
+    createdAt?: boolean
+  }
+
+  export type HabitInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    logs?: boolean | Habit$logsArgs<ExtArgs>
+    insights?: boolean | Habit$insightsArgs<ExtArgs>
+    posts?: boolean | Habit$postsArgs<ExtArgs>
+    _count?: boolean | HabitCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type HabitIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $HabitPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Habit"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+      logs: Prisma.$HabitLogPayload<ExtArgs>[]
+      insights: Prisma.$AIInsightPayload<ExtArgs>[]
+      posts: Prisma.$SocialPostPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      userId: number
+      name: string
+      description: string | null
+      category: string
+      color: string
+      icon: string
+      frequency: string
+      targetDaysPerWeek: number
+      reminderTime: string | null
+      isArchived: boolean
+      createdAt: Date
+    }, ExtArgs["result"]["habit"]>
+    composites: {}
+  }
+
+  type HabitGetPayload<S extends boolean | null | undefined | HabitDefaultArgs> = $Result.GetResult<Prisma.$HabitPayload, S>
+
+  type HabitCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<HabitFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: HabitCountAggregateInputType | true
+    }
+
+  export interface HabitDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Habit'], meta: { name: 'Habit' } }
+    /**
+     * Find zero or one Habit that matches the filter.
+     * @param {HabitFindUniqueArgs} args - Arguments to find a Habit
+     * @example
+     * // Get one Habit
+     * const habit = await prisma.habit.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends HabitFindUniqueArgs>(args: SelectSubset<T, HabitFindUniqueArgs<ExtArgs>>): Prisma__HabitClient<$Result.GetResult<Prisma.$HabitPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one Habit that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {HabitFindUniqueOrThrowArgs} args - Arguments to find a Habit
+     * @example
+     * // Get one Habit
+     * const habit = await prisma.habit.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends HabitFindUniqueOrThrowArgs>(args: SelectSubset<T, HabitFindUniqueOrThrowArgs<ExtArgs>>): Prisma__HabitClient<$Result.GetResult<Prisma.$HabitPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first Habit that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HabitFindFirstArgs} args - Arguments to find a Habit
+     * @example
+     * // Get one Habit
+     * const habit = await prisma.habit.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends HabitFindFirstArgs>(args?: SelectSubset<T, HabitFindFirstArgs<ExtArgs>>): Prisma__HabitClient<$Result.GetResult<Prisma.$HabitPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first Habit that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HabitFindFirstOrThrowArgs} args - Arguments to find a Habit
+     * @example
+     * // Get one Habit
+     * const habit = await prisma.habit.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends HabitFindFirstOrThrowArgs>(args?: SelectSubset<T, HabitFindFirstOrThrowArgs<ExtArgs>>): Prisma__HabitClient<$Result.GetResult<Prisma.$HabitPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more Habits that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HabitFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Habits
+     * const habits = await prisma.habit.findMany()
+     * 
+     * // Get first 10 Habits
+     * const habits = await prisma.habit.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const habitWithIdOnly = await prisma.habit.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends HabitFindManyArgs>(args?: SelectSubset<T, HabitFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$HabitPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a Habit.
+     * @param {HabitCreateArgs} args - Arguments to create a Habit.
+     * @example
+     * // Create one Habit
+     * const Habit = await prisma.habit.create({
+     *   data: {
+     *     // ... data to create a Habit
+     *   }
+     * })
+     * 
+     */
+    create<T extends HabitCreateArgs>(args: SelectSubset<T, HabitCreateArgs<ExtArgs>>): Prisma__HabitClient<$Result.GetResult<Prisma.$HabitPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many Habits.
+     * @param {HabitCreateManyArgs} args - Arguments to create many Habits.
+     * @example
+     * // Create many Habits
+     * const habit = await prisma.habit.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends HabitCreateManyArgs>(args?: SelectSubset<T, HabitCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Habits and returns the data saved in the database.
+     * @param {HabitCreateManyAndReturnArgs} args - Arguments to create many Habits.
+     * @example
+     * // Create many Habits
+     * const habit = await prisma.habit.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Habits and only return the `id`
+     * const habitWithIdOnly = await prisma.habit.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends HabitCreateManyAndReturnArgs>(args?: SelectSubset<T, HabitCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$HabitPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a Habit.
+     * @param {HabitDeleteArgs} args - Arguments to delete one Habit.
+     * @example
+     * // Delete one Habit
+     * const Habit = await prisma.habit.delete({
+     *   where: {
+     *     // ... filter to delete one Habit
+     *   }
+     * })
+     * 
+     */
+    delete<T extends HabitDeleteArgs>(args: SelectSubset<T, HabitDeleteArgs<ExtArgs>>): Prisma__HabitClient<$Result.GetResult<Prisma.$HabitPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one Habit.
+     * @param {HabitUpdateArgs} args - Arguments to update one Habit.
+     * @example
+     * // Update one Habit
+     * const habit = await prisma.habit.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends HabitUpdateArgs>(args: SelectSubset<T, HabitUpdateArgs<ExtArgs>>): Prisma__HabitClient<$Result.GetResult<Prisma.$HabitPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more Habits.
+     * @param {HabitDeleteManyArgs} args - Arguments to filter Habits to delete.
+     * @example
+     * // Delete a few Habits
+     * const { count } = await prisma.habit.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends HabitDeleteManyArgs>(args?: SelectSubset<T, HabitDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Habits.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HabitUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Habits
+     * const habit = await prisma.habit.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends HabitUpdateManyArgs>(args: SelectSubset<T, HabitUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Habit.
+     * @param {HabitUpsertArgs} args - Arguments to update or create a Habit.
+     * @example
+     * // Update or create a Habit
+     * const habit = await prisma.habit.upsert({
+     *   create: {
+     *     // ... data to create a Habit
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Habit we want to update
+     *   }
+     * })
+     */
+    upsert<T extends HabitUpsertArgs>(args: SelectSubset<T, HabitUpsertArgs<ExtArgs>>): Prisma__HabitClient<$Result.GetResult<Prisma.$HabitPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of Habits.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HabitCountArgs} args - Arguments to filter Habits to count.
+     * @example
+     * // Count the number of Habits
+     * const count = await prisma.habit.count({
+     *   where: {
+     *     // ... the filter for the Habits we want to count
+     *   }
+     * })
+    **/
+    count<T extends HabitCountArgs>(
+      args?: Subset<T, HabitCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], HabitCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Habit.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HabitAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends HabitAggregateArgs>(args: Subset<T, HabitAggregateArgs>): Prisma.PrismaPromise<GetHabitAggregateType<T>>
+
+    /**
+     * Group by Habit.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HabitGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends HabitGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: HabitGroupByArgs['orderBy'] }
+        : { orderBy?: HabitGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, HabitGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetHabitGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Habit model
+   */
+  readonly fields: HabitFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Habit.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__HabitClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    logs<T extends Habit$logsArgs<ExtArgs> = {}>(args?: Subset<T, Habit$logsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$HabitLogPayload<ExtArgs>, T, "findMany"> | Null>
+    insights<T extends Habit$insightsArgs<ExtArgs> = {}>(args?: Subset<T, Habit$insightsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AIInsightPayload<ExtArgs>, T, "findMany"> | Null>
+    posts<T extends Habit$postsArgs<ExtArgs> = {}>(args?: Subset<T, Habit$postsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SocialPostPayload<ExtArgs>, T, "findMany"> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Habit model
+   */ 
+  interface HabitFieldRefs {
+    readonly id: FieldRef<"Habit", 'Int'>
+    readonly userId: FieldRef<"Habit", 'Int'>
+    readonly name: FieldRef<"Habit", 'String'>
+    readonly description: FieldRef<"Habit", 'String'>
+    readonly category: FieldRef<"Habit", 'String'>
+    readonly color: FieldRef<"Habit", 'String'>
+    readonly icon: FieldRef<"Habit", 'String'>
+    readonly frequency: FieldRef<"Habit", 'String'>
+    readonly targetDaysPerWeek: FieldRef<"Habit", 'Int'>
+    readonly reminderTime: FieldRef<"Habit", 'String'>
+    readonly isArchived: FieldRef<"Habit", 'Boolean'>
+    readonly createdAt: FieldRef<"Habit", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Habit findUnique
+   */
+  export type HabitFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Habit
+     */
+    select?: HabitSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HabitInclude<ExtArgs> | null
+    /**
+     * Filter, which Habit to fetch.
+     */
+    where: HabitWhereUniqueInput
+  }
+
+  /**
+   * Habit findUniqueOrThrow
+   */
+  export type HabitFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Habit
+     */
+    select?: HabitSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HabitInclude<ExtArgs> | null
+    /**
+     * Filter, which Habit to fetch.
+     */
+    where: HabitWhereUniqueInput
+  }
+
+  /**
+   * Habit findFirst
+   */
+  export type HabitFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Habit
+     */
+    select?: HabitSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HabitInclude<ExtArgs> | null
+    /**
+     * Filter, which Habit to fetch.
+     */
+    where?: HabitWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Habits to fetch.
+     */
+    orderBy?: HabitOrderByWithRelationInput | HabitOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Habits.
+     */
+    cursor?: HabitWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Habits from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Habits.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Habits.
+     */
+    distinct?: HabitScalarFieldEnum | HabitScalarFieldEnum[]
+  }
+
+  /**
+   * Habit findFirstOrThrow
+   */
+  export type HabitFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Habit
+     */
+    select?: HabitSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HabitInclude<ExtArgs> | null
+    /**
+     * Filter, which Habit to fetch.
+     */
+    where?: HabitWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Habits to fetch.
+     */
+    orderBy?: HabitOrderByWithRelationInput | HabitOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Habits.
+     */
+    cursor?: HabitWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Habits from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Habits.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Habits.
+     */
+    distinct?: HabitScalarFieldEnum | HabitScalarFieldEnum[]
+  }
+
+  /**
+   * Habit findMany
+   */
+  export type HabitFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Habit
+     */
+    select?: HabitSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HabitInclude<ExtArgs> | null
+    /**
+     * Filter, which Habits to fetch.
+     */
+    where?: HabitWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Habits to fetch.
+     */
+    orderBy?: HabitOrderByWithRelationInput | HabitOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Habits.
+     */
+    cursor?: HabitWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Habits from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Habits.
+     */
+    skip?: number
+    distinct?: HabitScalarFieldEnum | HabitScalarFieldEnum[]
+  }
+
+  /**
+   * Habit create
+   */
+  export type HabitCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Habit
+     */
+    select?: HabitSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HabitInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Habit.
+     */
+    data: XOR<HabitCreateInput, HabitUncheckedCreateInput>
+  }
+
+  /**
+   * Habit createMany
+   */
+  export type HabitCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Habits.
+     */
+    data: HabitCreateManyInput | HabitCreateManyInput[]
+  }
+
+  /**
+   * Habit createManyAndReturn
+   */
+  export type HabitCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Habit
+     */
+    select?: HabitSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many Habits.
+     */
+    data: HabitCreateManyInput | HabitCreateManyInput[]
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HabitIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Habit update
+   */
+  export type HabitUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Habit
+     */
+    select?: HabitSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HabitInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Habit.
+     */
+    data: XOR<HabitUpdateInput, HabitUncheckedUpdateInput>
+    /**
+     * Choose, which Habit to update.
+     */
+    where: HabitWhereUniqueInput
+  }
+
+  /**
+   * Habit updateMany
+   */
+  export type HabitUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Habits.
+     */
+    data: XOR<HabitUpdateManyMutationInput, HabitUncheckedUpdateManyInput>
+    /**
+     * Filter which Habits to update
+     */
+    where?: HabitWhereInput
+  }
+
+  /**
+   * Habit upsert
+   */
+  export type HabitUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Habit
+     */
+    select?: HabitSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HabitInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Habit to update in case it exists.
+     */
+    where: HabitWhereUniqueInput
+    /**
+     * In case the Habit found by the `where` argument doesn't exist, create a new Habit with this data.
+     */
+    create: XOR<HabitCreateInput, HabitUncheckedCreateInput>
+    /**
+     * In case the Habit was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<HabitUpdateInput, HabitUncheckedUpdateInput>
+  }
+
+  /**
+   * Habit delete
+   */
+  export type HabitDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Habit
+     */
+    select?: HabitSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HabitInclude<ExtArgs> | null
+    /**
+     * Filter which Habit to delete.
+     */
+    where: HabitWhereUniqueInput
+  }
+
+  /**
+   * Habit deleteMany
+   */
+  export type HabitDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Habits to delete
+     */
+    where?: HabitWhereInput
+  }
+
+  /**
+   * Habit.logs
+   */
+  export type Habit$logsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HabitLog
+     */
+    select?: HabitLogSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HabitLogInclude<ExtArgs> | null
+    where?: HabitLogWhereInput
+    orderBy?: HabitLogOrderByWithRelationInput | HabitLogOrderByWithRelationInput[]
+    cursor?: HabitLogWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: HabitLogScalarFieldEnum | HabitLogScalarFieldEnum[]
+  }
+
+  /**
+   * Habit.insights
+   */
+  export type Habit$insightsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AIInsight
+     */
+    select?: AIInsightSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AIInsightInclude<ExtArgs> | null
+    where?: AIInsightWhereInput
+    orderBy?: AIInsightOrderByWithRelationInput | AIInsightOrderByWithRelationInput[]
+    cursor?: AIInsightWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: AIInsightScalarFieldEnum | AIInsightScalarFieldEnum[]
+  }
+
+  /**
+   * Habit.posts
+   */
+  export type Habit$postsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SocialPost
+     */
+    select?: SocialPostSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SocialPostInclude<ExtArgs> | null
+    where?: SocialPostWhereInput
+    orderBy?: SocialPostOrderByWithRelationInput | SocialPostOrderByWithRelationInput[]
+    cursor?: SocialPostWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: SocialPostScalarFieldEnum | SocialPostScalarFieldEnum[]
+  }
+
+  /**
+   * Habit without action
+   */
+  export type HabitDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Habit
+     */
+    select?: HabitSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HabitInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model HabitLog
+   */
+
+  export type AggregateHabitLog = {
+    _count: HabitLogCountAggregateOutputType | null
+    _avg: HabitLogAvgAggregateOutputType | null
+    _sum: HabitLogSumAggregateOutputType | null
+    _min: HabitLogMinAggregateOutputType | null
+    _max: HabitLogMaxAggregateOutputType | null
+  }
+
+  export type HabitLogAvgAggregateOutputType = {
+    id: number | null
+    habitId: number | null
+    userId: number | null
+    moodRating: number | null
+    durationMinutes: number | null
+  }
+
+  export type HabitLogSumAggregateOutputType = {
+    id: number | null
+    habitId: number | null
+    userId: number | null
+    moodRating: number | null
+    durationMinutes: number | null
+  }
+
+  export type HabitLogMinAggregateOutputType = {
+    id: number | null
+    habitId: number | null
+    userId: number | null
+    completedAt: Date | null
+    note: string | null
+    moodRating: number | null
+    durationMinutes: number | null
+  }
+
+  export type HabitLogMaxAggregateOutputType = {
+    id: number | null
+    habitId: number | null
+    userId: number | null
+    completedAt: Date | null
+    note: string | null
+    moodRating: number | null
+    durationMinutes: number | null
+  }
+
+  export type HabitLogCountAggregateOutputType = {
+    id: number
+    habitId: number
+    userId: number
+    completedAt: number
+    note: number
+    moodRating: number
+    durationMinutes: number
+    _all: number
+  }
+
+
+  export type HabitLogAvgAggregateInputType = {
+    id?: true
+    habitId?: true
+    userId?: true
+    moodRating?: true
+    durationMinutes?: true
+  }
+
+  export type HabitLogSumAggregateInputType = {
+    id?: true
+    habitId?: true
+    userId?: true
+    moodRating?: true
+    durationMinutes?: true
+  }
+
+  export type HabitLogMinAggregateInputType = {
+    id?: true
+    habitId?: true
+    userId?: true
+    completedAt?: true
+    note?: true
+    moodRating?: true
+    durationMinutes?: true
+  }
+
+  export type HabitLogMaxAggregateInputType = {
+    id?: true
+    habitId?: true
+    userId?: true
+    completedAt?: true
+    note?: true
+    moodRating?: true
+    durationMinutes?: true
+  }
+
+  export type HabitLogCountAggregateInputType = {
+    id?: true
+    habitId?: true
+    userId?: true
+    completedAt?: true
+    note?: true
+    moodRating?: true
+    durationMinutes?: true
+    _all?: true
+  }
+
+  export type HabitLogAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which HabitLog to aggregate.
+     */
+    where?: HabitLogWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of HabitLogs to fetch.
+     */
+    orderBy?: HabitLogOrderByWithRelationInput | HabitLogOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: HabitLogWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` HabitLogs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` HabitLogs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned HabitLogs
+    **/
+    _count?: true | HabitLogCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: HabitLogAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: HabitLogSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: HabitLogMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: HabitLogMaxAggregateInputType
+  }
+
+  export type GetHabitLogAggregateType<T extends HabitLogAggregateArgs> = {
+        [P in keyof T & keyof AggregateHabitLog]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateHabitLog[P]>
+      : GetScalarType<T[P], AggregateHabitLog[P]>
+  }
+
+
+
+
+  export type HabitLogGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: HabitLogWhereInput
+    orderBy?: HabitLogOrderByWithAggregationInput | HabitLogOrderByWithAggregationInput[]
+    by: HabitLogScalarFieldEnum[] | HabitLogScalarFieldEnum
+    having?: HabitLogScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: HabitLogCountAggregateInputType | true
+    _avg?: HabitLogAvgAggregateInputType
+    _sum?: HabitLogSumAggregateInputType
+    _min?: HabitLogMinAggregateInputType
+    _max?: HabitLogMaxAggregateInputType
+  }
+
+  export type HabitLogGroupByOutputType = {
+    id: number
+    habitId: number
+    userId: number
+    completedAt: Date
+    note: string | null
+    moodRating: number | null
+    durationMinutes: number | null
+    _count: HabitLogCountAggregateOutputType | null
+    _avg: HabitLogAvgAggregateOutputType | null
+    _sum: HabitLogSumAggregateOutputType | null
+    _min: HabitLogMinAggregateOutputType | null
+    _max: HabitLogMaxAggregateOutputType | null
+  }
+
+  type GetHabitLogGroupByPayload<T extends HabitLogGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<HabitLogGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof HabitLogGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], HabitLogGroupByOutputType[P]>
+            : GetScalarType<T[P], HabitLogGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type HabitLogSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    habitId?: boolean
+    userId?: boolean
+    completedAt?: boolean
+    note?: boolean
+    moodRating?: boolean
+    durationMinutes?: boolean
+    habit?: boolean | HabitDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["habitLog"]>
+
+  export type HabitLogSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    habitId?: boolean
+    userId?: boolean
+    completedAt?: boolean
+    note?: boolean
+    moodRating?: boolean
+    durationMinutes?: boolean
+    habit?: boolean | HabitDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["habitLog"]>
+
+  export type HabitLogSelectScalar = {
+    id?: boolean
+    habitId?: boolean
+    userId?: boolean
+    completedAt?: boolean
+    note?: boolean
+    moodRating?: boolean
+    durationMinutes?: boolean
+  }
+
+  export type HabitLogInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    habit?: boolean | HabitDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type HabitLogIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    habit?: boolean | HabitDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $HabitLogPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "HabitLog"
+    objects: {
+      habit: Prisma.$HabitPayload<ExtArgs>
+      user: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      habitId: number
+      userId: number
+      completedAt: Date
+      note: string | null
+      moodRating: number | null
+      durationMinutes: number | null
+    }, ExtArgs["result"]["habitLog"]>
+    composites: {}
+  }
+
+  type HabitLogGetPayload<S extends boolean | null | undefined | HabitLogDefaultArgs> = $Result.GetResult<Prisma.$HabitLogPayload, S>
+
+  type HabitLogCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<HabitLogFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: HabitLogCountAggregateInputType | true
+    }
+
+  export interface HabitLogDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['HabitLog'], meta: { name: 'HabitLog' } }
+    /**
+     * Find zero or one HabitLog that matches the filter.
+     * @param {HabitLogFindUniqueArgs} args - Arguments to find a HabitLog
+     * @example
+     * // Get one HabitLog
+     * const habitLog = await prisma.habitLog.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends HabitLogFindUniqueArgs>(args: SelectSubset<T, HabitLogFindUniqueArgs<ExtArgs>>): Prisma__HabitLogClient<$Result.GetResult<Prisma.$HabitLogPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one HabitLog that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {HabitLogFindUniqueOrThrowArgs} args - Arguments to find a HabitLog
+     * @example
+     * // Get one HabitLog
+     * const habitLog = await prisma.habitLog.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends HabitLogFindUniqueOrThrowArgs>(args: SelectSubset<T, HabitLogFindUniqueOrThrowArgs<ExtArgs>>): Prisma__HabitLogClient<$Result.GetResult<Prisma.$HabitLogPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first HabitLog that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HabitLogFindFirstArgs} args - Arguments to find a HabitLog
+     * @example
+     * // Get one HabitLog
+     * const habitLog = await prisma.habitLog.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends HabitLogFindFirstArgs>(args?: SelectSubset<T, HabitLogFindFirstArgs<ExtArgs>>): Prisma__HabitLogClient<$Result.GetResult<Prisma.$HabitLogPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first HabitLog that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HabitLogFindFirstOrThrowArgs} args - Arguments to find a HabitLog
+     * @example
+     * // Get one HabitLog
+     * const habitLog = await prisma.habitLog.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends HabitLogFindFirstOrThrowArgs>(args?: SelectSubset<T, HabitLogFindFirstOrThrowArgs<ExtArgs>>): Prisma__HabitLogClient<$Result.GetResult<Prisma.$HabitLogPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more HabitLogs that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HabitLogFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all HabitLogs
+     * const habitLogs = await prisma.habitLog.findMany()
+     * 
+     * // Get first 10 HabitLogs
+     * const habitLogs = await prisma.habitLog.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const habitLogWithIdOnly = await prisma.habitLog.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends HabitLogFindManyArgs>(args?: SelectSubset<T, HabitLogFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$HabitLogPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a HabitLog.
+     * @param {HabitLogCreateArgs} args - Arguments to create a HabitLog.
+     * @example
+     * // Create one HabitLog
+     * const HabitLog = await prisma.habitLog.create({
+     *   data: {
+     *     // ... data to create a HabitLog
+     *   }
+     * })
+     * 
+     */
+    create<T extends HabitLogCreateArgs>(args: SelectSubset<T, HabitLogCreateArgs<ExtArgs>>): Prisma__HabitLogClient<$Result.GetResult<Prisma.$HabitLogPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many HabitLogs.
+     * @param {HabitLogCreateManyArgs} args - Arguments to create many HabitLogs.
+     * @example
+     * // Create many HabitLogs
+     * const habitLog = await prisma.habitLog.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends HabitLogCreateManyArgs>(args?: SelectSubset<T, HabitLogCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many HabitLogs and returns the data saved in the database.
+     * @param {HabitLogCreateManyAndReturnArgs} args - Arguments to create many HabitLogs.
+     * @example
+     * // Create many HabitLogs
+     * const habitLog = await prisma.habitLog.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many HabitLogs and only return the `id`
+     * const habitLogWithIdOnly = await prisma.habitLog.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends HabitLogCreateManyAndReturnArgs>(args?: SelectSubset<T, HabitLogCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$HabitLogPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a HabitLog.
+     * @param {HabitLogDeleteArgs} args - Arguments to delete one HabitLog.
+     * @example
+     * // Delete one HabitLog
+     * const HabitLog = await prisma.habitLog.delete({
+     *   where: {
+     *     // ... filter to delete one HabitLog
+     *   }
+     * })
+     * 
+     */
+    delete<T extends HabitLogDeleteArgs>(args: SelectSubset<T, HabitLogDeleteArgs<ExtArgs>>): Prisma__HabitLogClient<$Result.GetResult<Prisma.$HabitLogPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one HabitLog.
+     * @param {HabitLogUpdateArgs} args - Arguments to update one HabitLog.
+     * @example
+     * // Update one HabitLog
+     * const habitLog = await prisma.habitLog.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends HabitLogUpdateArgs>(args: SelectSubset<T, HabitLogUpdateArgs<ExtArgs>>): Prisma__HabitLogClient<$Result.GetResult<Prisma.$HabitLogPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more HabitLogs.
+     * @param {HabitLogDeleteManyArgs} args - Arguments to filter HabitLogs to delete.
+     * @example
+     * // Delete a few HabitLogs
+     * const { count } = await prisma.habitLog.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends HabitLogDeleteManyArgs>(args?: SelectSubset<T, HabitLogDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more HabitLogs.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HabitLogUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many HabitLogs
+     * const habitLog = await prisma.habitLog.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends HabitLogUpdateManyArgs>(args: SelectSubset<T, HabitLogUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one HabitLog.
+     * @param {HabitLogUpsertArgs} args - Arguments to update or create a HabitLog.
+     * @example
+     * // Update or create a HabitLog
+     * const habitLog = await prisma.habitLog.upsert({
+     *   create: {
+     *     // ... data to create a HabitLog
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the HabitLog we want to update
+     *   }
+     * })
+     */
+    upsert<T extends HabitLogUpsertArgs>(args: SelectSubset<T, HabitLogUpsertArgs<ExtArgs>>): Prisma__HabitLogClient<$Result.GetResult<Prisma.$HabitLogPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of HabitLogs.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HabitLogCountArgs} args - Arguments to filter HabitLogs to count.
+     * @example
+     * // Count the number of HabitLogs
+     * const count = await prisma.habitLog.count({
+     *   where: {
+     *     // ... the filter for the HabitLogs we want to count
+     *   }
+     * })
+    **/
+    count<T extends HabitLogCountArgs>(
+      args?: Subset<T, HabitLogCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], HabitLogCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a HabitLog.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HabitLogAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends HabitLogAggregateArgs>(args: Subset<T, HabitLogAggregateArgs>): Prisma.PrismaPromise<GetHabitLogAggregateType<T>>
+
+    /**
+     * Group by HabitLog.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HabitLogGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends HabitLogGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: HabitLogGroupByArgs['orderBy'] }
+        : { orderBy?: HabitLogGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, HabitLogGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetHabitLogGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the HabitLog model
+   */
+  readonly fields: HabitLogFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for HabitLog.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__HabitLogClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    habit<T extends HabitDefaultArgs<ExtArgs> = {}>(args?: Subset<T, HabitDefaultArgs<ExtArgs>>): Prisma__HabitClient<$Result.GetResult<Prisma.$HabitPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the HabitLog model
+   */ 
+  interface HabitLogFieldRefs {
+    readonly id: FieldRef<"HabitLog", 'Int'>
+    readonly habitId: FieldRef<"HabitLog", 'Int'>
+    readonly userId: FieldRef<"HabitLog", 'Int'>
+    readonly completedAt: FieldRef<"HabitLog", 'DateTime'>
+    readonly note: FieldRef<"HabitLog", 'String'>
+    readonly moodRating: FieldRef<"HabitLog", 'Int'>
+    readonly durationMinutes: FieldRef<"HabitLog", 'Int'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * HabitLog findUnique
+   */
+  export type HabitLogFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HabitLog
+     */
+    select?: HabitLogSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HabitLogInclude<ExtArgs> | null
+    /**
+     * Filter, which HabitLog to fetch.
+     */
+    where: HabitLogWhereUniqueInput
+  }
+
+  /**
+   * HabitLog findUniqueOrThrow
+   */
+  export type HabitLogFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HabitLog
+     */
+    select?: HabitLogSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HabitLogInclude<ExtArgs> | null
+    /**
+     * Filter, which HabitLog to fetch.
+     */
+    where: HabitLogWhereUniqueInput
+  }
+
+  /**
+   * HabitLog findFirst
+   */
+  export type HabitLogFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HabitLog
+     */
+    select?: HabitLogSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HabitLogInclude<ExtArgs> | null
+    /**
+     * Filter, which HabitLog to fetch.
+     */
+    where?: HabitLogWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of HabitLogs to fetch.
+     */
+    orderBy?: HabitLogOrderByWithRelationInput | HabitLogOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for HabitLogs.
+     */
+    cursor?: HabitLogWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` HabitLogs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` HabitLogs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of HabitLogs.
+     */
+    distinct?: HabitLogScalarFieldEnum | HabitLogScalarFieldEnum[]
+  }
+
+  /**
+   * HabitLog findFirstOrThrow
+   */
+  export type HabitLogFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HabitLog
+     */
+    select?: HabitLogSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HabitLogInclude<ExtArgs> | null
+    /**
+     * Filter, which HabitLog to fetch.
+     */
+    where?: HabitLogWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of HabitLogs to fetch.
+     */
+    orderBy?: HabitLogOrderByWithRelationInput | HabitLogOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for HabitLogs.
+     */
+    cursor?: HabitLogWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` HabitLogs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` HabitLogs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of HabitLogs.
+     */
+    distinct?: HabitLogScalarFieldEnum | HabitLogScalarFieldEnum[]
+  }
+
+  /**
+   * HabitLog findMany
+   */
+  export type HabitLogFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HabitLog
+     */
+    select?: HabitLogSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HabitLogInclude<ExtArgs> | null
+    /**
+     * Filter, which HabitLogs to fetch.
+     */
+    where?: HabitLogWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of HabitLogs to fetch.
+     */
+    orderBy?: HabitLogOrderByWithRelationInput | HabitLogOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing HabitLogs.
+     */
+    cursor?: HabitLogWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` HabitLogs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` HabitLogs.
+     */
+    skip?: number
+    distinct?: HabitLogScalarFieldEnum | HabitLogScalarFieldEnum[]
+  }
+
+  /**
+   * HabitLog create
+   */
+  export type HabitLogCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HabitLog
+     */
+    select?: HabitLogSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HabitLogInclude<ExtArgs> | null
+    /**
+     * The data needed to create a HabitLog.
+     */
+    data: XOR<HabitLogCreateInput, HabitLogUncheckedCreateInput>
+  }
+
+  /**
+   * HabitLog createMany
+   */
+  export type HabitLogCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many HabitLogs.
+     */
+    data: HabitLogCreateManyInput | HabitLogCreateManyInput[]
+  }
+
+  /**
+   * HabitLog createManyAndReturn
+   */
+  export type HabitLogCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HabitLog
+     */
+    select?: HabitLogSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many HabitLogs.
+     */
+    data: HabitLogCreateManyInput | HabitLogCreateManyInput[]
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HabitLogIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * HabitLog update
+   */
+  export type HabitLogUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HabitLog
+     */
+    select?: HabitLogSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HabitLogInclude<ExtArgs> | null
+    /**
+     * The data needed to update a HabitLog.
+     */
+    data: XOR<HabitLogUpdateInput, HabitLogUncheckedUpdateInput>
+    /**
+     * Choose, which HabitLog to update.
+     */
+    where: HabitLogWhereUniqueInput
+  }
+
+  /**
+   * HabitLog updateMany
+   */
+  export type HabitLogUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update HabitLogs.
+     */
+    data: XOR<HabitLogUpdateManyMutationInput, HabitLogUncheckedUpdateManyInput>
+    /**
+     * Filter which HabitLogs to update
+     */
+    where?: HabitLogWhereInput
+  }
+
+  /**
+   * HabitLog upsert
+   */
+  export type HabitLogUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HabitLog
+     */
+    select?: HabitLogSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HabitLogInclude<ExtArgs> | null
+    /**
+     * The filter to search for the HabitLog to update in case it exists.
+     */
+    where: HabitLogWhereUniqueInput
+    /**
+     * In case the HabitLog found by the `where` argument doesn't exist, create a new HabitLog with this data.
+     */
+    create: XOR<HabitLogCreateInput, HabitLogUncheckedCreateInput>
+    /**
+     * In case the HabitLog was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<HabitLogUpdateInput, HabitLogUncheckedUpdateInput>
+  }
+
+  /**
+   * HabitLog delete
+   */
+  export type HabitLogDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HabitLog
+     */
+    select?: HabitLogSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HabitLogInclude<ExtArgs> | null
+    /**
+     * Filter which HabitLog to delete.
+     */
+    where: HabitLogWhereUniqueInput
+  }
+
+  /**
+   * HabitLog deleteMany
+   */
+  export type HabitLogDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which HabitLogs to delete
+     */
+    where?: HabitLogWhereInput
+  }
+
+  /**
+   * HabitLog without action
+   */
+  export type HabitLogDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HabitLog
+     */
+    select?: HabitLogSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HabitLogInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Badge
+   */
+
+  export type AggregateBadge = {
+    _count: BadgeCountAggregateOutputType | null
+    _avg: BadgeAvgAggregateOutputType | null
+    _sum: BadgeSumAggregateOutputType | null
+    _min: BadgeMinAggregateOutputType | null
+    _max: BadgeMaxAggregateOutputType | null
+  }
+
+  export type BadgeAvgAggregateOutputType = {
+    id: number | null
+    pointValue: number | null
+  }
+
+  export type BadgeSumAggregateOutputType = {
+    id: number | null
+    pointValue: number | null
+  }
+
+  export type BadgeMinAggregateOutputType = {
+    id: number | null
+    name: string | null
+    description: string | null
+    icon: string | null
+    rarity: string | null
+    pointValue: number | null
+    condition: string | null
+  }
+
+  export type BadgeMaxAggregateOutputType = {
+    id: number | null
+    name: string | null
+    description: string | null
+    icon: string | null
+    rarity: string | null
+    pointValue: number | null
+    condition: string | null
+  }
+
+  export type BadgeCountAggregateOutputType = {
+    id: number
+    name: number
+    description: number
+    icon: number
+    rarity: number
+    pointValue: number
+    condition: number
+    _all: number
+  }
+
+
+  export type BadgeAvgAggregateInputType = {
+    id?: true
+    pointValue?: true
+  }
+
+  export type BadgeSumAggregateInputType = {
+    id?: true
+    pointValue?: true
+  }
+
+  export type BadgeMinAggregateInputType = {
+    id?: true
+    name?: true
+    description?: true
+    icon?: true
+    rarity?: true
+    pointValue?: true
+    condition?: true
+  }
+
+  export type BadgeMaxAggregateInputType = {
+    id?: true
+    name?: true
+    description?: true
+    icon?: true
+    rarity?: true
+    pointValue?: true
+    condition?: true
+  }
+
+  export type BadgeCountAggregateInputType = {
+    id?: true
+    name?: true
+    description?: true
+    icon?: true
+    rarity?: true
+    pointValue?: true
+    condition?: true
+    _all?: true
+  }
+
+  export type BadgeAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Badge to aggregate.
+     */
+    where?: BadgeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Badges to fetch.
+     */
+    orderBy?: BadgeOrderByWithRelationInput | BadgeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: BadgeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Badges from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Badges.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Badges
+    **/
+    _count?: true | BadgeCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: BadgeAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: BadgeSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: BadgeMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: BadgeMaxAggregateInputType
+  }
+
+  export type GetBadgeAggregateType<T extends BadgeAggregateArgs> = {
+        [P in keyof T & keyof AggregateBadge]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateBadge[P]>
+      : GetScalarType<T[P], AggregateBadge[P]>
+  }
+
+
+
+
+  export type BadgeGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: BadgeWhereInput
+    orderBy?: BadgeOrderByWithAggregationInput | BadgeOrderByWithAggregationInput[]
+    by: BadgeScalarFieldEnum[] | BadgeScalarFieldEnum
+    having?: BadgeScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: BadgeCountAggregateInputType | true
+    _avg?: BadgeAvgAggregateInputType
+    _sum?: BadgeSumAggregateInputType
+    _min?: BadgeMinAggregateInputType
+    _max?: BadgeMaxAggregateInputType
+  }
+
+  export type BadgeGroupByOutputType = {
+    id: number
+    name: string
+    description: string
+    icon: string
+    rarity: string
+    pointValue: number
+    condition: string
+    _count: BadgeCountAggregateOutputType | null
+    _avg: BadgeAvgAggregateOutputType | null
+    _sum: BadgeSumAggregateOutputType | null
+    _min: BadgeMinAggregateOutputType | null
+    _max: BadgeMaxAggregateOutputType | null
+  }
+
+  type GetBadgeGroupByPayload<T extends BadgeGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<BadgeGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof BadgeGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], BadgeGroupByOutputType[P]>
+            : GetScalarType<T[P], BadgeGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type BadgeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    description?: boolean
+    icon?: boolean
+    rarity?: boolean
+    pointValue?: boolean
+    condition?: boolean
+    users?: boolean | Badge$usersArgs<ExtArgs>
+    posts?: boolean | Badge$postsArgs<ExtArgs>
+    _count?: boolean | BadgeCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["badge"]>
+
+  export type BadgeSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    description?: boolean
+    icon?: boolean
+    rarity?: boolean
+    pointValue?: boolean
+    condition?: boolean
+  }, ExtArgs["result"]["badge"]>
+
+  export type BadgeSelectScalar = {
+    id?: boolean
+    name?: boolean
+    description?: boolean
+    icon?: boolean
+    rarity?: boolean
+    pointValue?: boolean
+    condition?: boolean
+  }
+
+  export type BadgeInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    users?: boolean | Badge$usersArgs<ExtArgs>
+    posts?: boolean | Badge$postsArgs<ExtArgs>
+    _count?: boolean | BadgeCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type BadgeIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+
+  export type $BadgePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Badge"
+    objects: {
+      users: Prisma.$UserBadgePayload<ExtArgs>[]
+      posts: Prisma.$SocialPostPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      name: string
+      description: string
+      icon: string
+      rarity: string
+      pointValue: number
+      condition: string
+    }, ExtArgs["result"]["badge"]>
+    composites: {}
+  }
+
+  type BadgeGetPayload<S extends boolean | null | undefined | BadgeDefaultArgs> = $Result.GetResult<Prisma.$BadgePayload, S>
+
+  type BadgeCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<BadgeFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: BadgeCountAggregateInputType | true
+    }
+
+  export interface BadgeDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Badge'], meta: { name: 'Badge' } }
+    /**
+     * Find zero or one Badge that matches the filter.
+     * @param {BadgeFindUniqueArgs} args - Arguments to find a Badge
+     * @example
+     * // Get one Badge
+     * const badge = await prisma.badge.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends BadgeFindUniqueArgs>(args: SelectSubset<T, BadgeFindUniqueArgs<ExtArgs>>): Prisma__BadgeClient<$Result.GetResult<Prisma.$BadgePayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one Badge that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {BadgeFindUniqueOrThrowArgs} args - Arguments to find a Badge
+     * @example
+     * // Get one Badge
+     * const badge = await prisma.badge.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends BadgeFindUniqueOrThrowArgs>(args: SelectSubset<T, BadgeFindUniqueOrThrowArgs<ExtArgs>>): Prisma__BadgeClient<$Result.GetResult<Prisma.$BadgePayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first Badge that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BadgeFindFirstArgs} args - Arguments to find a Badge
+     * @example
+     * // Get one Badge
+     * const badge = await prisma.badge.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends BadgeFindFirstArgs>(args?: SelectSubset<T, BadgeFindFirstArgs<ExtArgs>>): Prisma__BadgeClient<$Result.GetResult<Prisma.$BadgePayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first Badge that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BadgeFindFirstOrThrowArgs} args - Arguments to find a Badge
+     * @example
+     * // Get one Badge
+     * const badge = await prisma.badge.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends BadgeFindFirstOrThrowArgs>(args?: SelectSubset<T, BadgeFindFirstOrThrowArgs<ExtArgs>>): Prisma__BadgeClient<$Result.GetResult<Prisma.$BadgePayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more Badges that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BadgeFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Badges
+     * const badges = await prisma.badge.findMany()
+     * 
+     * // Get first 10 Badges
+     * const badges = await prisma.badge.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const badgeWithIdOnly = await prisma.badge.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends BadgeFindManyArgs>(args?: SelectSubset<T, BadgeFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BadgePayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a Badge.
+     * @param {BadgeCreateArgs} args - Arguments to create a Badge.
+     * @example
+     * // Create one Badge
+     * const Badge = await prisma.badge.create({
+     *   data: {
+     *     // ... data to create a Badge
+     *   }
+     * })
+     * 
+     */
+    create<T extends BadgeCreateArgs>(args: SelectSubset<T, BadgeCreateArgs<ExtArgs>>): Prisma__BadgeClient<$Result.GetResult<Prisma.$BadgePayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many Badges.
+     * @param {BadgeCreateManyArgs} args - Arguments to create many Badges.
+     * @example
+     * // Create many Badges
+     * const badge = await prisma.badge.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends BadgeCreateManyArgs>(args?: SelectSubset<T, BadgeCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Badges and returns the data saved in the database.
+     * @param {BadgeCreateManyAndReturnArgs} args - Arguments to create many Badges.
+     * @example
+     * // Create many Badges
+     * const badge = await prisma.badge.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Badges and only return the `id`
+     * const badgeWithIdOnly = await prisma.badge.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends BadgeCreateManyAndReturnArgs>(args?: SelectSubset<T, BadgeCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BadgePayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a Badge.
+     * @param {BadgeDeleteArgs} args - Arguments to delete one Badge.
+     * @example
+     * // Delete one Badge
+     * const Badge = await prisma.badge.delete({
+     *   where: {
+     *     // ... filter to delete one Badge
+     *   }
+     * })
+     * 
+     */
+    delete<T extends BadgeDeleteArgs>(args: SelectSubset<T, BadgeDeleteArgs<ExtArgs>>): Prisma__BadgeClient<$Result.GetResult<Prisma.$BadgePayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one Badge.
+     * @param {BadgeUpdateArgs} args - Arguments to update one Badge.
+     * @example
+     * // Update one Badge
+     * const badge = await prisma.badge.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends BadgeUpdateArgs>(args: SelectSubset<T, BadgeUpdateArgs<ExtArgs>>): Prisma__BadgeClient<$Result.GetResult<Prisma.$BadgePayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more Badges.
+     * @param {BadgeDeleteManyArgs} args - Arguments to filter Badges to delete.
+     * @example
+     * // Delete a few Badges
+     * const { count } = await prisma.badge.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends BadgeDeleteManyArgs>(args?: SelectSubset<T, BadgeDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Badges.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BadgeUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Badges
+     * const badge = await prisma.badge.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends BadgeUpdateManyArgs>(args: SelectSubset<T, BadgeUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Badge.
+     * @param {BadgeUpsertArgs} args - Arguments to update or create a Badge.
+     * @example
+     * // Update or create a Badge
+     * const badge = await prisma.badge.upsert({
+     *   create: {
+     *     // ... data to create a Badge
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Badge we want to update
+     *   }
+     * })
+     */
+    upsert<T extends BadgeUpsertArgs>(args: SelectSubset<T, BadgeUpsertArgs<ExtArgs>>): Prisma__BadgeClient<$Result.GetResult<Prisma.$BadgePayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of Badges.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BadgeCountArgs} args - Arguments to filter Badges to count.
+     * @example
+     * // Count the number of Badges
+     * const count = await prisma.badge.count({
+     *   where: {
+     *     // ... the filter for the Badges we want to count
+     *   }
+     * })
+    **/
+    count<T extends BadgeCountArgs>(
+      args?: Subset<T, BadgeCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], BadgeCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Badge.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BadgeAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends BadgeAggregateArgs>(args: Subset<T, BadgeAggregateArgs>): Prisma.PrismaPromise<GetBadgeAggregateType<T>>
+
+    /**
+     * Group by Badge.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BadgeGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends BadgeGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: BadgeGroupByArgs['orderBy'] }
+        : { orderBy?: BadgeGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, BadgeGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetBadgeGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Badge model
+   */
+  readonly fields: BadgeFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Badge.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__BadgeClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    users<T extends Badge$usersArgs<ExtArgs> = {}>(args?: Subset<T, Badge$usersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserBadgePayload<ExtArgs>, T, "findMany"> | Null>
+    posts<T extends Badge$postsArgs<ExtArgs> = {}>(args?: Subset<T, Badge$postsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SocialPostPayload<ExtArgs>, T, "findMany"> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Badge model
+   */ 
+  interface BadgeFieldRefs {
+    readonly id: FieldRef<"Badge", 'Int'>
+    readonly name: FieldRef<"Badge", 'String'>
+    readonly description: FieldRef<"Badge", 'String'>
+    readonly icon: FieldRef<"Badge", 'String'>
+    readonly rarity: FieldRef<"Badge", 'String'>
+    readonly pointValue: FieldRef<"Badge", 'Int'>
+    readonly condition: FieldRef<"Badge", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Badge findUnique
+   */
+  export type BadgeFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Badge
+     */
+    select?: BadgeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BadgeInclude<ExtArgs> | null
+    /**
+     * Filter, which Badge to fetch.
+     */
+    where: BadgeWhereUniqueInput
+  }
+
+  /**
+   * Badge findUniqueOrThrow
+   */
+  export type BadgeFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Badge
+     */
+    select?: BadgeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BadgeInclude<ExtArgs> | null
+    /**
+     * Filter, which Badge to fetch.
+     */
+    where: BadgeWhereUniqueInput
+  }
+
+  /**
+   * Badge findFirst
+   */
+  export type BadgeFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Badge
+     */
+    select?: BadgeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BadgeInclude<ExtArgs> | null
+    /**
+     * Filter, which Badge to fetch.
+     */
+    where?: BadgeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Badges to fetch.
+     */
+    orderBy?: BadgeOrderByWithRelationInput | BadgeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Badges.
+     */
+    cursor?: BadgeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Badges from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Badges.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Badges.
+     */
+    distinct?: BadgeScalarFieldEnum | BadgeScalarFieldEnum[]
+  }
+
+  /**
+   * Badge findFirstOrThrow
+   */
+  export type BadgeFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Badge
+     */
+    select?: BadgeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BadgeInclude<ExtArgs> | null
+    /**
+     * Filter, which Badge to fetch.
+     */
+    where?: BadgeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Badges to fetch.
+     */
+    orderBy?: BadgeOrderByWithRelationInput | BadgeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Badges.
+     */
+    cursor?: BadgeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Badges from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Badges.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Badges.
+     */
+    distinct?: BadgeScalarFieldEnum | BadgeScalarFieldEnum[]
+  }
+
+  /**
+   * Badge findMany
+   */
+  export type BadgeFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Badge
+     */
+    select?: BadgeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BadgeInclude<ExtArgs> | null
+    /**
+     * Filter, which Badges to fetch.
+     */
+    where?: BadgeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Badges to fetch.
+     */
+    orderBy?: BadgeOrderByWithRelationInput | BadgeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Badges.
+     */
+    cursor?: BadgeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Badges from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Badges.
+     */
+    skip?: number
+    distinct?: BadgeScalarFieldEnum | BadgeScalarFieldEnum[]
+  }
+
+  /**
+   * Badge create
+   */
+  export type BadgeCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Badge
+     */
+    select?: BadgeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BadgeInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Badge.
+     */
+    data: XOR<BadgeCreateInput, BadgeUncheckedCreateInput>
+  }
+
+  /**
+   * Badge createMany
+   */
+  export type BadgeCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Badges.
+     */
+    data: BadgeCreateManyInput | BadgeCreateManyInput[]
+  }
+
+  /**
+   * Badge createManyAndReturn
+   */
+  export type BadgeCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Badge
+     */
+    select?: BadgeSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many Badges.
+     */
+    data: BadgeCreateManyInput | BadgeCreateManyInput[]
+  }
+
+  /**
+   * Badge update
+   */
+  export type BadgeUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Badge
+     */
+    select?: BadgeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BadgeInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Badge.
+     */
+    data: XOR<BadgeUpdateInput, BadgeUncheckedUpdateInput>
+    /**
+     * Choose, which Badge to update.
+     */
+    where: BadgeWhereUniqueInput
+  }
+
+  /**
+   * Badge updateMany
+   */
+  export type BadgeUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Badges.
+     */
+    data: XOR<BadgeUpdateManyMutationInput, BadgeUncheckedUpdateManyInput>
+    /**
+     * Filter which Badges to update
+     */
+    where?: BadgeWhereInput
+  }
+
+  /**
+   * Badge upsert
+   */
+  export type BadgeUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Badge
+     */
+    select?: BadgeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BadgeInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Badge to update in case it exists.
+     */
+    where: BadgeWhereUniqueInput
+    /**
+     * In case the Badge found by the `where` argument doesn't exist, create a new Badge with this data.
+     */
+    create: XOR<BadgeCreateInput, BadgeUncheckedCreateInput>
+    /**
+     * In case the Badge was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<BadgeUpdateInput, BadgeUncheckedUpdateInput>
+  }
+
+  /**
+   * Badge delete
+   */
+  export type BadgeDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Badge
+     */
+    select?: BadgeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BadgeInclude<ExtArgs> | null
+    /**
+     * Filter which Badge to delete.
+     */
+    where: BadgeWhereUniqueInput
+  }
+
+  /**
+   * Badge deleteMany
+   */
+  export type BadgeDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Badges to delete
+     */
+    where?: BadgeWhereInput
+  }
+
+  /**
+   * Badge.users
+   */
+  export type Badge$usersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserBadge
+     */
+    select?: UserBadgeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserBadgeInclude<ExtArgs> | null
+    where?: UserBadgeWhereInput
+    orderBy?: UserBadgeOrderByWithRelationInput | UserBadgeOrderByWithRelationInput[]
+    cursor?: UserBadgeWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: UserBadgeScalarFieldEnum | UserBadgeScalarFieldEnum[]
+  }
+
+  /**
+   * Badge.posts
+   */
+  export type Badge$postsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SocialPost
+     */
+    select?: SocialPostSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SocialPostInclude<ExtArgs> | null
+    where?: SocialPostWhereInput
+    orderBy?: SocialPostOrderByWithRelationInput | SocialPostOrderByWithRelationInput[]
+    cursor?: SocialPostWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: SocialPostScalarFieldEnum | SocialPostScalarFieldEnum[]
+  }
+
+  /**
+   * Badge without action
+   */
+  export type BadgeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Badge
+     */
+    select?: BadgeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BadgeInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model UserBadge
+   */
+
+  export type AggregateUserBadge = {
+    _count: UserBadgeCountAggregateOutputType | null
+    _avg: UserBadgeAvgAggregateOutputType | null
+    _sum: UserBadgeSumAggregateOutputType | null
+    _min: UserBadgeMinAggregateOutputType | null
+    _max: UserBadgeMaxAggregateOutputType | null
+  }
+
+  export type UserBadgeAvgAggregateOutputType = {
+    id: number | null
+    userId: number | null
+    badgeId: number | null
+  }
+
+  export type UserBadgeSumAggregateOutputType = {
+    id: number | null
+    userId: number | null
+    badgeId: number | null
+  }
+
+  export type UserBadgeMinAggregateOutputType = {
+    id: number | null
+    userId: number | null
+    badgeId: number | null
+    earnedAt: Date | null
+  }
+
+  export type UserBadgeMaxAggregateOutputType = {
+    id: number | null
+    userId: number | null
+    badgeId: number | null
+    earnedAt: Date | null
+  }
+
+  export type UserBadgeCountAggregateOutputType = {
+    id: number
+    userId: number
+    badgeId: number
+    earnedAt: number
+    _all: number
+  }
+
+
+  export type UserBadgeAvgAggregateInputType = {
+    id?: true
+    userId?: true
+    badgeId?: true
+  }
+
+  export type UserBadgeSumAggregateInputType = {
+    id?: true
+    userId?: true
+    badgeId?: true
+  }
+
+  export type UserBadgeMinAggregateInputType = {
+    id?: true
+    userId?: true
+    badgeId?: true
+    earnedAt?: true
+  }
+
+  export type UserBadgeMaxAggregateInputType = {
+    id?: true
+    userId?: true
+    badgeId?: true
+    earnedAt?: true
+  }
+
+  export type UserBadgeCountAggregateInputType = {
+    id?: true
+    userId?: true
+    badgeId?: true
+    earnedAt?: true
+    _all?: true
+  }
+
+  export type UserBadgeAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which UserBadge to aggregate.
+     */
+    where?: UserBadgeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserBadges to fetch.
+     */
+    orderBy?: UserBadgeOrderByWithRelationInput | UserBadgeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: UserBadgeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserBadges from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserBadges.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned UserBadges
+    **/
+    _count?: true | UserBadgeCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: UserBadgeAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: UserBadgeSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: UserBadgeMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: UserBadgeMaxAggregateInputType
+  }
+
+  export type GetUserBadgeAggregateType<T extends UserBadgeAggregateArgs> = {
+        [P in keyof T & keyof AggregateUserBadge]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateUserBadge[P]>
+      : GetScalarType<T[P], AggregateUserBadge[P]>
+  }
+
+
+
+
+  export type UserBadgeGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UserBadgeWhereInput
+    orderBy?: UserBadgeOrderByWithAggregationInput | UserBadgeOrderByWithAggregationInput[]
+    by: UserBadgeScalarFieldEnum[] | UserBadgeScalarFieldEnum
+    having?: UserBadgeScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: UserBadgeCountAggregateInputType | true
+    _avg?: UserBadgeAvgAggregateInputType
+    _sum?: UserBadgeSumAggregateInputType
+    _min?: UserBadgeMinAggregateInputType
+    _max?: UserBadgeMaxAggregateInputType
+  }
+
+  export type UserBadgeGroupByOutputType = {
+    id: number
+    userId: number
+    badgeId: number
+    earnedAt: Date
+    _count: UserBadgeCountAggregateOutputType | null
+    _avg: UserBadgeAvgAggregateOutputType | null
+    _sum: UserBadgeSumAggregateOutputType | null
+    _min: UserBadgeMinAggregateOutputType | null
+    _max: UserBadgeMaxAggregateOutputType | null
+  }
+
+  type GetUserBadgeGroupByPayload<T extends UserBadgeGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<UserBadgeGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof UserBadgeGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], UserBadgeGroupByOutputType[P]>
+            : GetScalarType<T[P], UserBadgeGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type UserBadgeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    badgeId?: boolean
+    earnedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    badge?: boolean | BadgeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["userBadge"]>
+
+  export type UserBadgeSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    badgeId?: boolean
+    earnedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    badge?: boolean | BadgeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["userBadge"]>
+
+  export type UserBadgeSelectScalar = {
+    id?: boolean
+    userId?: boolean
+    badgeId?: boolean
+    earnedAt?: boolean
+  }
+
+  export type UserBadgeInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    badge?: boolean | BadgeDefaultArgs<ExtArgs>
+  }
+  export type UserBadgeIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    badge?: boolean | BadgeDefaultArgs<ExtArgs>
+  }
+
+  export type $UserBadgePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "UserBadge"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+      badge: Prisma.$BadgePayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      userId: number
+      badgeId: number
+      earnedAt: Date
+    }, ExtArgs["result"]["userBadge"]>
+    composites: {}
+  }
+
+  type UserBadgeGetPayload<S extends boolean | null | undefined | UserBadgeDefaultArgs> = $Result.GetResult<Prisma.$UserBadgePayload, S>
+
+  type UserBadgeCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<UserBadgeFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: UserBadgeCountAggregateInputType | true
+    }
+
+  export interface UserBadgeDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['UserBadge'], meta: { name: 'UserBadge' } }
+    /**
+     * Find zero or one UserBadge that matches the filter.
+     * @param {UserBadgeFindUniqueArgs} args - Arguments to find a UserBadge
+     * @example
+     * // Get one UserBadge
+     * const userBadge = await prisma.userBadge.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends UserBadgeFindUniqueArgs>(args: SelectSubset<T, UserBadgeFindUniqueArgs<ExtArgs>>): Prisma__UserBadgeClient<$Result.GetResult<Prisma.$UserBadgePayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one UserBadge that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {UserBadgeFindUniqueOrThrowArgs} args - Arguments to find a UserBadge
+     * @example
+     * // Get one UserBadge
+     * const userBadge = await prisma.userBadge.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends UserBadgeFindUniqueOrThrowArgs>(args: SelectSubset<T, UserBadgeFindUniqueOrThrowArgs<ExtArgs>>): Prisma__UserBadgeClient<$Result.GetResult<Prisma.$UserBadgePayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first UserBadge that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserBadgeFindFirstArgs} args - Arguments to find a UserBadge
+     * @example
+     * // Get one UserBadge
+     * const userBadge = await prisma.userBadge.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends UserBadgeFindFirstArgs>(args?: SelectSubset<T, UserBadgeFindFirstArgs<ExtArgs>>): Prisma__UserBadgeClient<$Result.GetResult<Prisma.$UserBadgePayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first UserBadge that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserBadgeFindFirstOrThrowArgs} args - Arguments to find a UserBadge
+     * @example
+     * // Get one UserBadge
+     * const userBadge = await prisma.userBadge.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends UserBadgeFindFirstOrThrowArgs>(args?: SelectSubset<T, UserBadgeFindFirstOrThrowArgs<ExtArgs>>): Prisma__UserBadgeClient<$Result.GetResult<Prisma.$UserBadgePayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more UserBadges that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserBadgeFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all UserBadges
+     * const userBadges = await prisma.userBadge.findMany()
+     * 
+     * // Get first 10 UserBadges
+     * const userBadges = await prisma.userBadge.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const userBadgeWithIdOnly = await prisma.userBadge.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends UserBadgeFindManyArgs>(args?: SelectSubset<T, UserBadgeFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserBadgePayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a UserBadge.
+     * @param {UserBadgeCreateArgs} args - Arguments to create a UserBadge.
+     * @example
+     * // Create one UserBadge
+     * const UserBadge = await prisma.userBadge.create({
+     *   data: {
+     *     // ... data to create a UserBadge
+     *   }
+     * })
+     * 
+     */
+    create<T extends UserBadgeCreateArgs>(args: SelectSubset<T, UserBadgeCreateArgs<ExtArgs>>): Prisma__UserBadgeClient<$Result.GetResult<Prisma.$UserBadgePayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many UserBadges.
+     * @param {UserBadgeCreateManyArgs} args - Arguments to create many UserBadges.
+     * @example
+     * // Create many UserBadges
+     * const userBadge = await prisma.userBadge.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends UserBadgeCreateManyArgs>(args?: SelectSubset<T, UserBadgeCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many UserBadges and returns the data saved in the database.
+     * @param {UserBadgeCreateManyAndReturnArgs} args - Arguments to create many UserBadges.
+     * @example
+     * // Create many UserBadges
+     * const userBadge = await prisma.userBadge.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many UserBadges and only return the `id`
+     * const userBadgeWithIdOnly = await prisma.userBadge.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends UserBadgeCreateManyAndReturnArgs>(args?: SelectSubset<T, UserBadgeCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserBadgePayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a UserBadge.
+     * @param {UserBadgeDeleteArgs} args - Arguments to delete one UserBadge.
+     * @example
+     * // Delete one UserBadge
+     * const UserBadge = await prisma.userBadge.delete({
+     *   where: {
+     *     // ... filter to delete one UserBadge
+     *   }
+     * })
+     * 
+     */
+    delete<T extends UserBadgeDeleteArgs>(args: SelectSubset<T, UserBadgeDeleteArgs<ExtArgs>>): Prisma__UserBadgeClient<$Result.GetResult<Prisma.$UserBadgePayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one UserBadge.
+     * @param {UserBadgeUpdateArgs} args - Arguments to update one UserBadge.
+     * @example
+     * // Update one UserBadge
+     * const userBadge = await prisma.userBadge.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends UserBadgeUpdateArgs>(args: SelectSubset<T, UserBadgeUpdateArgs<ExtArgs>>): Prisma__UserBadgeClient<$Result.GetResult<Prisma.$UserBadgePayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more UserBadges.
+     * @param {UserBadgeDeleteManyArgs} args - Arguments to filter UserBadges to delete.
+     * @example
+     * // Delete a few UserBadges
+     * const { count } = await prisma.userBadge.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends UserBadgeDeleteManyArgs>(args?: SelectSubset<T, UserBadgeDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more UserBadges.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserBadgeUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many UserBadges
+     * const userBadge = await prisma.userBadge.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends UserBadgeUpdateManyArgs>(args: SelectSubset<T, UserBadgeUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one UserBadge.
+     * @param {UserBadgeUpsertArgs} args - Arguments to update or create a UserBadge.
+     * @example
+     * // Update or create a UserBadge
+     * const userBadge = await prisma.userBadge.upsert({
+     *   create: {
+     *     // ... data to create a UserBadge
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the UserBadge we want to update
+     *   }
+     * })
+     */
+    upsert<T extends UserBadgeUpsertArgs>(args: SelectSubset<T, UserBadgeUpsertArgs<ExtArgs>>): Prisma__UserBadgeClient<$Result.GetResult<Prisma.$UserBadgePayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of UserBadges.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserBadgeCountArgs} args - Arguments to filter UserBadges to count.
+     * @example
+     * // Count the number of UserBadges
+     * const count = await prisma.userBadge.count({
+     *   where: {
+     *     // ... the filter for the UserBadges we want to count
+     *   }
+     * })
+    **/
+    count<T extends UserBadgeCountArgs>(
+      args?: Subset<T, UserBadgeCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], UserBadgeCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a UserBadge.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserBadgeAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends UserBadgeAggregateArgs>(args: Subset<T, UserBadgeAggregateArgs>): Prisma.PrismaPromise<GetUserBadgeAggregateType<T>>
+
+    /**
+     * Group by UserBadge.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserBadgeGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends UserBadgeGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: UserBadgeGroupByArgs['orderBy'] }
+        : { orderBy?: UserBadgeGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, UserBadgeGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetUserBadgeGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the UserBadge model
+   */
+  readonly fields: UserBadgeFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for UserBadge.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__UserBadgeClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    badge<T extends BadgeDefaultArgs<ExtArgs> = {}>(args?: Subset<T, BadgeDefaultArgs<ExtArgs>>): Prisma__BadgeClient<$Result.GetResult<Prisma.$BadgePayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the UserBadge model
+   */ 
+  interface UserBadgeFieldRefs {
+    readonly id: FieldRef<"UserBadge", 'Int'>
+    readonly userId: FieldRef<"UserBadge", 'Int'>
+    readonly badgeId: FieldRef<"UserBadge", 'Int'>
+    readonly earnedAt: FieldRef<"UserBadge", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * UserBadge findUnique
+   */
+  export type UserBadgeFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserBadge
+     */
+    select?: UserBadgeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserBadgeInclude<ExtArgs> | null
+    /**
+     * Filter, which UserBadge to fetch.
+     */
+    where: UserBadgeWhereUniqueInput
+  }
+
+  /**
+   * UserBadge findUniqueOrThrow
+   */
+  export type UserBadgeFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserBadge
+     */
+    select?: UserBadgeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserBadgeInclude<ExtArgs> | null
+    /**
+     * Filter, which UserBadge to fetch.
+     */
+    where: UserBadgeWhereUniqueInput
+  }
+
+  /**
+   * UserBadge findFirst
+   */
+  export type UserBadgeFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserBadge
+     */
+    select?: UserBadgeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserBadgeInclude<ExtArgs> | null
+    /**
+     * Filter, which UserBadge to fetch.
+     */
+    where?: UserBadgeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserBadges to fetch.
+     */
+    orderBy?: UserBadgeOrderByWithRelationInput | UserBadgeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for UserBadges.
+     */
+    cursor?: UserBadgeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserBadges from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserBadges.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of UserBadges.
+     */
+    distinct?: UserBadgeScalarFieldEnum | UserBadgeScalarFieldEnum[]
+  }
+
+  /**
+   * UserBadge findFirstOrThrow
+   */
+  export type UserBadgeFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserBadge
+     */
+    select?: UserBadgeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserBadgeInclude<ExtArgs> | null
+    /**
+     * Filter, which UserBadge to fetch.
+     */
+    where?: UserBadgeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserBadges to fetch.
+     */
+    orderBy?: UserBadgeOrderByWithRelationInput | UserBadgeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for UserBadges.
+     */
+    cursor?: UserBadgeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserBadges from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserBadges.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of UserBadges.
+     */
+    distinct?: UserBadgeScalarFieldEnum | UserBadgeScalarFieldEnum[]
+  }
+
+  /**
+   * UserBadge findMany
+   */
+  export type UserBadgeFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserBadge
+     */
+    select?: UserBadgeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserBadgeInclude<ExtArgs> | null
+    /**
+     * Filter, which UserBadges to fetch.
+     */
+    where?: UserBadgeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserBadges to fetch.
+     */
+    orderBy?: UserBadgeOrderByWithRelationInput | UserBadgeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing UserBadges.
+     */
+    cursor?: UserBadgeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserBadges from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserBadges.
+     */
+    skip?: number
+    distinct?: UserBadgeScalarFieldEnum | UserBadgeScalarFieldEnum[]
+  }
+
+  /**
+   * UserBadge create
+   */
+  export type UserBadgeCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserBadge
+     */
+    select?: UserBadgeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserBadgeInclude<ExtArgs> | null
+    /**
+     * The data needed to create a UserBadge.
+     */
+    data: XOR<UserBadgeCreateInput, UserBadgeUncheckedCreateInput>
+  }
+
+  /**
+   * UserBadge createMany
+   */
+  export type UserBadgeCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many UserBadges.
+     */
+    data: UserBadgeCreateManyInput | UserBadgeCreateManyInput[]
+  }
+
+  /**
+   * UserBadge createManyAndReturn
+   */
+  export type UserBadgeCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserBadge
+     */
+    select?: UserBadgeSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many UserBadges.
+     */
+    data: UserBadgeCreateManyInput | UserBadgeCreateManyInput[]
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserBadgeIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * UserBadge update
+   */
+  export type UserBadgeUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserBadge
+     */
+    select?: UserBadgeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserBadgeInclude<ExtArgs> | null
+    /**
+     * The data needed to update a UserBadge.
+     */
+    data: XOR<UserBadgeUpdateInput, UserBadgeUncheckedUpdateInput>
+    /**
+     * Choose, which UserBadge to update.
+     */
+    where: UserBadgeWhereUniqueInput
+  }
+
+  /**
+   * UserBadge updateMany
+   */
+  export type UserBadgeUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update UserBadges.
+     */
+    data: XOR<UserBadgeUpdateManyMutationInput, UserBadgeUncheckedUpdateManyInput>
+    /**
+     * Filter which UserBadges to update
+     */
+    where?: UserBadgeWhereInput
+  }
+
+  /**
+   * UserBadge upsert
+   */
+  export type UserBadgeUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserBadge
+     */
+    select?: UserBadgeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserBadgeInclude<ExtArgs> | null
+    /**
+     * The filter to search for the UserBadge to update in case it exists.
+     */
+    where: UserBadgeWhereUniqueInput
+    /**
+     * In case the UserBadge found by the `where` argument doesn't exist, create a new UserBadge with this data.
+     */
+    create: XOR<UserBadgeCreateInput, UserBadgeUncheckedCreateInput>
+    /**
+     * In case the UserBadge was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<UserBadgeUpdateInput, UserBadgeUncheckedUpdateInput>
+  }
+
+  /**
+   * UserBadge delete
+   */
+  export type UserBadgeDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserBadge
+     */
+    select?: UserBadgeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserBadgeInclude<ExtArgs> | null
+    /**
+     * Filter which UserBadge to delete.
+     */
+    where: UserBadgeWhereUniqueInput
+  }
+
+  /**
+   * UserBadge deleteMany
+   */
+  export type UserBadgeDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which UserBadges to delete
+     */
+    where?: UserBadgeWhereInput
+  }
+
+  /**
+   * UserBadge without action
+   */
+  export type UserBadgeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserBadge
+     */
+    select?: UserBadgeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserBadgeInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Challenge
+   */
+
+  export type AggregateChallenge = {
+    _count: ChallengeCountAggregateOutputType | null
+    _avg: ChallengeAvgAggregateOutputType | null
+    _sum: ChallengeSumAggregateOutputType | null
+    _min: ChallengeMinAggregateOutputType | null
+    _max: ChallengeMaxAggregateOutputType | null
+  }
+
+  export type ChallengeAvgAggregateOutputType = {
+    id: number | null
+    pointReward: number | null
+    createdBy: number | null
+  }
+
+  export type ChallengeSumAggregateOutputType = {
+    id: number | null
+    pointReward: number | null
+    createdBy: number | null
+  }
+
+  export type ChallengeMinAggregateOutputType = {
+    id: number | null
+    title: string | null
+    description: string | null
+    startDate: Date | null
+    endDate: Date | null
+    habitCategory: string | null
+    pointReward: number | null
+    createdBy: number | null
+  }
+
+  export type ChallengeMaxAggregateOutputType = {
+    id: number | null
+    title: string | null
+    description: string | null
+    startDate: Date | null
+    endDate: Date | null
+    habitCategory: string | null
+    pointReward: number | null
+    createdBy: number | null
+  }
+
+  export type ChallengeCountAggregateOutputType = {
+    id: number
+    title: number
+    description: number
+    startDate: number
+    endDate: number
+    habitCategory: number
+    pointReward: number
+    createdBy: number
+    _all: number
+  }
+
+
+  export type ChallengeAvgAggregateInputType = {
+    id?: true
+    pointReward?: true
+    createdBy?: true
+  }
+
+  export type ChallengeSumAggregateInputType = {
+    id?: true
+    pointReward?: true
+    createdBy?: true
+  }
+
+  export type ChallengeMinAggregateInputType = {
+    id?: true
+    title?: true
+    description?: true
+    startDate?: true
+    endDate?: true
+    habitCategory?: true
+    pointReward?: true
+    createdBy?: true
+  }
+
+  export type ChallengeMaxAggregateInputType = {
+    id?: true
+    title?: true
+    description?: true
+    startDate?: true
+    endDate?: true
+    habitCategory?: true
+    pointReward?: true
+    createdBy?: true
+  }
+
+  export type ChallengeCountAggregateInputType = {
+    id?: true
+    title?: true
+    description?: true
+    startDate?: true
+    endDate?: true
+    habitCategory?: true
+    pointReward?: true
+    createdBy?: true
+    _all?: true
+  }
+
+  export type ChallengeAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Challenge to aggregate.
+     */
+    where?: ChallengeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Challenges to fetch.
+     */
+    orderBy?: ChallengeOrderByWithRelationInput | ChallengeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ChallengeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Challenges from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Challenges.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Challenges
+    **/
+    _count?: true | ChallengeCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: ChallengeAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: ChallengeSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ChallengeMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ChallengeMaxAggregateInputType
+  }
+
+  export type GetChallengeAggregateType<T extends ChallengeAggregateArgs> = {
+        [P in keyof T & keyof AggregateChallenge]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateChallenge[P]>
+      : GetScalarType<T[P], AggregateChallenge[P]>
+  }
+
+
+
+
+  export type ChallengeGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ChallengeWhereInput
+    orderBy?: ChallengeOrderByWithAggregationInput | ChallengeOrderByWithAggregationInput[]
+    by: ChallengeScalarFieldEnum[] | ChallengeScalarFieldEnum
+    having?: ChallengeScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ChallengeCountAggregateInputType | true
+    _avg?: ChallengeAvgAggregateInputType
+    _sum?: ChallengeSumAggregateInputType
+    _min?: ChallengeMinAggregateInputType
+    _max?: ChallengeMaxAggregateInputType
+  }
+
+  export type ChallengeGroupByOutputType = {
+    id: number
+    title: string
+    description: string
+    startDate: Date
+    endDate: Date
+    habitCategory: string | null
+    pointReward: number
+    createdBy: number
+    _count: ChallengeCountAggregateOutputType | null
+    _avg: ChallengeAvgAggregateOutputType | null
+    _sum: ChallengeSumAggregateOutputType | null
+    _min: ChallengeMinAggregateOutputType | null
+    _max: ChallengeMaxAggregateOutputType | null
+  }
+
+  type GetChallengeGroupByPayload<T extends ChallengeGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ChallengeGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ChallengeGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ChallengeGroupByOutputType[P]>
+            : GetScalarType<T[P], ChallengeGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ChallengeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    title?: boolean
+    description?: boolean
+    startDate?: boolean
+    endDate?: boolean
+    habitCategory?: boolean
+    pointReward?: boolean
+    createdBy?: boolean
+    creator?: boolean | UserDefaultArgs<ExtArgs>
+    participants?: boolean | Challenge$participantsArgs<ExtArgs>
+    _count?: boolean | ChallengeCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["challenge"]>
+
+  export type ChallengeSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    title?: boolean
+    description?: boolean
+    startDate?: boolean
+    endDate?: boolean
+    habitCategory?: boolean
+    pointReward?: boolean
+    createdBy?: boolean
+    creator?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["challenge"]>
+
+  export type ChallengeSelectScalar = {
+    id?: boolean
+    title?: boolean
+    description?: boolean
+    startDate?: boolean
+    endDate?: boolean
+    habitCategory?: boolean
+    pointReward?: boolean
+    createdBy?: boolean
+  }
+
+  export type ChallengeInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    creator?: boolean | UserDefaultArgs<ExtArgs>
+    participants?: boolean | Challenge$participantsArgs<ExtArgs>
+    _count?: boolean | ChallengeCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type ChallengeIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    creator?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $ChallengePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Challenge"
+    objects: {
+      creator: Prisma.$UserPayload<ExtArgs>
+      participants: Prisma.$UserChallengePayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      title: string
+      description: string
+      startDate: Date
+      endDate: Date
+      habitCategory: string | null
+      pointReward: number
+      createdBy: number
+    }, ExtArgs["result"]["challenge"]>
+    composites: {}
+  }
+
+  type ChallengeGetPayload<S extends boolean | null | undefined | ChallengeDefaultArgs> = $Result.GetResult<Prisma.$ChallengePayload, S>
+
+  type ChallengeCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<ChallengeFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: ChallengeCountAggregateInputType | true
+    }
+
+  export interface ChallengeDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Challenge'], meta: { name: 'Challenge' } }
+    /**
+     * Find zero or one Challenge that matches the filter.
+     * @param {ChallengeFindUniqueArgs} args - Arguments to find a Challenge
+     * @example
+     * // Get one Challenge
+     * const challenge = await prisma.challenge.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ChallengeFindUniqueArgs>(args: SelectSubset<T, ChallengeFindUniqueArgs<ExtArgs>>): Prisma__ChallengeClient<$Result.GetResult<Prisma.$ChallengePayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one Challenge that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {ChallengeFindUniqueOrThrowArgs} args - Arguments to find a Challenge
+     * @example
+     * // Get one Challenge
+     * const challenge = await prisma.challenge.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ChallengeFindUniqueOrThrowArgs>(args: SelectSubset<T, ChallengeFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ChallengeClient<$Result.GetResult<Prisma.$ChallengePayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first Challenge that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ChallengeFindFirstArgs} args - Arguments to find a Challenge
+     * @example
+     * // Get one Challenge
+     * const challenge = await prisma.challenge.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ChallengeFindFirstArgs>(args?: SelectSubset<T, ChallengeFindFirstArgs<ExtArgs>>): Prisma__ChallengeClient<$Result.GetResult<Prisma.$ChallengePayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first Challenge that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ChallengeFindFirstOrThrowArgs} args - Arguments to find a Challenge
+     * @example
+     * // Get one Challenge
+     * const challenge = await prisma.challenge.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ChallengeFindFirstOrThrowArgs>(args?: SelectSubset<T, ChallengeFindFirstOrThrowArgs<ExtArgs>>): Prisma__ChallengeClient<$Result.GetResult<Prisma.$ChallengePayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more Challenges that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ChallengeFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Challenges
+     * const challenges = await prisma.challenge.findMany()
+     * 
+     * // Get first 10 Challenges
+     * const challenges = await prisma.challenge.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const challengeWithIdOnly = await prisma.challenge.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ChallengeFindManyArgs>(args?: SelectSubset<T, ChallengeFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ChallengePayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a Challenge.
+     * @param {ChallengeCreateArgs} args - Arguments to create a Challenge.
+     * @example
+     * // Create one Challenge
+     * const Challenge = await prisma.challenge.create({
+     *   data: {
+     *     // ... data to create a Challenge
+     *   }
+     * })
+     * 
+     */
+    create<T extends ChallengeCreateArgs>(args: SelectSubset<T, ChallengeCreateArgs<ExtArgs>>): Prisma__ChallengeClient<$Result.GetResult<Prisma.$ChallengePayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many Challenges.
+     * @param {ChallengeCreateManyArgs} args - Arguments to create many Challenges.
+     * @example
+     * // Create many Challenges
+     * const challenge = await prisma.challenge.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ChallengeCreateManyArgs>(args?: SelectSubset<T, ChallengeCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Challenges and returns the data saved in the database.
+     * @param {ChallengeCreateManyAndReturnArgs} args - Arguments to create many Challenges.
+     * @example
+     * // Create many Challenges
+     * const challenge = await prisma.challenge.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Challenges and only return the `id`
+     * const challengeWithIdOnly = await prisma.challenge.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends ChallengeCreateManyAndReturnArgs>(args?: SelectSubset<T, ChallengeCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ChallengePayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a Challenge.
+     * @param {ChallengeDeleteArgs} args - Arguments to delete one Challenge.
+     * @example
+     * // Delete one Challenge
+     * const Challenge = await prisma.challenge.delete({
+     *   where: {
+     *     // ... filter to delete one Challenge
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ChallengeDeleteArgs>(args: SelectSubset<T, ChallengeDeleteArgs<ExtArgs>>): Prisma__ChallengeClient<$Result.GetResult<Prisma.$ChallengePayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one Challenge.
+     * @param {ChallengeUpdateArgs} args - Arguments to update one Challenge.
+     * @example
+     * // Update one Challenge
+     * const challenge = await prisma.challenge.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ChallengeUpdateArgs>(args: SelectSubset<T, ChallengeUpdateArgs<ExtArgs>>): Prisma__ChallengeClient<$Result.GetResult<Prisma.$ChallengePayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more Challenges.
+     * @param {ChallengeDeleteManyArgs} args - Arguments to filter Challenges to delete.
+     * @example
+     * // Delete a few Challenges
+     * const { count } = await prisma.challenge.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ChallengeDeleteManyArgs>(args?: SelectSubset<T, ChallengeDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Challenges.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ChallengeUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Challenges
+     * const challenge = await prisma.challenge.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ChallengeUpdateManyArgs>(args: SelectSubset<T, ChallengeUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Challenge.
+     * @param {ChallengeUpsertArgs} args - Arguments to update or create a Challenge.
+     * @example
+     * // Update or create a Challenge
+     * const challenge = await prisma.challenge.upsert({
+     *   create: {
+     *     // ... data to create a Challenge
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Challenge we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ChallengeUpsertArgs>(args: SelectSubset<T, ChallengeUpsertArgs<ExtArgs>>): Prisma__ChallengeClient<$Result.GetResult<Prisma.$ChallengePayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of Challenges.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ChallengeCountArgs} args - Arguments to filter Challenges to count.
+     * @example
+     * // Count the number of Challenges
+     * const count = await prisma.challenge.count({
+     *   where: {
+     *     // ... the filter for the Challenges we want to count
+     *   }
+     * })
+    **/
+    count<T extends ChallengeCountArgs>(
+      args?: Subset<T, ChallengeCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ChallengeCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Challenge.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ChallengeAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ChallengeAggregateArgs>(args: Subset<T, ChallengeAggregateArgs>): Prisma.PrismaPromise<GetChallengeAggregateType<T>>
+
+    /**
+     * Group by Challenge.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ChallengeGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ChallengeGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ChallengeGroupByArgs['orderBy'] }
+        : { orderBy?: ChallengeGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ChallengeGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetChallengeGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Challenge model
+   */
+  readonly fields: ChallengeFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Challenge.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ChallengeClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    creator<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    participants<T extends Challenge$participantsArgs<ExtArgs> = {}>(args?: Subset<T, Challenge$participantsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserChallengePayload<ExtArgs>, T, "findMany"> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Challenge model
+   */ 
+  interface ChallengeFieldRefs {
+    readonly id: FieldRef<"Challenge", 'Int'>
+    readonly title: FieldRef<"Challenge", 'String'>
+    readonly description: FieldRef<"Challenge", 'String'>
+    readonly startDate: FieldRef<"Challenge", 'DateTime'>
+    readonly endDate: FieldRef<"Challenge", 'DateTime'>
+    readonly habitCategory: FieldRef<"Challenge", 'String'>
+    readonly pointReward: FieldRef<"Challenge", 'Int'>
+    readonly createdBy: FieldRef<"Challenge", 'Int'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Challenge findUnique
+   */
+  export type ChallengeFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Challenge
+     */
+    select?: ChallengeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChallengeInclude<ExtArgs> | null
+    /**
+     * Filter, which Challenge to fetch.
+     */
+    where: ChallengeWhereUniqueInput
+  }
+
+  /**
+   * Challenge findUniqueOrThrow
+   */
+  export type ChallengeFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Challenge
+     */
+    select?: ChallengeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChallengeInclude<ExtArgs> | null
+    /**
+     * Filter, which Challenge to fetch.
+     */
+    where: ChallengeWhereUniqueInput
+  }
+
+  /**
+   * Challenge findFirst
+   */
+  export type ChallengeFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Challenge
+     */
+    select?: ChallengeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChallengeInclude<ExtArgs> | null
+    /**
+     * Filter, which Challenge to fetch.
+     */
+    where?: ChallengeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Challenges to fetch.
+     */
+    orderBy?: ChallengeOrderByWithRelationInput | ChallengeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Challenges.
+     */
+    cursor?: ChallengeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Challenges from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Challenges.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Challenges.
+     */
+    distinct?: ChallengeScalarFieldEnum | ChallengeScalarFieldEnum[]
+  }
+
+  /**
+   * Challenge findFirstOrThrow
+   */
+  export type ChallengeFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Challenge
+     */
+    select?: ChallengeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChallengeInclude<ExtArgs> | null
+    /**
+     * Filter, which Challenge to fetch.
+     */
+    where?: ChallengeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Challenges to fetch.
+     */
+    orderBy?: ChallengeOrderByWithRelationInput | ChallengeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Challenges.
+     */
+    cursor?: ChallengeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Challenges from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Challenges.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Challenges.
+     */
+    distinct?: ChallengeScalarFieldEnum | ChallengeScalarFieldEnum[]
+  }
+
+  /**
+   * Challenge findMany
+   */
+  export type ChallengeFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Challenge
+     */
+    select?: ChallengeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChallengeInclude<ExtArgs> | null
+    /**
+     * Filter, which Challenges to fetch.
+     */
+    where?: ChallengeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Challenges to fetch.
+     */
+    orderBy?: ChallengeOrderByWithRelationInput | ChallengeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Challenges.
+     */
+    cursor?: ChallengeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Challenges from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Challenges.
+     */
+    skip?: number
+    distinct?: ChallengeScalarFieldEnum | ChallengeScalarFieldEnum[]
+  }
+
+  /**
+   * Challenge create
+   */
+  export type ChallengeCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Challenge
+     */
+    select?: ChallengeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChallengeInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Challenge.
+     */
+    data: XOR<ChallengeCreateInput, ChallengeUncheckedCreateInput>
+  }
+
+  /**
+   * Challenge createMany
+   */
+  export type ChallengeCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Challenges.
+     */
+    data: ChallengeCreateManyInput | ChallengeCreateManyInput[]
+  }
+
+  /**
+   * Challenge createManyAndReturn
+   */
+  export type ChallengeCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Challenge
+     */
+    select?: ChallengeSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many Challenges.
+     */
+    data: ChallengeCreateManyInput | ChallengeCreateManyInput[]
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChallengeIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Challenge update
+   */
+  export type ChallengeUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Challenge
+     */
+    select?: ChallengeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChallengeInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Challenge.
+     */
+    data: XOR<ChallengeUpdateInput, ChallengeUncheckedUpdateInput>
+    /**
+     * Choose, which Challenge to update.
+     */
+    where: ChallengeWhereUniqueInput
+  }
+
+  /**
+   * Challenge updateMany
+   */
+  export type ChallengeUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Challenges.
+     */
+    data: XOR<ChallengeUpdateManyMutationInput, ChallengeUncheckedUpdateManyInput>
+    /**
+     * Filter which Challenges to update
+     */
+    where?: ChallengeWhereInput
+  }
+
+  /**
+   * Challenge upsert
+   */
+  export type ChallengeUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Challenge
+     */
+    select?: ChallengeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChallengeInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Challenge to update in case it exists.
+     */
+    where: ChallengeWhereUniqueInput
+    /**
+     * In case the Challenge found by the `where` argument doesn't exist, create a new Challenge with this data.
+     */
+    create: XOR<ChallengeCreateInput, ChallengeUncheckedCreateInput>
+    /**
+     * In case the Challenge was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ChallengeUpdateInput, ChallengeUncheckedUpdateInput>
+  }
+
+  /**
+   * Challenge delete
+   */
+  export type ChallengeDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Challenge
+     */
+    select?: ChallengeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChallengeInclude<ExtArgs> | null
+    /**
+     * Filter which Challenge to delete.
+     */
+    where: ChallengeWhereUniqueInput
+  }
+
+  /**
+   * Challenge deleteMany
+   */
+  export type ChallengeDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Challenges to delete
+     */
+    where?: ChallengeWhereInput
+  }
+
+  /**
+   * Challenge.participants
+   */
+  export type Challenge$participantsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserChallenge
+     */
+    select?: UserChallengeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserChallengeInclude<ExtArgs> | null
+    where?: UserChallengeWhereInput
+    orderBy?: UserChallengeOrderByWithRelationInput | UserChallengeOrderByWithRelationInput[]
+    cursor?: UserChallengeWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: UserChallengeScalarFieldEnum | UserChallengeScalarFieldEnum[]
+  }
+
+  /**
+   * Challenge without action
+   */
+  export type ChallengeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Challenge
+     */
+    select?: ChallengeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChallengeInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model UserChallenge
+   */
+
+  export type AggregateUserChallenge = {
+    _count: UserChallengeCountAggregateOutputType | null
+    _avg: UserChallengeAvgAggregateOutputType | null
+    _sum: UserChallengeSumAggregateOutputType | null
+    _min: UserChallengeMinAggregateOutputType | null
+    _max: UserChallengeMaxAggregateOutputType | null
+  }
+
+  export type UserChallengeAvgAggregateOutputType = {
+    id: number | null
+    userId: number | null
+    challengeId: number | null
+    progress: number | null
+  }
+
+  export type UserChallengeSumAggregateOutputType = {
+    id: number | null
+    userId: number | null
+    challengeId: number | null
+    progress: number | null
+  }
+
+  export type UserChallengeMinAggregateOutputType = {
+    id: number | null
+    userId: number | null
+    challengeId: number | null
+    joinedAt: Date | null
+    completedAt: Date | null
+    progress: number | null
+  }
+
+  export type UserChallengeMaxAggregateOutputType = {
+    id: number | null
+    userId: number | null
+    challengeId: number | null
+    joinedAt: Date | null
+    completedAt: Date | null
+    progress: number | null
+  }
+
+  export type UserChallengeCountAggregateOutputType = {
+    id: number
+    userId: number
+    challengeId: number
+    joinedAt: number
+    completedAt: number
+    progress: number
+    _all: number
+  }
+
+
+  export type UserChallengeAvgAggregateInputType = {
+    id?: true
+    userId?: true
+    challengeId?: true
+    progress?: true
+  }
+
+  export type UserChallengeSumAggregateInputType = {
+    id?: true
+    userId?: true
+    challengeId?: true
+    progress?: true
+  }
+
+  export type UserChallengeMinAggregateInputType = {
+    id?: true
+    userId?: true
+    challengeId?: true
+    joinedAt?: true
+    completedAt?: true
+    progress?: true
+  }
+
+  export type UserChallengeMaxAggregateInputType = {
+    id?: true
+    userId?: true
+    challengeId?: true
+    joinedAt?: true
+    completedAt?: true
+    progress?: true
+  }
+
+  export type UserChallengeCountAggregateInputType = {
+    id?: true
+    userId?: true
+    challengeId?: true
+    joinedAt?: true
+    completedAt?: true
+    progress?: true
+    _all?: true
+  }
+
+  export type UserChallengeAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which UserChallenge to aggregate.
+     */
+    where?: UserChallengeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserChallenges to fetch.
+     */
+    orderBy?: UserChallengeOrderByWithRelationInput | UserChallengeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: UserChallengeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserChallenges from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserChallenges.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned UserChallenges
+    **/
+    _count?: true | UserChallengeCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: UserChallengeAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: UserChallengeSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: UserChallengeMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: UserChallengeMaxAggregateInputType
+  }
+
+  export type GetUserChallengeAggregateType<T extends UserChallengeAggregateArgs> = {
+        [P in keyof T & keyof AggregateUserChallenge]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateUserChallenge[P]>
+      : GetScalarType<T[P], AggregateUserChallenge[P]>
+  }
+
+
+
+
+  export type UserChallengeGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UserChallengeWhereInput
+    orderBy?: UserChallengeOrderByWithAggregationInput | UserChallengeOrderByWithAggregationInput[]
+    by: UserChallengeScalarFieldEnum[] | UserChallengeScalarFieldEnum
+    having?: UserChallengeScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: UserChallengeCountAggregateInputType | true
+    _avg?: UserChallengeAvgAggregateInputType
+    _sum?: UserChallengeSumAggregateInputType
+    _min?: UserChallengeMinAggregateInputType
+    _max?: UserChallengeMaxAggregateInputType
+  }
+
+  export type UserChallengeGroupByOutputType = {
+    id: number
+    userId: number
+    challengeId: number
+    joinedAt: Date
+    completedAt: Date | null
+    progress: number
+    _count: UserChallengeCountAggregateOutputType | null
+    _avg: UserChallengeAvgAggregateOutputType | null
+    _sum: UserChallengeSumAggregateOutputType | null
+    _min: UserChallengeMinAggregateOutputType | null
+    _max: UserChallengeMaxAggregateOutputType | null
+  }
+
+  type GetUserChallengeGroupByPayload<T extends UserChallengeGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<UserChallengeGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof UserChallengeGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], UserChallengeGroupByOutputType[P]>
+            : GetScalarType<T[P], UserChallengeGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type UserChallengeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    challengeId?: boolean
+    joinedAt?: boolean
+    completedAt?: boolean
+    progress?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    challenge?: boolean | ChallengeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["userChallenge"]>
+
+  export type UserChallengeSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    challengeId?: boolean
+    joinedAt?: boolean
+    completedAt?: boolean
+    progress?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    challenge?: boolean | ChallengeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["userChallenge"]>
+
+  export type UserChallengeSelectScalar = {
+    id?: boolean
+    userId?: boolean
+    challengeId?: boolean
+    joinedAt?: boolean
+    completedAt?: boolean
+    progress?: boolean
+  }
+
+  export type UserChallengeInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    challenge?: boolean | ChallengeDefaultArgs<ExtArgs>
+  }
+  export type UserChallengeIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    challenge?: boolean | ChallengeDefaultArgs<ExtArgs>
+  }
+
+  export type $UserChallengePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "UserChallenge"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+      challenge: Prisma.$ChallengePayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      userId: number
+      challengeId: number
+      joinedAt: Date
+      completedAt: Date | null
+      progress: number
+    }, ExtArgs["result"]["userChallenge"]>
+    composites: {}
+  }
+
+  type UserChallengeGetPayload<S extends boolean | null | undefined | UserChallengeDefaultArgs> = $Result.GetResult<Prisma.$UserChallengePayload, S>
+
+  type UserChallengeCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<UserChallengeFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: UserChallengeCountAggregateInputType | true
+    }
+
+  export interface UserChallengeDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['UserChallenge'], meta: { name: 'UserChallenge' } }
+    /**
+     * Find zero or one UserChallenge that matches the filter.
+     * @param {UserChallengeFindUniqueArgs} args - Arguments to find a UserChallenge
+     * @example
+     * // Get one UserChallenge
+     * const userChallenge = await prisma.userChallenge.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends UserChallengeFindUniqueArgs>(args: SelectSubset<T, UserChallengeFindUniqueArgs<ExtArgs>>): Prisma__UserChallengeClient<$Result.GetResult<Prisma.$UserChallengePayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one UserChallenge that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {UserChallengeFindUniqueOrThrowArgs} args - Arguments to find a UserChallenge
+     * @example
+     * // Get one UserChallenge
+     * const userChallenge = await prisma.userChallenge.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends UserChallengeFindUniqueOrThrowArgs>(args: SelectSubset<T, UserChallengeFindUniqueOrThrowArgs<ExtArgs>>): Prisma__UserChallengeClient<$Result.GetResult<Prisma.$UserChallengePayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first UserChallenge that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserChallengeFindFirstArgs} args - Arguments to find a UserChallenge
+     * @example
+     * // Get one UserChallenge
+     * const userChallenge = await prisma.userChallenge.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends UserChallengeFindFirstArgs>(args?: SelectSubset<T, UserChallengeFindFirstArgs<ExtArgs>>): Prisma__UserChallengeClient<$Result.GetResult<Prisma.$UserChallengePayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first UserChallenge that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserChallengeFindFirstOrThrowArgs} args - Arguments to find a UserChallenge
+     * @example
+     * // Get one UserChallenge
+     * const userChallenge = await prisma.userChallenge.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends UserChallengeFindFirstOrThrowArgs>(args?: SelectSubset<T, UserChallengeFindFirstOrThrowArgs<ExtArgs>>): Prisma__UserChallengeClient<$Result.GetResult<Prisma.$UserChallengePayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more UserChallenges that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserChallengeFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all UserChallenges
+     * const userChallenges = await prisma.userChallenge.findMany()
+     * 
+     * // Get first 10 UserChallenges
+     * const userChallenges = await prisma.userChallenge.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const userChallengeWithIdOnly = await prisma.userChallenge.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends UserChallengeFindManyArgs>(args?: SelectSubset<T, UserChallengeFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserChallengePayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a UserChallenge.
+     * @param {UserChallengeCreateArgs} args - Arguments to create a UserChallenge.
+     * @example
+     * // Create one UserChallenge
+     * const UserChallenge = await prisma.userChallenge.create({
+     *   data: {
+     *     // ... data to create a UserChallenge
+     *   }
+     * })
+     * 
+     */
+    create<T extends UserChallengeCreateArgs>(args: SelectSubset<T, UserChallengeCreateArgs<ExtArgs>>): Prisma__UserChallengeClient<$Result.GetResult<Prisma.$UserChallengePayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many UserChallenges.
+     * @param {UserChallengeCreateManyArgs} args - Arguments to create many UserChallenges.
+     * @example
+     * // Create many UserChallenges
+     * const userChallenge = await prisma.userChallenge.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends UserChallengeCreateManyArgs>(args?: SelectSubset<T, UserChallengeCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many UserChallenges and returns the data saved in the database.
+     * @param {UserChallengeCreateManyAndReturnArgs} args - Arguments to create many UserChallenges.
+     * @example
+     * // Create many UserChallenges
+     * const userChallenge = await prisma.userChallenge.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many UserChallenges and only return the `id`
+     * const userChallengeWithIdOnly = await prisma.userChallenge.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends UserChallengeCreateManyAndReturnArgs>(args?: SelectSubset<T, UserChallengeCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserChallengePayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a UserChallenge.
+     * @param {UserChallengeDeleteArgs} args - Arguments to delete one UserChallenge.
+     * @example
+     * // Delete one UserChallenge
+     * const UserChallenge = await prisma.userChallenge.delete({
+     *   where: {
+     *     // ... filter to delete one UserChallenge
+     *   }
+     * })
+     * 
+     */
+    delete<T extends UserChallengeDeleteArgs>(args: SelectSubset<T, UserChallengeDeleteArgs<ExtArgs>>): Prisma__UserChallengeClient<$Result.GetResult<Prisma.$UserChallengePayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one UserChallenge.
+     * @param {UserChallengeUpdateArgs} args - Arguments to update one UserChallenge.
+     * @example
+     * // Update one UserChallenge
+     * const userChallenge = await prisma.userChallenge.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends UserChallengeUpdateArgs>(args: SelectSubset<T, UserChallengeUpdateArgs<ExtArgs>>): Prisma__UserChallengeClient<$Result.GetResult<Prisma.$UserChallengePayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more UserChallenges.
+     * @param {UserChallengeDeleteManyArgs} args - Arguments to filter UserChallenges to delete.
+     * @example
+     * // Delete a few UserChallenges
+     * const { count } = await prisma.userChallenge.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends UserChallengeDeleteManyArgs>(args?: SelectSubset<T, UserChallengeDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more UserChallenges.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserChallengeUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many UserChallenges
+     * const userChallenge = await prisma.userChallenge.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends UserChallengeUpdateManyArgs>(args: SelectSubset<T, UserChallengeUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one UserChallenge.
+     * @param {UserChallengeUpsertArgs} args - Arguments to update or create a UserChallenge.
+     * @example
+     * // Update or create a UserChallenge
+     * const userChallenge = await prisma.userChallenge.upsert({
+     *   create: {
+     *     // ... data to create a UserChallenge
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the UserChallenge we want to update
+     *   }
+     * })
+     */
+    upsert<T extends UserChallengeUpsertArgs>(args: SelectSubset<T, UserChallengeUpsertArgs<ExtArgs>>): Prisma__UserChallengeClient<$Result.GetResult<Prisma.$UserChallengePayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of UserChallenges.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserChallengeCountArgs} args - Arguments to filter UserChallenges to count.
+     * @example
+     * // Count the number of UserChallenges
+     * const count = await prisma.userChallenge.count({
+     *   where: {
+     *     // ... the filter for the UserChallenges we want to count
+     *   }
+     * })
+    **/
+    count<T extends UserChallengeCountArgs>(
+      args?: Subset<T, UserChallengeCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], UserChallengeCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a UserChallenge.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserChallengeAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends UserChallengeAggregateArgs>(args: Subset<T, UserChallengeAggregateArgs>): Prisma.PrismaPromise<GetUserChallengeAggregateType<T>>
+
+    /**
+     * Group by UserChallenge.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserChallengeGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends UserChallengeGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: UserChallengeGroupByArgs['orderBy'] }
+        : { orderBy?: UserChallengeGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, UserChallengeGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetUserChallengeGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the UserChallenge model
+   */
+  readonly fields: UserChallengeFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for UserChallenge.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__UserChallengeClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    challenge<T extends ChallengeDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ChallengeDefaultArgs<ExtArgs>>): Prisma__ChallengeClient<$Result.GetResult<Prisma.$ChallengePayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the UserChallenge model
+   */ 
+  interface UserChallengeFieldRefs {
+    readonly id: FieldRef<"UserChallenge", 'Int'>
+    readonly userId: FieldRef<"UserChallenge", 'Int'>
+    readonly challengeId: FieldRef<"UserChallenge", 'Int'>
+    readonly joinedAt: FieldRef<"UserChallenge", 'DateTime'>
+    readonly completedAt: FieldRef<"UserChallenge", 'DateTime'>
+    readonly progress: FieldRef<"UserChallenge", 'Int'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * UserChallenge findUnique
+   */
+  export type UserChallengeFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserChallenge
+     */
+    select?: UserChallengeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserChallengeInclude<ExtArgs> | null
+    /**
+     * Filter, which UserChallenge to fetch.
+     */
+    where: UserChallengeWhereUniqueInput
+  }
+
+  /**
+   * UserChallenge findUniqueOrThrow
+   */
+  export type UserChallengeFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserChallenge
+     */
+    select?: UserChallengeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserChallengeInclude<ExtArgs> | null
+    /**
+     * Filter, which UserChallenge to fetch.
+     */
+    where: UserChallengeWhereUniqueInput
+  }
+
+  /**
+   * UserChallenge findFirst
+   */
+  export type UserChallengeFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserChallenge
+     */
+    select?: UserChallengeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserChallengeInclude<ExtArgs> | null
+    /**
+     * Filter, which UserChallenge to fetch.
+     */
+    where?: UserChallengeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserChallenges to fetch.
+     */
+    orderBy?: UserChallengeOrderByWithRelationInput | UserChallengeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for UserChallenges.
+     */
+    cursor?: UserChallengeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserChallenges from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserChallenges.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of UserChallenges.
+     */
+    distinct?: UserChallengeScalarFieldEnum | UserChallengeScalarFieldEnum[]
+  }
+
+  /**
+   * UserChallenge findFirstOrThrow
+   */
+  export type UserChallengeFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserChallenge
+     */
+    select?: UserChallengeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserChallengeInclude<ExtArgs> | null
+    /**
+     * Filter, which UserChallenge to fetch.
+     */
+    where?: UserChallengeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserChallenges to fetch.
+     */
+    orderBy?: UserChallengeOrderByWithRelationInput | UserChallengeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for UserChallenges.
+     */
+    cursor?: UserChallengeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserChallenges from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserChallenges.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of UserChallenges.
+     */
+    distinct?: UserChallengeScalarFieldEnum | UserChallengeScalarFieldEnum[]
+  }
+
+  /**
+   * UserChallenge findMany
+   */
+  export type UserChallengeFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserChallenge
+     */
+    select?: UserChallengeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserChallengeInclude<ExtArgs> | null
+    /**
+     * Filter, which UserChallenges to fetch.
+     */
+    where?: UserChallengeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserChallenges to fetch.
+     */
+    orderBy?: UserChallengeOrderByWithRelationInput | UserChallengeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing UserChallenges.
+     */
+    cursor?: UserChallengeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserChallenges from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserChallenges.
+     */
+    skip?: number
+    distinct?: UserChallengeScalarFieldEnum | UserChallengeScalarFieldEnum[]
+  }
+
+  /**
+   * UserChallenge create
+   */
+  export type UserChallengeCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserChallenge
+     */
+    select?: UserChallengeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserChallengeInclude<ExtArgs> | null
+    /**
+     * The data needed to create a UserChallenge.
+     */
+    data: XOR<UserChallengeCreateInput, UserChallengeUncheckedCreateInput>
+  }
+
+  /**
+   * UserChallenge createMany
+   */
+  export type UserChallengeCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many UserChallenges.
+     */
+    data: UserChallengeCreateManyInput | UserChallengeCreateManyInput[]
+  }
+
+  /**
+   * UserChallenge createManyAndReturn
+   */
+  export type UserChallengeCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserChallenge
+     */
+    select?: UserChallengeSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many UserChallenges.
+     */
+    data: UserChallengeCreateManyInput | UserChallengeCreateManyInput[]
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserChallengeIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * UserChallenge update
+   */
+  export type UserChallengeUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserChallenge
+     */
+    select?: UserChallengeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserChallengeInclude<ExtArgs> | null
+    /**
+     * The data needed to update a UserChallenge.
+     */
+    data: XOR<UserChallengeUpdateInput, UserChallengeUncheckedUpdateInput>
+    /**
+     * Choose, which UserChallenge to update.
+     */
+    where: UserChallengeWhereUniqueInput
+  }
+
+  /**
+   * UserChallenge updateMany
+   */
+  export type UserChallengeUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update UserChallenges.
+     */
+    data: XOR<UserChallengeUpdateManyMutationInput, UserChallengeUncheckedUpdateManyInput>
+    /**
+     * Filter which UserChallenges to update
+     */
+    where?: UserChallengeWhereInput
+  }
+
+  /**
+   * UserChallenge upsert
+   */
+  export type UserChallengeUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserChallenge
+     */
+    select?: UserChallengeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserChallengeInclude<ExtArgs> | null
+    /**
+     * The filter to search for the UserChallenge to update in case it exists.
+     */
+    where: UserChallengeWhereUniqueInput
+    /**
+     * In case the UserChallenge found by the `where` argument doesn't exist, create a new UserChallenge with this data.
+     */
+    create: XOR<UserChallengeCreateInput, UserChallengeUncheckedCreateInput>
+    /**
+     * In case the UserChallenge was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<UserChallengeUpdateInput, UserChallengeUncheckedUpdateInput>
+  }
+
+  /**
+   * UserChallenge delete
+   */
+  export type UserChallengeDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserChallenge
+     */
+    select?: UserChallengeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserChallengeInclude<ExtArgs> | null
+    /**
+     * Filter which UserChallenge to delete.
+     */
+    where: UserChallengeWhereUniqueInput
+  }
+
+  /**
+   * UserChallenge deleteMany
+   */
+  export type UserChallengeDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which UserChallenges to delete
+     */
+    where?: UserChallengeWhereInput
+  }
+
+  /**
+   * UserChallenge without action
+   */
+  export type UserChallengeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserChallenge
+     */
+    select?: UserChallengeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserChallengeInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model AIInsight
+   */
+
+  export type AggregateAIInsight = {
+    _count: AIInsightCountAggregateOutputType | null
+    _avg: AIInsightAvgAggregateOutputType | null
+    _sum: AIInsightSumAggregateOutputType | null
+    _min: AIInsightMinAggregateOutputType | null
+    _max: AIInsightMaxAggregateOutputType | null
+  }
+
+  export type AIInsightAvgAggregateOutputType = {
+    id: number | null
+    userId: number | null
+    habitId: number | null
+  }
+
+  export type AIInsightSumAggregateOutputType = {
+    id: number | null
+    userId: number | null
+    habitId: number | null
+  }
+
+  export type AIInsightMinAggregateOutputType = {
+    id: number | null
+    userId: number | null
+    habitId: number | null
+    type: string | null
+    content: string | null
+    generatedAt: Date | null
+    isRead: boolean | null
+  }
+
+  export type AIInsightMaxAggregateOutputType = {
+    id: number | null
+    userId: number | null
+    habitId: number | null
+    type: string | null
+    content: string | null
+    generatedAt: Date | null
+    isRead: boolean | null
+  }
+
+  export type AIInsightCountAggregateOutputType = {
+    id: number
+    userId: number
+    habitId: number
+    type: number
+    content: number
+    generatedAt: number
+    isRead: number
+    _all: number
+  }
+
+
+  export type AIInsightAvgAggregateInputType = {
+    id?: true
+    userId?: true
+    habitId?: true
+  }
+
+  export type AIInsightSumAggregateInputType = {
+    id?: true
+    userId?: true
+    habitId?: true
+  }
+
+  export type AIInsightMinAggregateInputType = {
+    id?: true
+    userId?: true
+    habitId?: true
+    type?: true
+    content?: true
+    generatedAt?: true
+    isRead?: true
+  }
+
+  export type AIInsightMaxAggregateInputType = {
+    id?: true
+    userId?: true
+    habitId?: true
+    type?: true
+    content?: true
+    generatedAt?: true
+    isRead?: true
+  }
+
+  export type AIInsightCountAggregateInputType = {
+    id?: true
+    userId?: true
+    habitId?: true
+    type?: true
+    content?: true
+    generatedAt?: true
+    isRead?: true
+    _all?: true
+  }
+
+  export type AIInsightAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which AIInsight to aggregate.
+     */
+    where?: AIInsightWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AIInsights to fetch.
+     */
+    orderBy?: AIInsightOrderByWithRelationInput | AIInsightOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: AIInsightWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AIInsights from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AIInsights.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned AIInsights
+    **/
+    _count?: true | AIInsightCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: AIInsightAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: AIInsightSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: AIInsightMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: AIInsightMaxAggregateInputType
+  }
+
+  export type GetAIInsightAggregateType<T extends AIInsightAggregateArgs> = {
+        [P in keyof T & keyof AggregateAIInsight]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateAIInsight[P]>
+      : GetScalarType<T[P], AggregateAIInsight[P]>
+  }
+
+
+
+
+  export type AIInsightGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AIInsightWhereInput
+    orderBy?: AIInsightOrderByWithAggregationInput | AIInsightOrderByWithAggregationInput[]
+    by: AIInsightScalarFieldEnum[] | AIInsightScalarFieldEnum
+    having?: AIInsightScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: AIInsightCountAggregateInputType | true
+    _avg?: AIInsightAvgAggregateInputType
+    _sum?: AIInsightSumAggregateInputType
+    _min?: AIInsightMinAggregateInputType
+    _max?: AIInsightMaxAggregateInputType
+  }
+
+  export type AIInsightGroupByOutputType = {
+    id: number
+    userId: number
+    habitId: number | null
+    type: string
+    content: string
+    generatedAt: Date
+    isRead: boolean
+    _count: AIInsightCountAggregateOutputType | null
+    _avg: AIInsightAvgAggregateOutputType | null
+    _sum: AIInsightSumAggregateOutputType | null
+    _min: AIInsightMinAggregateOutputType | null
+    _max: AIInsightMaxAggregateOutputType | null
+  }
+
+  type GetAIInsightGroupByPayload<T extends AIInsightGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<AIInsightGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof AIInsightGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], AIInsightGroupByOutputType[P]>
+            : GetScalarType<T[P], AIInsightGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type AIInsightSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    habitId?: boolean
+    type?: boolean
+    content?: boolean
+    generatedAt?: boolean
+    isRead?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    habit?: boolean | AIInsight$habitArgs<ExtArgs>
+  }, ExtArgs["result"]["aIInsight"]>
+
+  export type AIInsightSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    habitId?: boolean
+    type?: boolean
+    content?: boolean
+    generatedAt?: boolean
+    isRead?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    habit?: boolean | AIInsight$habitArgs<ExtArgs>
+  }, ExtArgs["result"]["aIInsight"]>
+
+  export type AIInsightSelectScalar = {
+    id?: boolean
+    userId?: boolean
+    habitId?: boolean
+    type?: boolean
+    content?: boolean
+    generatedAt?: boolean
+    isRead?: boolean
+  }
+
+  export type AIInsightInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    habit?: boolean | AIInsight$habitArgs<ExtArgs>
+  }
+  export type AIInsightIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    habit?: boolean | AIInsight$habitArgs<ExtArgs>
+  }
+
+  export type $AIInsightPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "AIInsight"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+      habit: Prisma.$HabitPayload<ExtArgs> | null
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      userId: number
+      habitId: number | null
+      type: string
+      content: string
+      generatedAt: Date
+      isRead: boolean
+    }, ExtArgs["result"]["aIInsight"]>
+    composites: {}
+  }
+
+  type AIInsightGetPayload<S extends boolean | null | undefined | AIInsightDefaultArgs> = $Result.GetResult<Prisma.$AIInsightPayload, S>
+
+  type AIInsightCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<AIInsightFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: AIInsightCountAggregateInputType | true
+    }
+
+  export interface AIInsightDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['AIInsight'], meta: { name: 'AIInsight' } }
+    /**
+     * Find zero or one AIInsight that matches the filter.
+     * @param {AIInsightFindUniqueArgs} args - Arguments to find a AIInsight
+     * @example
+     * // Get one AIInsight
+     * const aIInsight = await prisma.aIInsight.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends AIInsightFindUniqueArgs>(args: SelectSubset<T, AIInsightFindUniqueArgs<ExtArgs>>): Prisma__AIInsightClient<$Result.GetResult<Prisma.$AIInsightPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one AIInsight that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {AIInsightFindUniqueOrThrowArgs} args - Arguments to find a AIInsight
+     * @example
+     * // Get one AIInsight
+     * const aIInsight = await prisma.aIInsight.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends AIInsightFindUniqueOrThrowArgs>(args: SelectSubset<T, AIInsightFindUniqueOrThrowArgs<ExtArgs>>): Prisma__AIInsightClient<$Result.GetResult<Prisma.$AIInsightPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first AIInsight that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AIInsightFindFirstArgs} args - Arguments to find a AIInsight
+     * @example
+     * // Get one AIInsight
+     * const aIInsight = await prisma.aIInsight.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends AIInsightFindFirstArgs>(args?: SelectSubset<T, AIInsightFindFirstArgs<ExtArgs>>): Prisma__AIInsightClient<$Result.GetResult<Prisma.$AIInsightPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first AIInsight that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AIInsightFindFirstOrThrowArgs} args - Arguments to find a AIInsight
+     * @example
+     * // Get one AIInsight
+     * const aIInsight = await prisma.aIInsight.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends AIInsightFindFirstOrThrowArgs>(args?: SelectSubset<T, AIInsightFindFirstOrThrowArgs<ExtArgs>>): Prisma__AIInsightClient<$Result.GetResult<Prisma.$AIInsightPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more AIInsights that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AIInsightFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all AIInsights
+     * const aIInsights = await prisma.aIInsight.findMany()
+     * 
+     * // Get first 10 AIInsights
+     * const aIInsights = await prisma.aIInsight.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const aIInsightWithIdOnly = await prisma.aIInsight.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends AIInsightFindManyArgs>(args?: SelectSubset<T, AIInsightFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AIInsightPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a AIInsight.
+     * @param {AIInsightCreateArgs} args - Arguments to create a AIInsight.
+     * @example
+     * // Create one AIInsight
+     * const AIInsight = await prisma.aIInsight.create({
+     *   data: {
+     *     // ... data to create a AIInsight
+     *   }
+     * })
+     * 
+     */
+    create<T extends AIInsightCreateArgs>(args: SelectSubset<T, AIInsightCreateArgs<ExtArgs>>): Prisma__AIInsightClient<$Result.GetResult<Prisma.$AIInsightPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many AIInsights.
+     * @param {AIInsightCreateManyArgs} args - Arguments to create many AIInsights.
+     * @example
+     * // Create many AIInsights
+     * const aIInsight = await prisma.aIInsight.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends AIInsightCreateManyArgs>(args?: SelectSubset<T, AIInsightCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many AIInsights and returns the data saved in the database.
+     * @param {AIInsightCreateManyAndReturnArgs} args - Arguments to create many AIInsights.
+     * @example
+     * // Create many AIInsights
+     * const aIInsight = await prisma.aIInsight.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many AIInsights and only return the `id`
+     * const aIInsightWithIdOnly = await prisma.aIInsight.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends AIInsightCreateManyAndReturnArgs>(args?: SelectSubset<T, AIInsightCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AIInsightPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a AIInsight.
+     * @param {AIInsightDeleteArgs} args - Arguments to delete one AIInsight.
+     * @example
+     * // Delete one AIInsight
+     * const AIInsight = await prisma.aIInsight.delete({
+     *   where: {
+     *     // ... filter to delete one AIInsight
+     *   }
+     * })
+     * 
+     */
+    delete<T extends AIInsightDeleteArgs>(args: SelectSubset<T, AIInsightDeleteArgs<ExtArgs>>): Prisma__AIInsightClient<$Result.GetResult<Prisma.$AIInsightPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one AIInsight.
+     * @param {AIInsightUpdateArgs} args - Arguments to update one AIInsight.
+     * @example
+     * // Update one AIInsight
+     * const aIInsight = await prisma.aIInsight.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends AIInsightUpdateArgs>(args: SelectSubset<T, AIInsightUpdateArgs<ExtArgs>>): Prisma__AIInsightClient<$Result.GetResult<Prisma.$AIInsightPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more AIInsights.
+     * @param {AIInsightDeleteManyArgs} args - Arguments to filter AIInsights to delete.
+     * @example
+     * // Delete a few AIInsights
+     * const { count } = await prisma.aIInsight.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends AIInsightDeleteManyArgs>(args?: SelectSubset<T, AIInsightDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more AIInsights.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AIInsightUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many AIInsights
+     * const aIInsight = await prisma.aIInsight.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends AIInsightUpdateManyArgs>(args: SelectSubset<T, AIInsightUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one AIInsight.
+     * @param {AIInsightUpsertArgs} args - Arguments to update or create a AIInsight.
+     * @example
+     * // Update or create a AIInsight
+     * const aIInsight = await prisma.aIInsight.upsert({
+     *   create: {
+     *     // ... data to create a AIInsight
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the AIInsight we want to update
+     *   }
+     * })
+     */
+    upsert<T extends AIInsightUpsertArgs>(args: SelectSubset<T, AIInsightUpsertArgs<ExtArgs>>): Prisma__AIInsightClient<$Result.GetResult<Prisma.$AIInsightPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of AIInsights.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AIInsightCountArgs} args - Arguments to filter AIInsights to count.
+     * @example
+     * // Count the number of AIInsights
+     * const count = await prisma.aIInsight.count({
+     *   where: {
+     *     // ... the filter for the AIInsights we want to count
+     *   }
+     * })
+    **/
+    count<T extends AIInsightCountArgs>(
+      args?: Subset<T, AIInsightCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], AIInsightCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a AIInsight.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AIInsightAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends AIInsightAggregateArgs>(args: Subset<T, AIInsightAggregateArgs>): Prisma.PrismaPromise<GetAIInsightAggregateType<T>>
+
+    /**
+     * Group by AIInsight.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AIInsightGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends AIInsightGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: AIInsightGroupByArgs['orderBy'] }
+        : { orderBy?: AIInsightGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, AIInsightGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetAIInsightGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the AIInsight model
+   */
+  readonly fields: AIInsightFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for AIInsight.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__AIInsightClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    habit<T extends AIInsight$habitArgs<ExtArgs> = {}>(args?: Subset<T, AIInsight$habitArgs<ExtArgs>>): Prisma__HabitClient<$Result.GetResult<Prisma.$HabitPayload<ExtArgs>, T, "findUniqueOrThrow"> | null, null, ExtArgs>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the AIInsight model
+   */ 
+  interface AIInsightFieldRefs {
+    readonly id: FieldRef<"AIInsight", 'Int'>
+    readonly userId: FieldRef<"AIInsight", 'Int'>
+    readonly habitId: FieldRef<"AIInsight", 'Int'>
+    readonly type: FieldRef<"AIInsight", 'String'>
+    readonly content: FieldRef<"AIInsight", 'String'>
+    readonly generatedAt: FieldRef<"AIInsight", 'DateTime'>
+    readonly isRead: FieldRef<"AIInsight", 'Boolean'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * AIInsight findUnique
+   */
+  export type AIInsightFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AIInsight
+     */
+    select?: AIInsightSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AIInsightInclude<ExtArgs> | null
+    /**
+     * Filter, which AIInsight to fetch.
+     */
+    where: AIInsightWhereUniqueInput
+  }
+
+  /**
+   * AIInsight findUniqueOrThrow
+   */
+  export type AIInsightFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AIInsight
+     */
+    select?: AIInsightSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AIInsightInclude<ExtArgs> | null
+    /**
+     * Filter, which AIInsight to fetch.
+     */
+    where: AIInsightWhereUniqueInput
+  }
+
+  /**
+   * AIInsight findFirst
+   */
+  export type AIInsightFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AIInsight
+     */
+    select?: AIInsightSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AIInsightInclude<ExtArgs> | null
+    /**
+     * Filter, which AIInsight to fetch.
+     */
+    where?: AIInsightWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AIInsights to fetch.
+     */
+    orderBy?: AIInsightOrderByWithRelationInput | AIInsightOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for AIInsights.
+     */
+    cursor?: AIInsightWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AIInsights from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AIInsights.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AIInsights.
+     */
+    distinct?: AIInsightScalarFieldEnum | AIInsightScalarFieldEnum[]
+  }
+
+  /**
+   * AIInsight findFirstOrThrow
+   */
+  export type AIInsightFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AIInsight
+     */
+    select?: AIInsightSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AIInsightInclude<ExtArgs> | null
+    /**
+     * Filter, which AIInsight to fetch.
+     */
+    where?: AIInsightWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AIInsights to fetch.
+     */
+    orderBy?: AIInsightOrderByWithRelationInput | AIInsightOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for AIInsights.
+     */
+    cursor?: AIInsightWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AIInsights from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AIInsights.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AIInsights.
+     */
+    distinct?: AIInsightScalarFieldEnum | AIInsightScalarFieldEnum[]
+  }
+
+  /**
+   * AIInsight findMany
+   */
+  export type AIInsightFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AIInsight
+     */
+    select?: AIInsightSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AIInsightInclude<ExtArgs> | null
+    /**
+     * Filter, which AIInsights to fetch.
+     */
+    where?: AIInsightWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AIInsights to fetch.
+     */
+    orderBy?: AIInsightOrderByWithRelationInput | AIInsightOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing AIInsights.
+     */
+    cursor?: AIInsightWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AIInsights from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AIInsights.
+     */
+    skip?: number
+    distinct?: AIInsightScalarFieldEnum | AIInsightScalarFieldEnum[]
+  }
+
+  /**
+   * AIInsight create
+   */
+  export type AIInsightCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AIInsight
+     */
+    select?: AIInsightSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AIInsightInclude<ExtArgs> | null
+    /**
+     * The data needed to create a AIInsight.
+     */
+    data: XOR<AIInsightCreateInput, AIInsightUncheckedCreateInput>
+  }
+
+  /**
+   * AIInsight createMany
+   */
+  export type AIInsightCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many AIInsights.
+     */
+    data: AIInsightCreateManyInput | AIInsightCreateManyInput[]
+  }
+
+  /**
+   * AIInsight createManyAndReturn
+   */
+  export type AIInsightCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AIInsight
+     */
+    select?: AIInsightSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many AIInsights.
+     */
+    data: AIInsightCreateManyInput | AIInsightCreateManyInput[]
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AIInsightIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * AIInsight update
+   */
+  export type AIInsightUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AIInsight
+     */
+    select?: AIInsightSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AIInsightInclude<ExtArgs> | null
+    /**
+     * The data needed to update a AIInsight.
+     */
+    data: XOR<AIInsightUpdateInput, AIInsightUncheckedUpdateInput>
+    /**
+     * Choose, which AIInsight to update.
+     */
+    where: AIInsightWhereUniqueInput
+  }
+
+  /**
+   * AIInsight updateMany
+   */
+  export type AIInsightUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update AIInsights.
+     */
+    data: XOR<AIInsightUpdateManyMutationInput, AIInsightUncheckedUpdateManyInput>
+    /**
+     * Filter which AIInsights to update
+     */
+    where?: AIInsightWhereInput
+  }
+
+  /**
+   * AIInsight upsert
+   */
+  export type AIInsightUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AIInsight
+     */
+    select?: AIInsightSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AIInsightInclude<ExtArgs> | null
+    /**
+     * The filter to search for the AIInsight to update in case it exists.
+     */
+    where: AIInsightWhereUniqueInput
+    /**
+     * In case the AIInsight found by the `where` argument doesn't exist, create a new AIInsight with this data.
+     */
+    create: XOR<AIInsightCreateInput, AIInsightUncheckedCreateInput>
+    /**
+     * In case the AIInsight was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<AIInsightUpdateInput, AIInsightUncheckedUpdateInput>
+  }
+
+  /**
+   * AIInsight delete
+   */
+  export type AIInsightDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AIInsight
+     */
+    select?: AIInsightSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AIInsightInclude<ExtArgs> | null
+    /**
+     * Filter which AIInsight to delete.
+     */
+    where: AIInsightWhereUniqueInput
+  }
+
+  /**
+   * AIInsight deleteMany
+   */
+  export type AIInsightDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which AIInsights to delete
+     */
+    where?: AIInsightWhereInput
+  }
+
+  /**
+   * AIInsight.habit
+   */
+  export type AIInsight$habitArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Habit
+     */
+    select?: HabitSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HabitInclude<ExtArgs> | null
+    where?: HabitWhereInput
+  }
+
+  /**
+   * AIInsight without action
+   */
+  export type AIInsightDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AIInsight
+     */
+    select?: AIInsightSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AIInsightInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Friend
+   */
+
+  export type AggregateFriend = {
+    _count: FriendCountAggregateOutputType | null
+    _avg: FriendAvgAggregateOutputType | null
+    _sum: FriendSumAggregateOutputType | null
+    _min: FriendMinAggregateOutputType | null
+    _max: FriendMaxAggregateOutputType | null
+  }
+
+  export type FriendAvgAggregateOutputType = {
+    id: number | null
+    userId: number | null
+    friendId: number | null
+  }
+
+  export type FriendSumAggregateOutputType = {
+    id: number | null
+    userId: number | null
+    friendId: number | null
+  }
+
+  export type FriendMinAggregateOutputType = {
+    id: number | null
+    userId: number | null
+    friendId: number | null
+    status: string | null
+    createdAt: Date | null
+  }
+
+  export type FriendMaxAggregateOutputType = {
+    id: number | null
+    userId: number | null
+    friendId: number | null
+    status: string | null
+    createdAt: Date | null
+  }
+
+  export type FriendCountAggregateOutputType = {
+    id: number
+    userId: number
+    friendId: number
+    status: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type FriendAvgAggregateInputType = {
+    id?: true
+    userId?: true
+    friendId?: true
+  }
+
+  export type FriendSumAggregateInputType = {
+    id?: true
+    userId?: true
+    friendId?: true
+  }
+
+  export type FriendMinAggregateInputType = {
+    id?: true
+    userId?: true
+    friendId?: true
+    status?: true
+    createdAt?: true
+  }
+
+  export type FriendMaxAggregateInputType = {
+    id?: true
+    userId?: true
+    friendId?: true
+    status?: true
+    createdAt?: true
+  }
+
+  export type FriendCountAggregateInputType = {
+    id?: true
+    userId?: true
+    friendId?: true
+    status?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type FriendAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Friend to aggregate.
+     */
+    where?: FriendWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Friends to fetch.
+     */
+    orderBy?: FriendOrderByWithRelationInput | FriendOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: FriendWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Friends from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Friends.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Friends
+    **/
+    _count?: true | FriendCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: FriendAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: FriendSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: FriendMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: FriendMaxAggregateInputType
+  }
+
+  export type GetFriendAggregateType<T extends FriendAggregateArgs> = {
+        [P in keyof T & keyof AggregateFriend]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateFriend[P]>
+      : GetScalarType<T[P], AggregateFriend[P]>
+  }
+
+
+
+
+  export type FriendGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: FriendWhereInput
+    orderBy?: FriendOrderByWithAggregationInput | FriendOrderByWithAggregationInput[]
+    by: FriendScalarFieldEnum[] | FriendScalarFieldEnum
+    having?: FriendScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: FriendCountAggregateInputType | true
+    _avg?: FriendAvgAggregateInputType
+    _sum?: FriendSumAggregateInputType
+    _min?: FriendMinAggregateInputType
+    _max?: FriendMaxAggregateInputType
+  }
+
+  export type FriendGroupByOutputType = {
+    id: number
+    userId: number
+    friendId: number
+    status: string
+    createdAt: Date
+    _count: FriendCountAggregateOutputType | null
+    _avg: FriendAvgAggregateOutputType | null
+    _sum: FriendSumAggregateOutputType | null
+    _min: FriendMinAggregateOutputType | null
+    _max: FriendMaxAggregateOutputType | null
+  }
+
+  type GetFriendGroupByPayload<T extends FriendGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<FriendGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof FriendGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], FriendGroupByOutputType[P]>
+            : GetScalarType<T[P], FriendGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type FriendSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    friendId?: boolean
+    status?: boolean
+    createdAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    friend?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["friend"]>
+
+  export type FriendSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    friendId?: boolean
+    status?: boolean
+    createdAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    friend?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["friend"]>
+
+  export type FriendSelectScalar = {
+    id?: boolean
+    userId?: boolean
+    friendId?: boolean
+    status?: boolean
+    createdAt?: boolean
+  }
+
+  export type FriendInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    friend?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type FriendIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    friend?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $FriendPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Friend"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+      friend: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      userId: number
+      friendId: number
+      status: string
+      createdAt: Date
+    }, ExtArgs["result"]["friend"]>
+    composites: {}
+  }
+
+  type FriendGetPayload<S extends boolean | null | undefined | FriendDefaultArgs> = $Result.GetResult<Prisma.$FriendPayload, S>
+
+  type FriendCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<FriendFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: FriendCountAggregateInputType | true
+    }
+
+  export interface FriendDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Friend'], meta: { name: 'Friend' } }
+    /**
+     * Find zero or one Friend that matches the filter.
+     * @param {FriendFindUniqueArgs} args - Arguments to find a Friend
+     * @example
+     * // Get one Friend
+     * const friend = await prisma.friend.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends FriendFindUniqueArgs>(args: SelectSubset<T, FriendFindUniqueArgs<ExtArgs>>): Prisma__FriendClient<$Result.GetResult<Prisma.$FriendPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one Friend that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {FriendFindUniqueOrThrowArgs} args - Arguments to find a Friend
+     * @example
+     * // Get one Friend
+     * const friend = await prisma.friend.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends FriendFindUniqueOrThrowArgs>(args: SelectSubset<T, FriendFindUniqueOrThrowArgs<ExtArgs>>): Prisma__FriendClient<$Result.GetResult<Prisma.$FriendPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first Friend that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FriendFindFirstArgs} args - Arguments to find a Friend
+     * @example
+     * // Get one Friend
+     * const friend = await prisma.friend.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends FriendFindFirstArgs>(args?: SelectSubset<T, FriendFindFirstArgs<ExtArgs>>): Prisma__FriendClient<$Result.GetResult<Prisma.$FriendPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first Friend that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FriendFindFirstOrThrowArgs} args - Arguments to find a Friend
+     * @example
+     * // Get one Friend
+     * const friend = await prisma.friend.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends FriendFindFirstOrThrowArgs>(args?: SelectSubset<T, FriendFindFirstOrThrowArgs<ExtArgs>>): Prisma__FriendClient<$Result.GetResult<Prisma.$FriendPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more Friends that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FriendFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Friends
+     * const friends = await prisma.friend.findMany()
+     * 
+     * // Get first 10 Friends
+     * const friends = await prisma.friend.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const friendWithIdOnly = await prisma.friend.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends FriendFindManyArgs>(args?: SelectSubset<T, FriendFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FriendPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a Friend.
+     * @param {FriendCreateArgs} args - Arguments to create a Friend.
+     * @example
+     * // Create one Friend
+     * const Friend = await prisma.friend.create({
+     *   data: {
+     *     // ... data to create a Friend
+     *   }
+     * })
+     * 
+     */
+    create<T extends FriendCreateArgs>(args: SelectSubset<T, FriendCreateArgs<ExtArgs>>): Prisma__FriendClient<$Result.GetResult<Prisma.$FriendPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many Friends.
+     * @param {FriendCreateManyArgs} args - Arguments to create many Friends.
+     * @example
+     * // Create many Friends
+     * const friend = await prisma.friend.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends FriendCreateManyArgs>(args?: SelectSubset<T, FriendCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Friends and returns the data saved in the database.
+     * @param {FriendCreateManyAndReturnArgs} args - Arguments to create many Friends.
+     * @example
+     * // Create many Friends
+     * const friend = await prisma.friend.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Friends and only return the `id`
+     * const friendWithIdOnly = await prisma.friend.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends FriendCreateManyAndReturnArgs>(args?: SelectSubset<T, FriendCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FriendPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a Friend.
+     * @param {FriendDeleteArgs} args - Arguments to delete one Friend.
+     * @example
+     * // Delete one Friend
+     * const Friend = await prisma.friend.delete({
+     *   where: {
+     *     // ... filter to delete one Friend
+     *   }
+     * })
+     * 
+     */
+    delete<T extends FriendDeleteArgs>(args: SelectSubset<T, FriendDeleteArgs<ExtArgs>>): Prisma__FriendClient<$Result.GetResult<Prisma.$FriendPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one Friend.
+     * @param {FriendUpdateArgs} args - Arguments to update one Friend.
+     * @example
+     * // Update one Friend
+     * const friend = await prisma.friend.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends FriendUpdateArgs>(args: SelectSubset<T, FriendUpdateArgs<ExtArgs>>): Prisma__FriendClient<$Result.GetResult<Prisma.$FriendPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more Friends.
+     * @param {FriendDeleteManyArgs} args - Arguments to filter Friends to delete.
+     * @example
+     * // Delete a few Friends
+     * const { count } = await prisma.friend.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends FriendDeleteManyArgs>(args?: SelectSubset<T, FriendDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Friends.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FriendUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Friends
+     * const friend = await prisma.friend.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends FriendUpdateManyArgs>(args: SelectSubset<T, FriendUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Friend.
+     * @param {FriendUpsertArgs} args - Arguments to update or create a Friend.
+     * @example
+     * // Update or create a Friend
+     * const friend = await prisma.friend.upsert({
+     *   create: {
+     *     // ... data to create a Friend
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Friend we want to update
+     *   }
+     * })
+     */
+    upsert<T extends FriendUpsertArgs>(args: SelectSubset<T, FriendUpsertArgs<ExtArgs>>): Prisma__FriendClient<$Result.GetResult<Prisma.$FriendPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of Friends.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FriendCountArgs} args - Arguments to filter Friends to count.
+     * @example
+     * // Count the number of Friends
+     * const count = await prisma.friend.count({
+     *   where: {
+     *     // ... the filter for the Friends we want to count
+     *   }
+     * })
+    **/
+    count<T extends FriendCountArgs>(
+      args?: Subset<T, FriendCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], FriendCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Friend.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FriendAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends FriendAggregateArgs>(args: Subset<T, FriendAggregateArgs>): Prisma.PrismaPromise<GetFriendAggregateType<T>>
+
+    /**
+     * Group by Friend.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FriendGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends FriendGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: FriendGroupByArgs['orderBy'] }
+        : { orderBy?: FriendGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, FriendGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetFriendGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Friend model
+   */
+  readonly fields: FriendFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Friend.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__FriendClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    friend<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Friend model
+   */ 
+  interface FriendFieldRefs {
+    readonly id: FieldRef<"Friend", 'Int'>
+    readonly userId: FieldRef<"Friend", 'Int'>
+    readonly friendId: FieldRef<"Friend", 'Int'>
+    readonly status: FieldRef<"Friend", 'String'>
+    readonly createdAt: FieldRef<"Friend", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Friend findUnique
+   */
+  export type FriendFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Friend
+     */
+    select?: FriendSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FriendInclude<ExtArgs> | null
+    /**
+     * Filter, which Friend to fetch.
+     */
+    where: FriendWhereUniqueInput
+  }
+
+  /**
+   * Friend findUniqueOrThrow
+   */
+  export type FriendFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Friend
+     */
+    select?: FriendSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FriendInclude<ExtArgs> | null
+    /**
+     * Filter, which Friend to fetch.
+     */
+    where: FriendWhereUniqueInput
+  }
+
+  /**
+   * Friend findFirst
+   */
+  export type FriendFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Friend
+     */
+    select?: FriendSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FriendInclude<ExtArgs> | null
+    /**
+     * Filter, which Friend to fetch.
+     */
+    where?: FriendWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Friends to fetch.
+     */
+    orderBy?: FriendOrderByWithRelationInput | FriendOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Friends.
+     */
+    cursor?: FriendWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Friends from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Friends.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Friends.
+     */
+    distinct?: FriendScalarFieldEnum | FriendScalarFieldEnum[]
+  }
+
+  /**
+   * Friend findFirstOrThrow
+   */
+  export type FriendFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Friend
+     */
+    select?: FriendSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FriendInclude<ExtArgs> | null
+    /**
+     * Filter, which Friend to fetch.
+     */
+    where?: FriendWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Friends to fetch.
+     */
+    orderBy?: FriendOrderByWithRelationInput | FriendOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Friends.
+     */
+    cursor?: FriendWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Friends from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Friends.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Friends.
+     */
+    distinct?: FriendScalarFieldEnum | FriendScalarFieldEnum[]
+  }
+
+  /**
+   * Friend findMany
+   */
+  export type FriendFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Friend
+     */
+    select?: FriendSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FriendInclude<ExtArgs> | null
+    /**
+     * Filter, which Friends to fetch.
+     */
+    where?: FriendWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Friends to fetch.
+     */
+    orderBy?: FriendOrderByWithRelationInput | FriendOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Friends.
+     */
+    cursor?: FriendWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Friends from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Friends.
+     */
+    skip?: number
+    distinct?: FriendScalarFieldEnum | FriendScalarFieldEnum[]
+  }
+
+  /**
+   * Friend create
+   */
+  export type FriendCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Friend
+     */
+    select?: FriendSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FriendInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Friend.
+     */
+    data: XOR<FriendCreateInput, FriendUncheckedCreateInput>
+  }
+
+  /**
+   * Friend createMany
+   */
+  export type FriendCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Friends.
+     */
+    data: FriendCreateManyInput | FriendCreateManyInput[]
+  }
+
+  /**
+   * Friend createManyAndReturn
+   */
+  export type FriendCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Friend
+     */
+    select?: FriendSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many Friends.
+     */
+    data: FriendCreateManyInput | FriendCreateManyInput[]
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FriendIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Friend update
+   */
+  export type FriendUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Friend
+     */
+    select?: FriendSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FriendInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Friend.
+     */
+    data: XOR<FriendUpdateInput, FriendUncheckedUpdateInput>
+    /**
+     * Choose, which Friend to update.
+     */
+    where: FriendWhereUniqueInput
+  }
+
+  /**
+   * Friend updateMany
+   */
+  export type FriendUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Friends.
+     */
+    data: XOR<FriendUpdateManyMutationInput, FriendUncheckedUpdateManyInput>
+    /**
+     * Filter which Friends to update
+     */
+    where?: FriendWhereInput
+  }
+
+  /**
+   * Friend upsert
+   */
+  export type FriendUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Friend
+     */
+    select?: FriendSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FriendInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Friend to update in case it exists.
+     */
+    where: FriendWhereUniqueInput
+    /**
+     * In case the Friend found by the `where` argument doesn't exist, create a new Friend with this data.
+     */
+    create: XOR<FriendCreateInput, FriendUncheckedCreateInput>
+    /**
+     * In case the Friend was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<FriendUpdateInput, FriendUncheckedUpdateInput>
+  }
+
+  /**
+   * Friend delete
+   */
+  export type FriendDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Friend
+     */
+    select?: FriendSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FriendInclude<ExtArgs> | null
+    /**
+     * Filter which Friend to delete.
+     */
+    where: FriendWhereUniqueInput
+  }
+
+  /**
+   * Friend deleteMany
+   */
+  export type FriendDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Friends to delete
+     */
+    where?: FriendWhereInput
+  }
+
+  /**
+   * Friend without action
+   */
+  export type FriendDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Friend
+     */
+    select?: FriendSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FriendInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model SocialPost
+   */
+
+  export type AggregateSocialPost = {
+    _count: SocialPostCountAggregateOutputType | null
+    _avg: SocialPostAvgAggregateOutputType | null
+    _sum: SocialPostSumAggregateOutputType | null
+    _min: SocialPostMinAggregateOutputType | null
+    _max: SocialPostMaxAggregateOutputType | null
+  }
+
+  export type SocialPostAvgAggregateOutputType = {
+    id: number | null
+    userId: number | null
+    badgeId: number | null
+    habitId: number | null
+    likesCount: number | null
+  }
+
+  export type SocialPostSumAggregateOutputType = {
+    id: number | null
+    userId: number | null
+    badgeId: number | null
+    habitId: number | null
+    likesCount: number | null
+  }
+
+  export type SocialPostMinAggregateOutputType = {
+    id: number | null
+    userId: number | null
+    content: string | null
+    badgeId: number | null
+    habitId: number | null
+    likesCount: number | null
+    createdAt: Date | null
+  }
+
+  export type SocialPostMaxAggregateOutputType = {
+    id: number | null
+    userId: number | null
+    content: string | null
+    badgeId: number | null
+    habitId: number | null
+    likesCount: number | null
+    createdAt: Date | null
+  }
+
+  export type SocialPostCountAggregateOutputType = {
+    id: number
+    userId: number
+    content: number
+    badgeId: number
+    habitId: number
+    likesCount: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type SocialPostAvgAggregateInputType = {
+    id?: true
+    userId?: true
+    badgeId?: true
+    habitId?: true
+    likesCount?: true
+  }
+
+  export type SocialPostSumAggregateInputType = {
+    id?: true
+    userId?: true
+    badgeId?: true
+    habitId?: true
+    likesCount?: true
+  }
+
+  export type SocialPostMinAggregateInputType = {
+    id?: true
+    userId?: true
+    content?: true
+    badgeId?: true
+    habitId?: true
+    likesCount?: true
+    createdAt?: true
+  }
+
+  export type SocialPostMaxAggregateInputType = {
+    id?: true
+    userId?: true
+    content?: true
+    badgeId?: true
+    habitId?: true
+    likesCount?: true
+    createdAt?: true
+  }
+
+  export type SocialPostCountAggregateInputType = {
+    id?: true
+    userId?: true
+    content?: true
+    badgeId?: true
+    habitId?: true
+    likesCount?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type SocialPostAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which SocialPost to aggregate.
+     */
+    where?: SocialPostWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SocialPosts to fetch.
+     */
+    orderBy?: SocialPostOrderByWithRelationInput | SocialPostOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: SocialPostWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SocialPosts from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SocialPosts.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned SocialPosts
+    **/
+    _count?: true | SocialPostCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: SocialPostAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: SocialPostSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: SocialPostMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: SocialPostMaxAggregateInputType
+  }
+
+  export type GetSocialPostAggregateType<T extends SocialPostAggregateArgs> = {
+        [P in keyof T & keyof AggregateSocialPost]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateSocialPost[P]>
+      : GetScalarType<T[P], AggregateSocialPost[P]>
+  }
+
+
+
+
+  export type SocialPostGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SocialPostWhereInput
+    orderBy?: SocialPostOrderByWithAggregationInput | SocialPostOrderByWithAggregationInput[]
+    by: SocialPostScalarFieldEnum[] | SocialPostScalarFieldEnum
+    having?: SocialPostScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: SocialPostCountAggregateInputType | true
+    _avg?: SocialPostAvgAggregateInputType
+    _sum?: SocialPostSumAggregateInputType
+    _min?: SocialPostMinAggregateInputType
+    _max?: SocialPostMaxAggregateInputType
+  }
+
+  export type SocialPostGroupByOutputType = {
+    id: number
+    userId: number
+    content: string
+    badgeId: number | null
+    habitId: number | null
+    likesCount: number
+    createdAt: Date
+    _count: SocialPostCountAggregateOutputType | null
+    _avg: SocialPostAvgAggregateOutputType | null
+    _sum: SocialPostSumAggregateOutputType | null
+    _min: SocialPostMinAggregateOutputType | null
+    _max: SocialPostMaxAggregateOutputType | null
+  }
+
+  type GetSocialPostGroupByPayload<T extends SocialPostGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<SocialPostGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof SocialPostGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], SocialPostGroupByOutputType[P]>
+            : GetScalarType<T[P], SocialPostGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type SocialPostSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    content?: boolean
+    badgeId?: boolean
+    habitId?: boolean
+    likesCount?: boolean
+    createdAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    badge?: boolean | SocialPost$badgeArgs<ExtArgs>
+    habit?: boolean | SocialPost$habitArgs<ExtArgs>
+  }, ExtArgs["result"]["socialPost"]>
+
+  export type SocialPostSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    content?: boolean
+    badgeId?: boolean
+    habitId?: boolean
+    likesCount?: boolean
+    createdAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    badge?: boolean | SocialPost$badgeArgs<ExtArgs>
+    habit?: boolean | SocialPost$habitArgs<ExtArgs>
+  }, ExtArgs["result"]["socialPost"]>
+
+  export type SocialPostSelectScalar = {
+    id?: boolean
+    userId?: boolean
+    content?: boolean
+    badgeId?: boolean
+    habitId?: boolean
+    likesCount?: boolean
+    createdAt?: boolean
+  }
+
+  export type SocialPostInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    badge?: boolean | SocialPost$badgeArgs<ExtArgs>
+    habit?: boolean | SocialPost$habitArgs<ExtArgs>
+  }
+  export type SocialPostIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    badge?: boolean | SocialPost$badgeArgs<ExtArgs>
+    habit?: boolean | SocialPost$habitArgs<ExtArgs>
+  }
+
+  export type $SocialPostPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "SocialPost"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+      badge: Prisma.$BadgePayload<ExtArgs> | null
+      habit: Prisma.$HabitPayload<ExtArgs> | null
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      userId: number
+      content: string
+      badgeId: number | null
+      habitId: number | null
+      likesCount: number
+      createdAt: Date
+    }, ExtArgs["result"]["socialPost"]>
+    composites: {}
+  }
+
+  type SocialPostGetPayload<S extends boolean | null | undefined | SocialPostDefaultArgs> = $Result.GetResult<Prisma.$SocialPostPayload, S>
+
+  type SocialPostCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<SocialPostFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: SocialPostCountAggregateInputType | true
+    }
+
+  export interface SocialPostDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['SocialPost'], meta: { name: 'SocialPost' } }
+    /**
+     * Find zero or one SocialPost that matches the filter.
+     * @param {SocialPostFindUniqueArgs} args - Arguments to find a SocialPost
+     * @example
+     * // Get one SocialPost
+     * const socialPost = await prisma.socialPost.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends SocialPostFindUniqueArgs>(args: SelectSubset<T, SocialPostFindUniqueArgs<ExtArgs>>): Prisma__SocialPostClient<$Result.GetResult<Prisma.$SocialPostPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one SocialPost that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {SocialPostFindUniqueOrThrowArgs} args - Arguments to find a SocialPost
+     * @example
+     * // Get one SocialPost
+     * const socialPost = await prisma.socialPost.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends SocialPostFindUniqueOrThrowArgs>(args: SelectSubset<T, SocialPostFindUniqueOrThrowArgs<ExtArgs>>): Prisma__SocialPostClient<$Result.GetResult<Prisma.$SocialPostPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first SocialPost that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SocialPostFindFirstArgs} args - Arguments to find a SocialPost
+     * @example
+     * // Get one SocialPost
+     * const socialPost = await prisma.socialPost.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends SocialPostFindFirstArgs>(args?: SelectSubset<T, SocialPostFindFirstArgs<ExtArgs>>): Prisma__SocialPostClient<$Result.GetResult<Prisma.$SocialPostPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first SocialPost that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SocialPostFindFirstOrThrowArgs} args - Arguments to find a SocialPost
+     * @example
+     * // Get one SocialPost
+     * const socialPost = await prisma.socialPost.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends SocialPostFindFirstOrThrowArgs>(args?: SelectSubset<T, SocialPostFindFirstOrThrowArgs<ExtArgs>>): Prisma__SocialPostClient<$Result.GetResult<Prisma.$SocialPostPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more SocialPosts that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SocialPostFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all SocialPosts
+     * const socialPosts = await prisma.socialPost.findMany()
+     * 
+     * // Get first 10 SocialPosts
+     * const socialPosts = await prisma.socialPost.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const socialPostWithIdOnly = await prisma.socialPost.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends SocialPostFindManyArgs>(args?: SelectSubset<T, SocialPostFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SocialPostPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a SocialPost.
+     * @param {SocialPostCreateArgs} args - Arguments to create a SocialPost.
+     * @example
+     * // Create one SocialPost
+     * const SocialPost = await prisma.socialPost.create({
+     *   data: {
+     *     // ... data to create a SocialPost
+     *   }
+     * })
+     * 
+     */
+    create<T extends SocialPostCreateArgs>(args: SelectSubset<T, SocialPostCreateArgs<ExtArgs>>): Prisma__SocialPostClient<$Result.GetResult<Prisma.$SocialPostPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many SocialPosts.
+     * @param {SocialPostCreateManyArgs} args - Arguments to create many SocialPosts.
+     * @example
+     * // Create many SocialPosts
+     * const socialPost = await prisma.socialPost.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends SocialPostCreateManyArgs>(args?: SelectSubset<T, SocialPostCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many SocialPosts and returns the data saved in the database.
+     * @param {SocialPostCreateManyAndReturnArgs} args - Arguments to create many SocialPosts.
+     * @example
+     * // Create many SocialPosts
+     * const socialPost = await prisma.socialPost.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many SocialPosts and only return the `id`
+     * const socialPostWithIdOnly = await prisma.socialPost.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends SocialPostCreateManyAndReturnArgs>(args?: SelectSubset<T, SocialPostCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SocialPostPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a SocialPost.
+     * @param {SocialPostDeleteArgs} args - Arguments to delete one SocialPost.
+     * @example
+     * // Delete one SocialPost
+     * const SocialPost = await prisma.socialPost.delete({
+     *   where: {
+     *     // ... filter to delete one SocialPost
+     *   }
+     * })
+     * 
+     */
+    delete<T extends SocialPostDeleteArgs>(args: SelectSubset<T, SocialPostDeleteArgs<ExtArgs>>): Prisma__SocialPostClient<$Result.GetResult<Prisma.$SocialPostPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one SocialPost.
+     * @param {SocialPostUpdateArgs} args - Arguments to update one SocialPost.
+     * @example
+     * // Update one SocialPost
+     * const socialPost = await prisma.socialPost.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends SocialPostUpdateArgs>(args: SelectSubset<T, SocialPostUpdateArgs<ExtArgs>>): Prisma__SocialPostClient<$Result.GetResult<Prisma.$SocialPostPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more SocialPosts.
+     * @param {SocialPostDeleteManyArgs} args - Arguments to filter SocialPosts to delete.
+     * @example
+     * // Delete a few SocialPosts
+     * const { count } = await prisma.socialPost.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends SocialPostDeleteManyArgs>(args?: SelectSubset<T, SocialPostDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more SocialPosts.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SocialPostUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many SocialPosts
+     * const socialPost = await prisma.socialPost.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends SocialPostUpdateManyArgs>(args: SelectSubset<T, SocialPostUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one SocialPost.
+     * @param {SocialPostUpsertArgs} args - Arguments to update or create a SocialPost.
+     * @example
+     * // Update or create a SocialPost
+     * const socialPost = await prisma.socialPost.upsert({
+     *   create: {
+     *     // ... data to create a SocialPost
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the SocialPost we want to update
+     *   }
+     * })
+     */
+    upsert<T extends SocialPostUpsertArgs>(args: SelectSubset<T, SocialPostUpsertArgs<ExtArgs>>): Prisma__SocialPostClient<$Result.GetResult<Prisma.$SocialPostPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of SocialPosts.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SocialPostCountArgs} args - Arguments to filter SocialPosts to count.
+     * @example
+     * // Count the number of SocialPosts
+     * const count = await prisma.socialPost.count({
+     *   where: {
+     *     // ... the filter for the SocialPosts we want to count
+     *   }
+     * })
+    **/
+    count<T extends SocialPostCountArgs>(
+      args?: Subset<T, SocialPostCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], SocialPostCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a SocialPost.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SocialPostAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends SocialPostAggregateArgs>(args: Subset<T, SocialPostAggregateArgs>): Prisma.PrismaPromise<GetSocialPostAggregateType<T>>
+
+    /**
+     * Group by SocialPost.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SocialPostGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends SocialPostGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: SocialPostGroupByArgs['orderBy'] }
+        : { orderBy?: SocialPostGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, SocialPostGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetSocialPostGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the SocialPost model
+   */
+  readonly fields: SocialPostFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for SocialPost.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__SocialPostClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    badge<T extends SocialPost$badgeArgs<ExtArgs> = {}>(args?: Subset<T, SocialPost$badgeArgs<ExtArgs>>): Prisma__BadgeClient<$Result.GetResult<Prisma.$BadgePayload<ExtArgs>, T, "findUniqueOrThrow"> | null, null, ExtArgs>
+    habit<T extends SocialPost$habitArgs<ExtArgs> = {}>(args?: Subset<T, SocialPost$habitArgs<ExtArgs>>): Prisma__HabitClient<$Result.GetResult<Prisma.$HabitPayload<ExtArgs>, T, "findUniqueOrThrow"> | null, null, ExtArgs>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the SocialPost model
+   */ 
+  interface SocialPostFieldRefs {
+    readonly id: FieldRef<"SocialPost", 'Int'>
+    readonly userId: FieldRef<"SocialPost", 'Int'>
+    readonly content: FieldRef<"SocialPost", 'String'>
+    readonly badgeId: FieldRef<"SocialPost", 'Int'>
+    readonly habitId: FieldRef<"SocialPost", 'Int'>
+    readonly likesCount: FieldRef<"SocialPost", 'Int'>
+    readonly createdAt: FieldRef<"SocialPost", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * SocialPost findUnique
+   */
+  export type SocialPostFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SocialPost
+     */
+    select?: SocialPostSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SocialPostInclude<ExtArgs> | null
+    /**
+     * Filter, which SocialPost to fetch.
+     */
+    where: SocialPostWhereUniqueInput
+  }
+
+  /**
+   * SocialPost findUniqueOrThrow
+   */
+  export type SocialPostFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SocialPost
+     */
+    select?: SocialPostSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SocialPostInclude<ExtArgs> | null
+    /**
+     * Filter, which SocialPost to fetch.
+     */
+    where: SocialPostWhereUniqueInput
+  }
+
+  /**
+   * SocialPost findFirst
+   */
+  export type SocialPostFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SocialPost
+     */
+    select?: SocialPostSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SocialPostInclude<ExtArgs> | null
+    /**
+     * Filter, which SocialPost to fetch.
+     */
+    where?: SocialPostWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SocialPosts to fetch.
+     */
+    orderBy?: SocialPostOrderByWithRelationInput | SocialPostOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for SocialPosts.
+     */
+    cursor?: SocialPostWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SocialPosts from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SocialPosts.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SocialPosts.
+     */
+    distinct?: SocialPostScalarFieldEnum | SocialPostScalarFieldEnum[]
+  }
+
+  /**
+   * SocialPost findFirstOrThrow
+   */
+  export type SocialPostFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SocialPost
+     */
+    select?: SocialPostSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SocialPostInclude<ExtArgs> | null
+    /**
+     * Filter, which SocialPost to fetch.
+     */
+    where?: SocialPostWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SocialPosts to fetch.
+     */
+    orderBy?: SocialPostOrderByWithRelationInput | SocialPostOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for SocialPosts.
+     */
+    cursor?: SocialPostWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SocialPosts from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SocialPosts.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SocialPosts.
+     */
+    distinct?: SocialPostScalarFieldEnum | SocialPostScalarFieldEnum[]
+  }
+
+  /**
+   * SocialPost findMany
+   */
+  export type SocialPostFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SocialPost
+     */
+    select?: SocialPostSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SocialPostInclude<ExtArgs> | null
+    /**
+     * Filter, which SocialPosts to fetch.
+     */
+    where?: SocialPostWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SocialPosts to fetch.
+     */
+    orderBy?: SocialPostOrderByWithRelationInput | SocialPostOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing SocialPosts.
+     */
+    cursor?: SocialPostWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SocialPosts from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SocialPosts.
+     */
+    skip?: number
+    distinct?: SocialPostScalarFieldEnum | SocialPostScalarFieldEnum[]
+  }
+
+  /**
+   * SocialPost create
+   */
+  export type SocialPostCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SocialPost
+     */
+    select?: SocialPostSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SocialPostInclude<ExtArgs> | null
+    /**
+     * The data needed to create a SocialPost.
+     */
+    data: XOR<SocialPostCreateInput, SocialPostUncheckedCreateInput>
+  }
+
+  /**
+   * SocialPost createMany
+   */
+  export type SocialPostCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many SocialPosts.
+     */
+    data: SocialPostCreateManyInput | SocialPostCreateManyInput[]
+  }
+
+  /**
+   * SocialPost createManyAndReturn
+   */
+  export type SocialPostCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SocialPost
+     */
+    select?: SocialPostSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many SocialPosts.
+     */
+    data: SocialPostCreateManyInput | SocialPostCreateManyInput[]
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SocialPostIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * SocialPost update
+   */
+  export type SocialPostUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SocialPost
+     */
+    select?: SocialPostSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SocialPostInclude<ExtArgs> | null
+    /**
+     * The data needed to update a SocialPost.
+     */
+    data: XOR<SocialPostUpdateInput, SocialPostUncheckedUpdateInput>
+    /**
+     * Choose, which SocialPost to update.
+     */
+    where: SocialPostWhereUniqueInput
+  }
+
+  /**
+   * SocialPost updateMany
+   */
+  export type SocialPostUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update SocialPosts.
+     */
+    data: XOR<SocialPostUpdateManyMutationInput, SocialPostUncheckedUpdateManyInput>
+    /**
+     * Filter which SocialPosts to update
+     */
+    where?: SocialPostWhereInput
+  }
+
+  /**
+   * SocialPost upsert
+   */
+  export type SocialPostUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SocialPost
+     */
+    select?: SocialPostSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SocialPostInclude<ExtArgs> | null
+    /**
+     * The filter to search for the SocialPost to update in case it exists.
+     */
+    where: SocialPostWhereUniqueInput
+    /**
+     * In case the SocialPost found by the `where` argument doesn't exist, create a new SocialPost with this data.
+     */
+    create: XOR<SocialPostCreateInput, SocialPostUncheckedCreateInput>
+    /**
+     * In case the SocialPost was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<SocialPostUpdateInput, SocialPostUncheckedUpdateInput>
+  }
+
+  /**
+   * SocialPost delete
+   */
+  export type SocialPostDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SocialPost
+     */
+    select?: SocialPostSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SocialPostInclude<ExtArgs> | null
+    /**
+     * Filter which SocialPost to delete.
+     */
+    where: SocialPostWhereUniqueInput
+  }
+
+  /**
+   * SocialPost deleteMany
+   */
+  export type SocialPostDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which SocialPosts to delete
+     */
+    where?: SocialPostWhereInput
+  }
+
+  /**
+   * SocialPost.badge
+   */
+  export type SocialPost$badgeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Badge
+     */
+    select?: BadgeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BadgeInclude<ExtArgs> | null
+    where?: BadgeWhereInput
+  }
+
+  /**
+   * SocialPost.habit
+   */
+  export type SocialPost$habitArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Habit
+     */
+    select?: HabitSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HabitInclude<ExtArgs> | null
+    where?: HabitWhereInput
+  }
+
+  /**
+   * SocialPost without action
+   */
+  export type SocialPostDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SocialPost
+     */
+    select?: SocialPostSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SocialPostInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Enums
+   */
+
+  export const TransactionIsolationLevel: {
+    Serializable: 'Serializable'
+  };
+
+  export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel]
+
+
+  export const UserScalarFieldEnum: {
+    id: 'id',
+    username: 'username',
+    avatar: 'avatar',
+    level: 'level',
+    totalPoints: 'totalPoints',
+    currentStreak: 'currentStreak',
+    longestStreak: 'longestStreak',
+    createdAt: 'createdAt'
+  };
+
+  export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
+
+
+  export const HabitScalarFieldEnum: {
+    id: 'id',
+    userId: 'userId',
+    name: 'name',
+    description: 'description',
+    category: 'category',
+    color: 'color',
+    icon: 'icon',
+    frequency: 'frequency',
+    targetDaysPerWeek: 'targetDaysPerWeek',
+    reminderTime: 'reminderTime',
+    isArchived: 'isArchived',
+    createdAt: 'createdAt'
+  };
+
+  export type HabitScalarFieldEnum = (typeof HabitScalarFieldEnum)[keyof typeof HabitScalarFieldEnum]
+
+
+  export const HabitLogScalarFieldEnum: {
+    id: 'id',
+    habitId: 'habitId',
+    userId: 'userId',
+    completedAt: 'completedAt',
+    note: 'note',
+    moodRating: 'moodRating',
+    durationMinutes: 'durationMinutes'
+  };
+
+  export type HabitLogScalarFieldEnum = (typeof HabitLogScalarFieldEnum)[keyof typeof HabitLogScalarFieldEnum]
+
+
+  export const BadgeScalarFieldEnum: {
+    id: 'id',
+    name: 'name',
+    description: 'description',
+    icon: 'icon',
+    rarity: 'rarity',
+    pointValue: 'pointValue',
+    condition: 'condition'
+  };
+
+  export type BadgeScalarFieldEnum = (typeof BadgeScalarFieldEnum)[keyof typeof BadgeScalarFieldEnum]
+
+
+  export const UserBadgeScalarFieldEnum: {
+    id: 'id',
+    userId: 'userId',
+    badgeId: 'badgeId',
+    earnedAt: 'earnedAt'
+  };
+
+  export type UserBadgeScalarFieldEnum = (typeof UserBadgeScalarFieldEnum)[keyof typeof UserBadgeScalarFieldEnum]
+
+
+  export const ChallengeScalarFieldEnum: {
+    id: 'id',
+    title: 'title',
+    description: 'description',
+    startDate: 'startDate',
+    endDate: 'endDate',
+    habitCategory: 'habitCategory',
+    pointReward: 'pointReward',
+    createdBy: 'createdBy'
+  };
+
+  export type ChallengeScalarFieldEnum = (typeof ChallengeScalarFieldEnum)[keyof typeof ChallengeScalarFieldEnum]
+
+
+  export const UserChallengeScalarFieldEnum: {
+    id: 'id',
+    userId: 'userId',
+    challengeId: 'challengeId',
+    joinedAt: 'joinedAt',
+    completedAt: 'completedAt',
+    progress: 'progress'
+  };
+
+  export type UserChallengeScalarFieldEnum = (typeof UserChallengeScalarFieldEnum)[keyof typeof UserChallengeScalarFieldEnum]
+
+
+  export const AIInsightScalarFieldEnum: {
+    id: 'id',
+    userId: 'userId',
+    habitId: 'habitId',
+    type: 'type',
+    content: 'content',
+    generatedAt: 'generatedAt',
+    isRead: 'isRead'
+  };
+
+  export type AIInsightScalarFieldEnum = (typeof AIInsightScalarFieldEnum)[keyof typeof AIInsightScalarFieldEnum]
+
+
+  export const FriendScalarFieldEnum: {
+    id: 'id',
+    userId: 'userId',
+    friendId: 'friendId',
+    status: 'status',
+    createdAt: 'createdAt'
+  };
+
+  export type FriendScalarFieldEnum = (typeof FriendScalarFieldEnum)[keyof typeof FriendScalarFieldEnum]
+
+
+  export const SocialPostScalarFieldEnum: {
+    id: 'id',
+    userId: 'userId',
+    content: 'content',
+    badgeId: 'badgeId',
+    habitId: 'habitId',
+    likesCount: 'likesCount',
+    createdAt: 'createdAt'
+  };
+
+  export type SocialPostScalarFieldEnum = (typeof SocialPostScalarFieldEnum)[keyof typeof SocialPostScalarFieldEnum]
+
+
+  export const SortOrder: {
+    asc: 'asc',
+    desc: 'desc'
+  };
+
+  export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
+
+
+  export const NullsOrder: {
+    first: 'first',
+    last: 'last'
+  };
+
+  export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
+  /**
+   * Field references 
+   */
+
+
+  /**
+   * Reference to a field of type 'Int'
+   */
+  export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
+    
+
+
+  /**
+   * Reference to a field of type 'String'
+   */
+  export type StringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'String'>
+    
+
+
+  /**
+   * Reference to a field of type 'DateTime'
+   */
+  export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
+    
+
+
+  /**
+   * Reference to a field of type 'Boolean'
+   */
+  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+    
+
+
+  /**
+   * Reference to a field of type 'Float'
+   */
+  export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
+    
+  /**
+   * Deep Input Types
+   */
+
+
+  export type UserWhereInput = {
+    AND?: UserWhereInput | UserWhereInput[]
+    OR?: UserWhereInput[]
+    NOT?: UserWhereInput | UserWhereInput[]
+    id?: IntFilter<"User"> | number
+    username?: StringFilter<"User"> | string
+    avatar?: StringNullableFilter<"User"> | string | null
+    level?: IntFilter<"User"> | number
+    totalPoints?: IntFilter<"User"> | number
+    currentStreak?: IntFilter<"User"> | number
+    longestStreak?: IntFilter<"User"> | number
+    createdAt?: DateTimeFilter<"User"> | Date | string
+    habits?: HabitListRelationFilter
+    habitLogs?: HabitLogListRelationFilter
+    badges?: UserBadgeListRelationFilter
+    challenges?: UserChallengeListRelationFilter
+    insights?: AIInsightListRelationFilter
+    posts?: SocialPostListRelationFilter
+    friends?: FriendListRelationFilter
+    friendOf?: FriendListRelationFilter
+    challenges_created?: ChallengeListRelationFilter
+  }
+
+  export type UserOrderByWithRelationInput = {
+    id?: SortOrder
+    username?: SortOrder
+    avatar?: SortOrderInput | SortOrder
+    level?: SortOrder
+    totalPoints?: SortOrder
+    currentStreak?: SortOrder
+    longestStreak?: SortOrder
+    createdAt?: SortOrder
+    habits?: HabitOrderByRelationAggregateInput
+    habitLogs?: HabitLogOrderByRelationAggregateInput
+    badges?: UserBadgeOrderByRelationAggregateInput
+    challenges?: UserChallengeOrderByRelationAggregateInput
+    insights?: AIInsightOrderByRelationAggregateInput
+    posts?: SocialPostOrderByRelationAggregateInput
+    friends?: FriendOrderByRelationAggregateInput
+    friendOf?: FriendOrderByRelationAggregateInput
+    challenges_created?: ChallengeOrderByRelationAggregateInput
+  }
+
+  export type UserWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    username?: string
+    AND?: UserWhereInput | UserWhereInput[]
+    OR?: UserWhereInput[]
+    NOT?: UserWhereInput | UserWhereInput[]
+    avatar?: StringNullableFilter<"User"> | string | null
+    level?: IntFilter<"User"> | number
+    totalPoints?: IntFilter<"User"> | number
+    currentStreak?: IntFilter<"User"> | number
+    longestStreak?: IntFilter<"User"> | number
+    createdAt?: DateTimeFilter<"User"> | Date | string
+    habits?: HabitListRelationFilter
+    habitLogs?: HabitLogListRelationFilter
+    badges?: UserBadgeListRelationFilter
+    challenges?: UserChallengeListRelationFilter
+    insights?: AIInsightListRelationFilter
+    posts?: SocialPostListRelationFilter
+    friends?: FriendListRelationFilter
+    friendOf?: FriendListRelationFilter
+    challenges_created?: ChallengeListRelationFilter
+  }, "id" | "username">
+
+  export type UserOrderByWithAggregationInput = {
+    id?: SortOrder
+    username?: SortOrder
+    avatar?: SortOrderInput | SortOrder
+    level?: SortOrder
+    totalPoints?: SortOrder
+    currentStreak?: SortOrder
+    longestStreak?: SortOrder
+    createdAt?: SortOrder
+    _count?: UserCountOrderByAggregateInput
+    _avg?: UserAvgOrderByAggregateInput
+    _max?: UserMaxOrderByAggregateInput
+    _min?: UserMinOrderByAggregateInput
+    _sum?: UserSumOrderByAggregateInput
+  }
+
+  export type UserScalarWhereWithAggregatesInput = {
+    AND?: UserScalarWhereWithAggregatesInput | UserScalarWhereWithAggregatesInput[]
+    OR?: UserScalarWhereWithAggregatesInput[]
+    NOT?: UserScalarWhereWithAggregatesInput | UserScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"User"> | number
+    username?: StringWithAggregatesFilter<"User"> | string
+    avatar?: StringNullableWithAggregatesFilter<"User"> | string | null
+    level?: IntWithAggregatesFilter<"User"> | number
+    totalPoints?: IntWithAggregatesFilter<"User"> | number
+    currentStreak?: IntWithAggregatesFilter<"User"> | number
+    longestStreak?: IntWithAggregatesFilter<"User"> | number
+    createdAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
+  }
+
+  export type HabitWhereInput = {
+    AND?: HabitWhereInput | HabitWhereInput[]
+    OR?: HabitWhereInput[]
+    NOT?: HabitWhereInput | HabitWhereInput[]
+    id?: IntFilter<"Habit"> | number
+    userId?: IntFilter<"Habit"> | number
+    name?: StringFilter<"Habit"> | string
+    description?: StringNullableFilter<"Habit"> | string | null
+    category?: StringFilter<"Habit"> | string
+    color?: StringFilter<"Habit"> | string
+    icon?: StringFilter<"Habit"> | string
+    frequency?: StringFilter<"Habit"> | string
+    targetDaysPerWeek?: IntFilter<"Habit"> | number
+    reminderTime?: StringNullableFilter<"Habit"> | string | null
+    isArchived?: BoolFilter<"Habit"> | boolean
+    createdAt?: DateTimeFilter<"Habit"> | Date | string
+    user?: XOR<UserRelationFilter, UserWhereInput>
+    logs?: HabitLogListRelationFilter
+    insights?: AIInsightListRelationFilter
+    posts?: SocialPostListRelationFilter
+  }
+
+  export type HabitOrderByWithRelationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    name?: SortOrder
+    description?: SortOrderInput | SortOrder
+    category?: SortOrder
+    color?: SortOrder
+    icon?: SortOrder
+    frequency?: SortOrder
+    targetDaysPerWeek?: SortOrder
+    reminderTime?: SortOrderInput | SortOrder
+    isArchived?: SortOrder
+    createdAt?: SortOrder
+    user?: UserOrderByWithRelationInput
+    logs?: HabitLogOrderByRelationAggregateInput
+    insights?: AIInsightOrderByRelationAggregateInput
+    posts?: SocialPostOrderByRelationAggregateInput
+  }
+
+  export type HabitWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: HabitWhereInput | HabitWhereInput[]
+    OR?: HabitWhereInput[]
+    NOT?: HabitWhereInput | HabitWhereInput[]
+    userId?: IntFilter<"Habit"> | number
+    name?: StringFilter<"Habit"> | string
+    description?: StringNullableFilter<"Habit"> | string | null
+    category?: StringFilter<"Habit"> | string
+    color?: StringFilter<"Habit"> | string
+    icon?: StringFilter<"Habit"> | string
+    frequency?: StringFilter<"Habit"> | string
+    targetDaysPerWeek?: IntFilter<"Habit"> | number
+    reminderTime?: StringNullableFilter<"Habit"> | string | null
+    isArchived?: BoolFilter<"Habit"> | boolean
+    createdAt?: DateTimeFilter<"Habit"> | Date | string
+    user?: XOR<UserRelationFilter, UserWhereInput>
+    logs?: HabitLogListRelationFilter
+    insights?: AIInsightListRelationFilter
+    posts?: SocialPostListRelationFilter
+  }, "id">
+
+  export type HabitOrderByWithAggregationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    name?: SortOrder
+    description?: SortOrderInput | SortOrder
+    category?: SortOrder
+    color?: SortOrder
+    icon?: SortOrder
+    frequency?: SortOrder
+    targetDaysPerWeek?: SortOrder
+    reminderTime?: SortOrderInput | SortOrder
+    isArchived?: SortOrder
+    createdAt?: SortOrder
+    _count?: HabitCountOrderByAggregateInput
+    _avg?: HabitAvgOrderByAggregateInput
+    _max?: HabitMaxOrderByAggregateInput
+    _min?: HabitMinOrderByAggregateInput
+    _sum?: HabitSumOrderByAggregateInput
+  }
+
+  export type HabitScalarWhereWithAggregatesInput = {
+    AND?: HabitScalarWhereWithAggregatesInput | HabitScalarWhereWithAggregatesInput[]
+    OR?: HabitScalarWhereWithAggregatesInput[]
+    NOT?: HabitScalarWhereWithAggregatesInput | HabitScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"Habit"> | number
+    userId?: IntWithAggregatesFilter<"Habit"> | number
+    name?: StringWithAggregatesFilter<"Habit"> | string
+    description?: StringNullableWithAggregatesFilter<"Habit"> | string | null
+    category?: StringWithAggregatesFilter<"Habit"> | string
+    color?: StringWithAggregatesFilter<"Habit"> | string
+    icon?: StringWithAggregatesFilter<"Habit"> | string
+    frequency?: StringWithAggregatesFilter<"Habit"> | string
+    targetDaysPerWeek?: IntWithAggregatesFilter<"Habit"> | number
+    reminderTime?: StringNullableWithAggregatesFilter<"Habit"> | string | null
+    isArchived?: BoolWithAggregatesFilter<"Habit"> | boolean
+    createdAt?: DateTimeWithAggregatesFilter<"Habit"> | Date | string
+  }
+
+  export type HabitLogWhereInput = {
+    AND?: HabitLogWhereInput | HabitLogWhereInput[]
+    OR?: HabitLogWhereInput[]
+    NOT?: HabitLogWhereInput | HabitLogWhereInput[]
+    id?: IntFilter<"HabitLog"> | number
+    habitId?: IntFilter<"HabitLog"> | number
+    userId?: IntFilter<"HabitLog"> | number
+    completedAt?: DateTimeFilter<"HabitLog"> | Date | string
+    note?: StringNullableFilter<"HabitLog"> | string | null
+    moodRating?: IntNullableFilter<"HabitLog"> | number | null
+    durationMinutes?: IntNullableFilter<"HabitLog"> | number | null
+    habit?: XOR<HabitRelationFilter, HabitWhereInput>
+    user?: XOR<UserRelationFilter, UserWhereInput>
+  }
+
+  export type HabitLogOrderByWithRelationInput = {
+    id?: SortOrder
+    habitId?: SortOrder
+    userId?: SortOrder
+    completedAt?: SortOrder
+    note?: SortOrderInput | SortOrder
+    moodRating?: SortOrderInput | SortOrder
+    durationMinutes?: SortOrderInput | SortOrder
+    habit?: HabitOrderByWithRelationInput
+    user?: UserOrderByWithRelationInput
+  }
+
+  export type HabitLogWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: HabitLogWhereInput | HabitLogWhereInput[]
+    OR?: HabitLogWhereInput[]
+    NOT?: HabitLogWhereInput | HabitLogWhereInput[]
+    habitId?: IntFilter<"HabitLog"> | number
+    userId?: IntFilter<"HabitLog"> | number
+    completedAt?: DateTimeFilter<"HabitLog"> | Date | string
+    note?: StringNullableFilter<"HabitLog"> | string | null
+    moodRating?: IntNullableFilter<"HabitLog"> | number | null
+    durationMinutes?: IntNullableFilter<"HabitLog"> | number | null
+    habit?: XOR<HabitRelationFilter, HabitWhereInput>
+    user?: XOR<UserRelationFilter, UserWhereInput>
+  }, "id">
+
+  export type HabitLogOrderByWithAggregationInput = {
+    id?: SortOrder
+    habitId?: SortOrder
+    userId?: SortOrder
+    completedAt?: SortOrder
+    note?: SortOrderInput | SortOrder
+    moodRating?: SortOrderInput | SortOrder
+    durationMinutes?: SortOrderInput | SortOrder
+    _count?: HabitLogCountOrderByAggregateInput
+    _avg?: HabitLogAvgOrderByAggregateInput
+    _max?: HabitLogMaxOrderByAggregateInput
+    _min?: HabitLogMinOrderByAggregateInput
+    _sum?: HabitLogSumOrderByAggregateInput
+  }
+
+  export type HabitLogScalarWhereWithAggregatesInput = {
+    AND?: HabitLogScalarWhereWithAggregatesInput | HabitLogScalarWhereWithAggregatesInput[]
+    OR?: HabitLogScalarWhereWithAggregatesInput[]
+    NOT?: HabitLogScalarWhereWithAggregatesInput | HabitLogScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"HabitLog"> | number
+    habitId?: IntWithAggregatesFilter<"HabitLog"> | number
+    userId?: IntWithAggregatesFilter<"HabitLog"> | number
+    completedAt?: DateTimeWithAggregatesFilter<"HabitLog"> | Date | string
+    note?: StringNullableWithAggregatesFilter<"HabitLog"> | string | null
+    moodRating?: IntNullableWithAggregatesFilter<"HabitLog"> | number | null
+    durationMinutes?: IntNullableWithAggregatesFilter<"HabitLog"> | number | null
+  }
+
+  export type BadgeWhereInput = {
+    AND?: BadgeWhereInput | BadgeWhereInput[]
+    OR?: BadgeWhereInput[]
+    NOT?: BadgeWhereInput | BadgeWhereInput[]
+    id?: IntFilter<"Badge"> | number
+    name?: StringFilter<"Badge"> | string
+    description?: StringFilter<"Badge"> | string
+    icon?: StringFilter<"Badge"> | string
+    rarity?: StringFilter<"Badge"> | string
+    pointValue?: IntFilter<"Badge"> | number
+    condition?: StringFilter<"Badge"> | string
+    users?: UserBadgeListRelationFilter
+    posts?: SocialPostListRelationFilter
+  }
+
+  export type BadgeOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    icon?: SortOrder
+    rarity?: SortOrder
+    pointValue?: SortOrder
+    condition?: SortOrder
+    users?: UserBadgeOrderByRelationAggregateInput
+    posts?: SocialPostOrderByRelationAggregateInput
+  }
+
+  export type BadgeWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    name?: string
+    AND?: BadgeWhereInput | BadgeWhereInput[]
+    OR?: BadgeWhereInput[]
+    NOT?: BadgeWhereInput | BadgeWhereInput[]
+    description?: StringFilter<"Badge"> | string
+    icon?: StringFilter<"Badge"> | string
+    rarity?: StringFilter<"Badge"> | string
+    pointValue?: IntFilter<"Badge"> | number
+    condition?: StringFilter<"Badge"> | string
+    users?: UserBadgeListRelationFilter
+    posts?: SocialPostListRelationFilter
+  }, "id" | "name">
+
+  export type BadgeOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    icon?: SortOrder
+    rarity?: SortOrder
+    pointValue?: SortOrder
+    condition?: SortOrder
+    _count?: BadgeCountOrderByAggregateInput
+    _avg?: BadgeAvgOrderByAggregateInput
+    _max?: BadgeMaxOrderByAggregateInput
+    _min?: BadgeMinOrderByAggregateInput
+    _sum?: BadgeSumOrderByAggregateInput
+  }
+
+  export type BadgeScalarWhereWithAggregatesInput = {
+    AND?: BadgeScalarWhereWithAggregatesInput | BadgeScalarWhereWithAggregatesInput[]
+    OR?: BadgeScalarWhereWithAggregatesInput[]
+    NOT?: BadgeScalarWhereWithAggregatesInput | BadgeScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"Badge"> | number
+    name?: StringWithAggregatesFilter<"Badge"> | string
+    description?: StringWithAggregatesFilter<"Badge"> | string
+    icon?: StringWithAggregatesFilter<"Badge"> | string
+    rarity?: StringWithAggregatesFilter<"Badge"> | string
+    pointValue?: IntWithAggregatesFilter<"Badge"> | number
+    condition?: StringWithAggregatesFilter<"Badge"> | string
+  }
+
+  export type UserBadgeWhereInput = {
+    AND?: UserBadgeWhereInput | UserBadgeWhereInput[]
+    OR?: UserBadgeWhereInput[]
+    NOT?: UserBadgeWhereInput | UserBadgeWhereInput[]
+    id?: IntFilter<"UserBadge"> | number
+    userId?: IntFilter<"UserBadge"> | number
+    badgeId?: IntFilter<"UserBadge"> | number
+    earnedAt?: DateTimeFilter<"UserBadge"> | Date | string
+    user?: XOR<UserRelationFilter, UserWhereInput>
+    badge?: XOR<BadgeRelationFilter, BadgeWhereInput>
+  }
+
+  export type UserBadgeOrderByWithRelationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    badgeId?: SortOrder
+    earnedAt?: SortOrder
+    user?: UserOrderByWithRelationInput
+    badge?: BadgeOrderByWithRelationInput
+  }
+
+  export type UserBadgeWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    userId_badgeId?: UserBadgeUserIdBadgeIdCompoundUniqueInput
+    AND?: UserBadgeWhereInput | UserBadgeWhereInput[]
+    OR?: UserBadgeWhereInput[]
+    NOT?: UserBadgeWhereInput | UserBadgeWhereInput[]
+    userId?: IntFilter<"UserBadge"> | number
+    badgeId?: IntFilter<"UserBadge"> | number
+    earnedAt?: DateTimeFilter<"UserBadge"> | Date | string
+    user?: XOR<UserRelationFilter, UserWhereInput>
+    badge?: XOR<BadgeRelationFilter, BadgeWhereInput>
+  }, "id" | "userId_badgeId">
+
+  export type UserBadgeOrderByWithAggregationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    badgeId?: SortOrder
+    earnedAt?: SortOrder
+    _count?: UserBadgeCountOrderByAggregateInput
+    _avg?: UserBadgeAvgOrderByAggregateInput
+    _max?: UserBadgeMaxOrderByAggregateInput
+    _min?: UserBadgeMinOrderByAggregateInput
+    _sum?: UserBadgeSumOrderByAggregateInput
+  }
+
+  export type UserBadgeScalarWhereWithAggregatesInput = {
+    AND?: UserBadgeScalarWhereWithAggregatesInput | UserBadgeScalarWhereWithAggregatesInput[]
+    OR?: UserBadgeScalarWhereWithAggregatesInput[]
+    NOT?: UserBadgeScalarWhereWithAggregatesInput | UserBadgeScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"UserBadge"> | number
+    userId?: IntWithAggregatesFilter<"UserBadge"> | number
+    badgeId?: IntWithAggregatesFilter<"UserBadge"> | number
+    earnedAt?: DateTimeWithAggregatesFilter<"UserBadge"> | Date | string
+  }
+
+  export type ChallengeWhereInput = {
+    AND?: ChallengeWhereInput | ChallengeWhereInput[]
+    OR?: ChallengeWhereInput[]
+    NOT?: ChallengeWhereInput | ChallengeWhereInput[]
+    id?: IntFilter<"Challenge"> | number
+    title?: StringFilter<"Challenge"> | string
+    description?: StringFilter<"Challenge"> | string
+    startDate?: DateTimeFilter<"Challenge"> | Date | string
+    endDate?: DateTimeFilter<"Challenge"> | Date | string
+    habitCategory?: StringNullableFilter<"Challenge"> | string | null
+    pointReward?: IntFilter<"Challenge"> | number
+    createdBy?: IntFilter<"Challenge"> | number
+    creator?: XOR<UserRelationFilter, UserWhereInput>
+    participants?: UserChallengeListRelationFilter
+  }
+
+  export type ChallengeOrderByWithRelationInput = {
+    id?: SortOrder
+    title?: SortOrder
+    description?: SortOrder
+    startDate?: SortOrder
+    endDate?: SortOrder
+    habitCategory?: SortOrderInput | SortOrder
+    pointReward?: SortOrder
+    createdBy?: SortOrder
+    creator?: UserOrderByWithRelationInput
+    participants?: UserChallengeOrderByRelationAggregateInput
+  }
+
+  export type ChallengeWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: ChallengeWhereInput | ChallengeWhereInput[]
+    OR?: ChallengeWhereInput[]
+    NOT?: ChallengeWhereInput | ChallengeWhereInput[]
+    title?: StringFilter<"Challenge"> | string
+    description?: StringFilter<"Challenge"> | string
+    startDate?: DateTimeFilter<"Challenge"> | Date | string
+    endDate?: DateTimeFilter<"Challenge"> | Date | string
+    habitCategory?: StringNullableFilter<"Challenge"> | string | null
+    pointReward?: IntFilter<"Challenge"> | number
+    createdBy?: IntFilter<"Challenge"> | number
+    creator?: XOR<UserRelationFilter, UserWhereInput>
+    participants?: UserChallengeListRelationFilter
+  }, "id">
+
+  export type ChallengeOrderByWithAggregationInput = {
+    id?: SortOrder
+    title?: SortOrder
+    description?: SortOrder
+    startDate?: SortOrder
+    endDate?: SortOrder
+    habitCategory?: SortOrderInput | SortOrder
+    pointReward?: SortOrder
+    createdBy?: SortOrder
+    _count?: ChallengeCountOrderByAggregateInput
+    _avg?: ChallengeAvgOrderByAggregateInput
+    _max?: ChallengeMaxOrderByAggregateInput
+    _min?: ChallengeMinOrderByAggregateInput
+    _sum?: ChallengeSumOrderByAggregateInput
+  }
+
+  export type ChallengeScalarWhereWithAggregatesInput = {
+    AND?: ChallengeScalarWhereWithAggregatesInput | ChallengeScalarWhereWithAggregatesInput[]
+    OR?: ChallengeScalarWhereWithAggregatesInput[]
+    NOT?: ChallengeScalarWhereWithAggregatesInput | ChallengeScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"Challenge"> | number
+    title?: StringWithAggregatesFilter<"Challenge"> | string
+    description?: StringWithAggregatesFilter<"Challenge"> | string
+    startDate?: DateTimeWithAggregatesFilter<"Challenge"> | Date | string
+    endDate?: DateTimeWithAggregatesFilter<"Challenge"> | Date | string
+    habitCategory?: StringNullableWithAggregatesFilter<"Challenge"> | string | null
+    pointReward?: IntWithAggregatesFilter<"Challenge"> | number
+    createdBy?: IntWithAggregatesFilter<"Challenge"> | number
+  }
+
+  export type UserChallengeWhereInput = {
+    AND?: UserChallengeWhereInput | UserChallengeWhereInput[]
+    OR?: UserChallengeWhereInput[]
+    NOT?: UserChallengeWhereInput | UserChallengeWhereInput[]
+    id?: IntFilter<"UserChallenge"> | number
+    userId?: IntFilter<"UserChallenge"> | number
+    challengeId?: IntFilter<"UserChallenge"> | number
+    joinedAt?: DateTimeFilter<"UserChallenge"> | Date | string
+    completedAt?: DateTimeNullableFilter<"UserChallenge"> | Date | string | null
+    progress?: IntFilter<"UserChallenge"> | number
+    user?: XOR<UserRelationFilter, UserWhereInput>
+    challenge?: XOR<ChallengeRelationFilter, ChallengeWhereInput>
+  }
+
+  export type UserChallengeOrderByWithRelationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    challengeId?: SortOrder
+    joinedAt?: SortOrder
+    completedAt?: SortOrderInput | SortOrder
+    progress?: SortOrder
+    user?: UserOrderByWithRelationInput
+    challenge?: ChallengeOrderByWithRelationInput
+  }
+
+  export type UserChallengeWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    userId_challengeId?: UserChallengeUserIdChallengeIdCompoundUniqueInput
+    AND?: UserChallengeWhereInput | UserChallengeWhereInput[]
+    OR?: UserChallengeWhereInput[]
+    NOT?: UserChallengeWhereInput | UserChallengeWhereInput[]
+    userId?: IntFilter<"UserChallenge"> | number
+    challengeId?: IntFilter<"UserChallenge"> | number
+    joinedAt?: DateTimeFilter<"UserChallenge"> | Date | string
+    completedAt?: DateTimeNullableFilter<"UserChallenge"> | Date | string | null
+    progress?: IntFilter<"UserChallenge"> | number
+    user?: XOR<UserRelationFilter, UserWhereInput>
+    challenge?: XOR<ChallengeRelationFilter, ChallengeWhereInput>
+  }, "id" | "userId_challengeId">
+
+  export type UserChallengeOrderByWithAggregationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    challengeId?: SortOrder
+    joinedAt?: SortOrder
+    completedAt?: SortOrderInput | SortOrder
+    progress?: SortOrder
+    _count?: UserChallengeCountOrderByAggregateInput
+    _avg?: UserChallengeAvgOrderByAggregateInput
+    _max?: UserChallengeMaxOrderByAggregateInput
+    _min?: UserChallengeMinOrderByAggregateInput
+    _sum?: UserChallengeSumOrderByAggregateInput
+  }
+
+  export type UserChallengeScalarWhereWithAggregatesInput = {
+    AND?: UserChallengeScalarWhereWithAggregatesInput | UserChallengeScalarWhereWithAggregatesInput[]
+    OR?: UserChallengeScalarWhereWithAggregatesInput[]
+    NOT?: UserChallengeScalarWhereWithAggregatesInput | UserChallengeScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"UserChallenge"> | number
+    userId?: IntWithAggregatesFilter<"UserChallenge"> | number
+    challengeId?: IntWithAggregatesFilter<"UserChallenge"> | number
+    joinedAt?: DateTimeWithAggregatesFilter<"UserChallenge"> | Date | string
+    completedAt?: DateTimeNullableWithAggregatesFilter<"UserChallenge"> | Date | string | null
+    progress?: IntWithAggregatesFilter<"UserChallenge"> | number
+  }
+
+  export type AIInsightWhereInput = {
+    AND?: AIInsightWhereInput | AIInsightWhereInput[]
+    OR?: AIInsightWhereInput[]
+    NOT?: AIInsightWhereInput | AIInsightWhereInput[]
+    id?: IntFilter<"AIInsight"> | number
+    userId?: IntFilter<"AIInsight"> | number
+    habitId?: IntNullableFilter<"AIInsight"> | number | null
+    type?: StringFilter<"AIInsight"> | string
+    content?: StringFilter<"AIInsight"> | string
+    generatedAt?: DateTimeFilter<"AIInsight"> | Date | string
+    isRead?: BoolFilter<"AIInsight"> | boolean
+    user?: XOR<UserRelationFilter, UserWhereInput>
+    habit?: XOR<HabitNullableRelationFilter, HabitWhereInput> | null
+  }
+
+  export type AIInsightOrderByWithRelationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    habitId?: SortOrderInput | SortOrder
+    type?: SortOrder
+    content?: SortOrder
+    generatedAt?: SortOrder
+    isRead?: SortOrder
+    user?: UserOrderByWithRelationInput
+    habit?: HabitOrderByWithRelationInput
+  }
+
+  export type AIInsightWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: AIInsightWhereInput | AIInsightWhereInput[]
+    OR?: AIInsightWhereInput[]
+    NOT?: AIInsightWhereInput | AIInsightWhereInput[]
+    userId?: IntFilter<"AIInsight"> | number
+    habitId?: IntNullableFilter<"AIInsight"> | number | null
+    type?: StringFilter<"AIInsight"> | string
+    content?: StringFilter<"AIInsight"> | string
+    generatedAt?: DateTimeFilter<"AIInsight"> | Date | string
+    isRead?: BoolFilter<"AIInsight"> | boolean
+    user?: XOR<UserRelationFilter, UserWhereInput>
+    habit?: XOR<HabitNullableRelationFilter, HabitWhereInput> | null
+  }, "id">
+
+  export type AIInsightOrderByWithAggregationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    habitId?: SortOrderInput | SortOrder
+    type?: SortOrder
+    content?: SortOrder
+    generatedAt?: SortOrder
+    isRead?: SortOrder
+    _count?: AIInsightCountOrderByAggregateInput
+    _avg?: AIInsightAvgOrderByAggregateInput
+    _max?: AIInsightMaxOrderByAggregateInput
+    _min?: AIInsightMinOrderByAggregateInput
+    _sum?: AIInsightSumOrderByAggregateInput
+  }
+
+  export type AIInsightScalarWhereWithAggregatesInput = {
+    AND?: AIInsightScalarWhereWithAggregatesInput | AIInsightScalarWhereWithAggregatesInput[]
+    OR?: AIInsightScalarWhereWithAggregatesInput[]
+    NOT?: AIInsightScalarWhereWithAggregatesInput | AIInsightScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"AIInsight"> | number
+    userId?: IntWithAggregatesFilter<"AIInsight"> | number
+    habitId?: IntNullableWithAggregatesFilter<"AIInsight"> | number | null
+    type?: StringWithAggregatesFilter<"AIInsight"> | string
+    content?: StringWithAggregatesFilter<"AIInsight"> | string
+    generatedAt?: DateTimeWithAggregatesFilter<"AIInsight"> | Date | string
+    isRead?: BoolWithAggregatesFilter<"AIInsight"> | boolean
+  }
+
+  export type FriendWhereInput = {
+    AND?: FriendWhereInput | FriendWhereInput[]
+    OR?: FriendWhereInput[]
+    NOT?: FriendWhereInput | FriendWhereInput[]
+    id?: IntFilter<"Friend"> | number
+    userId?: IntFilter<"Friend"> | number
+    friendId?: IntFilter<"Friend"> | number
+    status?: StringFilter<"Friend"> | string
+    createdAt?: DateTimeFilter<"Friend"> | Date | string
+    user?: XOR<UserRelationFilter, UserWhereInput>
+    friend?: XOR<UserRelationFilter, UserWhereInput>
+  }
+
+  export type FriendOrderByWithRelationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    friendId?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    user?: UserOrderByWithRelationInput
+    friend?: UserOrderByWithRelationInput
+  }
+
+  export type FriendWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    userId_friendId?: FriendUserIdFriendIdCompoundUniqueInput
+    AND?: FriendWhereInput | FriendWhereInput[]
+    OR?: FriendWhereInput[]
+    NOT?: FriendWhereInput | FriendWhereInput[]
+    userId?: IntFilter<"Friend"> | number
+    friendId?: IntFilter<"Friend"> | number
+    status?: StringFilter<"Friend"> | string
+    createdAt?: DateTimeFilter<"Friend"> | Date | string
+    user?: XOR<UserRelationFilter, UserWhereInput>
+    friend?: XOR<UserRelationFilter, UserWhereInput>
+  }, "id" | "userId_friendId">
+
+  export type FriendOrderByWithAggregationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    friendId?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    _count?: FriendCountOrderByAggregateInput
+    _avg?: FriendAvgOrderByAggregateInput
+    _max?: FriendMaxOrderByAggregateInput
+    _min?: FriendMinOrderByAggregateInput
+    _sum?: FriendSumOrderByAggregateInput
+  }
+
+  export type FriendScalarWhereWithAggregatesInput = {
+    AND?: FriendScalarWhereWithAggregatesInput | FriendScalarWhereWithAggregatesInput[]
+    OR?: FriendScalarWhereWithAggregatesInput[]
+    NOT?: FriendScalarWhereWithAggregatesInput | FriendScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"Friend"> | number
+    userId?: IntWithAggregatesFilter<"Friend"> | number
+    friendId?: IntWithAggregatesFilter<"Friend"> | number
+    status?: StringWithAggregatesFilter<"Friend"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"Friend"> | Date | string
+  }
+
+  export type SocialPostWhereInput = {
+    AND?: SocialPostWhereInput | SocialPostWhereInput[]
+    OR?: SocialPostWhereInput[]
+    NOT?: SocialPostWhereInput | SocialPostWhereInput[]
+    id?: IntFilter<"SocialPost"> | number
+    userId?: IntFilter<"SocialPost"> | number
+    content?: StringFilter<"SocialPost"> | string
+    badgeId?: IntNullableFilter<"SocialPost"> | number | null
+    habitId?: IntNullableFilter<"SocialPost"> | number | null
+    likesCount?: IntFilter<"SocialPost"> | number
+    createdAt?: DateTimeFilter<"SocialPost"> | Date | string
+    user?: XOR<UserRelationFilter, UserWhereInput>
+    badge?: XOR<BadgeNullableRelationFilter, BadgeWhereInput> | null
+    habit?: XOR<HabitNullableRelationFilter, HabitWhereInput> | null
+  }
+
+  export type SocialPostOrderByWithRelationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    content?: SortOrder
+    badgeId?: SortOrderInput | SortOrder
+    habitId?: SortOrderInput | SortOrder
+    likesCount?: SortOrder
+    createdAt?: SortOrder
+    user?: UserOrderByWithRelationInput
+    badge?: BadgeOrderByWithRelationInput
+    habit?: HabitOrderByWithRelationInput
+  }
+
+  export type SocialPostWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: SocialPostWhereInput | SocialPostWhereInput[]
+    OR?: SocialPostWhereInput[]
+    NOT?: SocialPostWhereInput | SocialPostWhereInput[]
+    userId?: IntFilter<"SocialPost"> | number
+    content?: StringFilter<"SocialPost"> | string
+    badgeId?: IntNullableFilter<"SocialPost"> | number | null
+    habitId?: IntNullableFilter<"SocialPost"> | number | null
+    likesCount?: IntFilter<"SocialPost"> | number
+    createdAt?: DateTimeFilter<"SocialPost"> | Date | string
+    user?: XOR<UserRelationFilter, UserWhereInput>
+    badge?: XOR<BadgeNullableRelationFilter, BadgeWhereInput> | null
+    habit?: XOR<HabitNullableRelationFilter, HabitWhereInput> | null
+  }, "id">
+
+  export type SocialPostOrderByWithAggregationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    content?: SortOrder
+    badgeId?: SortOrderInput | SortOrder
+    habitId?: SortOrderInput | SortOrder
+    likesCount?: SortOrder
+    createdAt?: SortOrder
+    _count?: SocialPostCountOrderByAggregateInput
+    _avg?: SocialPostAvgOrderByAggregateInput
+    _max?: SocialPostMaxOrderByAggregateInput
+    _min?: SocialPostMinOrderByAggregateInput
+    _sum?: SocialPostSumOrderByAggregateInput
+  }
+
+  export type SocialPostScalarWhereWithAggregatesInput = {
+    AND?: SocialPostScalarWhereWithAggregatesInput | SocialPostScalarWhereWithAggregatesInput[]
+    OR?: SocialPostScalarWhereWithAggregatesInput[]
+    NOT?: SocialPostScalarWhereWithAggregatesInput | SocialPostScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"SocialPost"> | number
+    userId?: IntWithAggregatesFilter<"SocialPost"> | number
+    content?: StringWithAggregatesFilter<"SocialPost"> | string
+    badgeId?: IntNullableWithAggregatesFilter<"SocialPost"> | number | null
+    habitId?: IntNullableWithAggregatesFilter<"SocialPost"> | number | null
+    likesCount?: IntWithAggregatesFilter<"SocialPost"> | number
+    createdAt?: DateTimeWithAggregatesFilter<"SocialPost"> | Date | string
+  }
+
+  export type UserCreateInput = {
+    username: string
+    avatar?: string | null
+    level?: number
+    totalPoints?: number
+    currentStreak?: number
+    longestStreak?: number
+    createdAt?: Date | string
+    habits?: HabitCreateNestedManyWithoutUserInput
+    habitLogs?: HabitLogCreateNestedManyWithoutUserInput
+    badges?: UserBadgeCreateNestedManyWithoutUserInput
+    challenges?: UserChallengeCreateNestedManyWithoutUserInput
+    insights?: AIInsightCreateNestedManyWithoutUserInput
+    posts?: SocialPostCreateNestedManyWithoutUserInput
+    friends?: FriendCreateNestedManyWithoutUserInput
+    friendOf?: FriendCreateNestedManyWithoutFriendInput
+    challenges_created?: ChallengeCreateNestedManyWithoutCreatorInput
+  }
+
+  export type UserUncheckedCreateInput = {
+    id?: number
+    username: string
+    avatar?: string | null
+    level?: number
+    totalPoints?: number
+    currentStreak?: number
+    longestStreak?: number
+    createdAt?: Date | string
+    habits?: HabitUncheckedCreateNestedManyWithoutUserInput
+    habitLogs?: HabitLogUncheckedCreateNestedManyWithoutUserInput
+    badges?: UserBadgeUncheckedCreateNestedManyWithoutUserInput
+    challenges?: UserChallengeUncheckedCreateNestedManyWithoutUserInput
+    insights?: AIInsightUncheckedCreateNestedManyWithoutUserInput
+    posts?: SocialPostUncheckedCreateNestedManyWithoutUserInput
+    friends?: FriendUncheckedCreateNestedManyWithoutUserInput
+    friendOf?: FriendUncheckedCreateNestedManyWithoutFriendInput
+    challenges_created?: ChallengeUncheckedCreateNestedManyWithoutCreatorInput
+  }
+
+  export type UserUpdateInput = {
+    username?: StringFieldUpdateOperationsInput | string
+    avatar?: NullableStringFieldUpdateOperationsInput | string | null
+    level?: IntFieldUpdateOperationsInput | number
+    totalPoints?: IntFieldUpdateOperationsInput | number
+    currentStreak?: IntFieldUpdateOperationsInput | number
+    longestStreak?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    habits?: HabitUpdateManyWithoutUserNestedInput
+    habitLogs?: HabitLogUpdateManyWithoutUserNestedInput
+    badges?: UserBadgeUpdateManyWithoutUserNestedInput
+    challenges?: UserChallengeUpdateManyWithoutUserNestedInput
+    insights?: AIInsightUpdateManyWithoutUserNestedInput
+    posts?: SocialPostUpdateManyWithoutUserNestedInput
+    friends?: FriendUpdateManyWithoutUserNestedInput
+    friendOf?: FriendUpdateManyWithoutFriendNestedInput
+    challenges_created?: ChallengeUpdateManyWithoutCreatorNestedInput
+  }
+
+  export type UserUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    username?: StringFieldUpdateOperationsInput | string
+    avatar?: NullableStringFieldUpdateOperationsInput | string | null
+    level?: IntFieldUpdateOperationsInput | number
+    totalPoints?: IntFieldUpdateOperationsInput | number
+    currentStreak?: IntFieldUpdateOperationsInput | number
+    longestStreak?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    habits?: HabitUncheckedUpdateManyWithoutUserNestedInput
+    habitLogs?: HabitLogUncheckedUpdateManyWithoutUserNestedInput
+    badges?: UserBadgeUncheckedUpdateManyWithoutUserNestedInput
+    challenges?: UserChallengeUncheckedUpdateManyWithoutUserNestedInput
+    insights?: AIInsightUncheckedUpdateManyWithoutUserNestedInput
+    posts?: SocialPostUncheckedUpdateManyWithoutUserNestedInput
+    friends?: FriendUncheckedUpdateManyWithoutUserNestedInput
+    friendOf?: FriendUncheckedUpdateManyWithoutFriendNestedInput
+    challenges_created?: ChallengeUncheckedUpdateManyWithoutCreatorNestedInput
+  }
+
+  export type UserCreateManyInput = {
+    id?: number
+    username: string
+    avatar?: string | null
+    level?: number
+    totalPoints?: number
+    currentStreak?: number
+    longestStreak?: number
+    createdAt?: Date | string
+  }
+
+  export type UserUpdateManyMutationInput = {
+    username?: StringFieldUpdateOperationsInput | string
+    avatar?: NullableStringFieldUpdateOperationsInput | string | null
+    level?: IntFieldUpdateOperationsInput | number
+    totalPoints?: IntFieldUpdateOperationsInput | number
+    currentStreak?: IntFieldUpdateOperationsInput | number
+    longestStreak?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    username?: StringFieldUpdateOperationsInput | string
+    avatar?: NullableStringFieldUpdateOperationsInput | string | null
+    level?: IntFieldUpdateOperationsInput | number
+    totalPoints?: IntFieldUpdateOperationsInput | number
+    currentStreak?: IntFieldUpdateOperationsInput | number
+    longestStreak?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type HabitCreateInput = {
+    name: string
+    description?: string | null
+    category: string
+    color?: string
+    icon?: string
+    frequency?: string
+    targetDaysPerWeek?: number
+    reminderTime?: string | null
+    isArchived?: boolean
+    createdAt?: Date | string
+    user: UserCreateNestedOneWithoutHabitsInput
+    logs?: HabitLogCreateNestedManyWithoutHabitInput
+    insights?: AIInsightCreateNestedManyWithoutHabitInput
+    posts?: SocialPostCreateNestedManyWithoutHabitInput
+  }
+
+  export type HabitUncheckedCreateInput = {
+    id?: number
+    userId: number
+    name: string
+    description?: string | null
+    category: string
+    color?: string
+    icon?: string
+    frequency?: string
+    targetDaysPerWeek?: number
+    reminderTime?: string | null
+    isArchived?: boolean
+    createdAt?: Date | string
+    logs?: HabitLogUncheckedCreateNestedManyWithoutHabitInput
+    insights?: AIInsightUncheckedCreateNestedManyWithoutHabitInput
+    posts?: SocialPostUncheckedCreateNestedManyWithoutHabitInput
+  }
+
+  export type HabitUpdateInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    category?: StringFieldUpdateOperationsInput | string
+    color?: StringFieldUpdateOperationsInput | string
+    icon?: StringFieldUpdateOperationsInput | string
+    frequency?: StringFieldUpdateOperationsInput | string
+    targetDaysPerWeek?: IntFieldUpdateOperationsInput | number
+    reminderTime?: NullableStringFieldUpdateOperationsInput | string | null
+    isArchived?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutHabitsNestedInput
+    logs?: HabitLogUpdateManyWithoutHabitNestedInput
+    insights?: AIInsightUpdateManyWithoutHabitNestedInput
+    posts?: SocialPostUpdateManyWithoutHabitNestedInput
+  }
+
+  export type HabitUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    category?: StringFieldUpdateOperationsInput | string
+    color?: StringFieldUpdateOperationsInput | string
+    icon?: StringFieldUpdateOperationsInput | string
+    frequency?: StringFieldUpdateOperationsInput | string
+    targetDaysPerWeek?: IntFieldUpdateOperationsInput | number
+    reminderTime?: NullableStringFieldUpdateOperationsInput | string | null
+    isArchived?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    logs?: HabitLogUncheckedUpdateManyWithoutHabitNestedInput
+    insights?: AIInsightUncheckedUpdateManyWithoutHabitNestedInput
+    posts?: SocialPostUncheckedUpdateManyWithoutHabitNestedInput
+  }
+
+  export type HabitCreateManyInput = {
+    id?: number
+    userId: number
+    name: string
+    description?: string | null
+    category: string
+    color?: string
+    icon?: string
+    frequency?: string
+    targetDaysPerWeek?: number
+    reminderTime?: string | null
+    isArchived?: boolean
+    createdAt?: Date | string
+  }
+
+  export type HabitUpdateManyMutationInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    category?: StringFieldUpdateOperationsInput | string
+    color?: StringFieldUpdateOperationsInput | string
+    icon?: StringFieldUpdateOperationsInput | string
+    frequency?: StringFieldUpdateOperationsInput | string
+    targetDaysPerWeek?: IntFieldUpdateOperationsInput | number
+    reminderTime?: NullableStringFieldUpdateOperationsInput | string | null
+    isArchived?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type HabitUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    category?: StringFieldUpdateOperationsInput | string
+    color?: StringFieldUpdateOperationsInput | string
+    icon?: StringFieldUpdateOperationsInput | string
+    frequency?: StringFieldUpdateOperationsInput | string
+    targetDaysPerWeek?: IntFieldUpdateOperationsInput | number
+    reminderTime?: NullableStringFieldUpdateOperationsInput | string | null
+    isArchived?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type HabitLogCreateInput = {
+    completedAt?: Date | string
+    note?: string | null
+    moodRating?: number | null
+    durationMinutes?: number | null
+    habit: HabitCreateNestedOneWithoutLogsInput
+    user: UserCreateNestedOneWithoutHabitLogsInput
+  }
+
+  export type HabitLogUncheckedCreateInput = {
+    id?: number
+    habitId: number
+    userId: number
+    completedAt?: Date | string
+    note?: string | null
+    moodRating?: number | null
+    durationMinutes?: number | null
+  }
+
+  export type HabitLogUpdateInput = {
+    completedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    note?: NullableStringFieldUpdateOperationsInput | string | null
+    moodRating?: NullableIntFieldUpdateOperationsInput | number | null
+    durationMinutes?: NullableIntFieldUpdateOperationsInput | number | null
+    habit?: HabitUpdateOneRequiredWithoutLogsNestedInput
+    user?: UserUpdateOneRequiredWithoutHabitLogsNestedInput
+  }
+
+  export type HabitLogUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    habitId?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    completedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    note?: NullableStringFieldUpdateOperationsInput | string | null
+    moodRating?: NullableIntFieldUpdateOperationsInput | number | null
+    durationMinutes?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type HabitLogCreateManyInput = {
+    id?: number
+    habitId: number
+    userId: number
+    completedAt?: Date | string
+    note?: string | null
+    moodRating?: number | null
+    durationMinutes?: number | null
+  }
+
+  export type HabitLogUpdateManyMutationInput = {
+    completedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    note?: NullableStringFieldUpdateOperationsInput | string | null
+    moodRating?: NullableIntFieldUpdateOperationsInput | number | null
+    durationMinutes?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type HabitLogUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    habitId?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    completedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    note?: NullableStringFieldUpdateOperationsInput | string | null
+    moodRating?: NullableIntFieldUpdateOperationsInput | number | null
+    durationMinutes?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type BadgeCreateInput = {
+    name: string
+    description: string
+    icon: string
+    rarity: string
+    pointValue: number
+    condition: string
+    users?: UserBadgeCreateNestedManyWithoutBadgeInput
+    posts?: SocialPostCreateNestedManyWithoutBadgeInput
+  }
+
+  export type BadgeUncheckedCreateInput = {
+    id?: number
+    name: string
+    description: string
+    icon: string
+    rarity: string
+    pointValue: number
+    condition: string
+    users?: UserBadgeUncheckedCreateNestedManyWithoutBadgeInput
+    posts?: SocialPostUncheckedCreateNestedManyWithoutBadgeInput
+  }
+
+  export type BadgeUpdateInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    icon?: StringFieldUpdateOperationsInput | string
+    rarity?: StringFieldUpdateOperationsInput | string
+    pointValue?: IntFieldUpdateOperationsInput | number
+    condition?: StringFieldUpdateOperationsInput | string
+    users?: UserBadgeUpdateManyWithoutBadgeNestedInput
+    posts?: SocialPostUpdateManyWithoutBadgeNestedInput
+  }
+
+  export type BadgeUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    icon?: StringFieldUpdateOperationsInput | string
+    rarity?: StringFieldUpdateOperationsInput | string
+    pointValue?: IntFieldUpdateOperationsInput | number
+    condition?: StringFieldUpdateOperationsInput | string
+    users?: UserBadgeUncheckedUpdateManyWithoutBadgeNestedInput
+    posts?: SocialPostUncheckedUpdateManyWithoutBadgeNestedInput
+  }
+
+  export type BadgeCreateManyInput = {
+    id?: number
+    name: string
+    description: string
+    icon: string
+    rarity: string
+    pointValue: number
+    condition: string
+  }
+
+  export type BadgeUpdateManyMutationInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    icon?: StringFieldUpdateOperationsInput | string
+    rarity?: StringFieldUpdateOperationsInput | string
+    pointValue?: IntFieldUpdateOperationsInput | number
+    condition?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type BadgeUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    icon?: StringFieldUpdateOperationsInput | string
+    rarity?: StringFieldUpdateOperationsInput | string
+    pointValue?: IntFieldUpdateOperationsInput | number
+    condition?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type UserBadgeCreateInput = {
+    earnedAt?: Date | string
+    user: UserCreateNestedOneWithoutBadgesInput
+    badge: BadgeCreateNestedOneWithoutUsersInput
+  }
+
+  export type UserBadgeUncheckedCreateInput = {
+    id?: number
+    userId: number
+    badgeId: number
+    earnedAt?: Date | string
+  }
+
+  export type UserBadgeUpdateInput = {
+    earnedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutBadgesNestedInput
+    badge?: BadgeUpdateOneRequiredWithoutUsersNestedInput
+  }
+
+  export type UserBadgeUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    badgeId?: IntFieldUpdateOperationsInput | number
+    earnedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserBadgeCreateManyInput = {
+    id?: number
+    userId: number
+    badgeId: number
+    earnedAt?: Date | string
+  }
+
+  export type UserBadgeUpdateManyMutationInput = {
+    earnedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserBadgeUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    badgeId?: IntFieldUpdateOperationsInput | number
+    earnedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ChallengeCreateInput = {
+    title: string
+    description: string
+    startDate: Date | string
+    endDate: Date | string
+    habitCategory?: string | null
+    pointReward?: number
+    creator: UserCreateNestedOneWithoutChallenges_createdInput
+    participants?: UserChallengeCreateNestedManyWithoutChallengeInput
+  }
+
+  export type ChallengeUncheckedCreateInput = {
+    id?: number
+    title: string
+    description: string
+    startDate: Date | string
+    endDate: Date | string
+    habitCategory?: string | null
+    pointReward?: number
+    createdBy: number
+    participants?: UserChallengeUncheckedCreateNestedManyWithoutChallengeInput
+  }
+
+  export type ChallengeUpdateInput = {
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    habitCategory?: NullableStringFieldUpdateOperationsInput | string | null
+    pointReward?: IntFieldUpdateOperationsInput | number
+    creator?: UserUpdateOneRequiredWithoutChallenges_createdNestedInput
+    participants?: UserChallengeUpdateManyWithoutChallengeNestedInput
+  }
+
+  export type ChallengeUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    habitCategory?: NullableStringFieldUpdateOperationsInput | string | null
+    pointReward?: IntFieldUpdateOperationsInput | number
+    createdBy?: IntFieldUpdateOperationsInput | number
+    participants?: UserChallengeUncheckedUpdateManyWithoutChallengeNestedInput
+  }
+
+  export type ChallengeCreateManyInput = {
+    id?: number
+    title: string
+    description: string
+    startDate: Date | string
+    endDate: Date | string
+    habitCategory?: string | null
+    pointReward?: number
+    createdBy: number
+  }
+
+  export type ChallengeUpdateManyMutationInput = {
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    habitCategory?: NullableStringFieldUpdateOperationsInput | string | null
+    pointReward?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type ChallengeUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    habitCategory?: NullableStringFieldUpdateOperationsInput | string | null
+    pointReward?: IntFieldUpdateOperationsInput | number
+    createdBy?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type UserChallengeCreateInput = {
+    joinedAt?: Date | string
+    completedAt?: Date | string | null
+    progress?: number
+    user: UserCreateNestedOneWithoutChallengesInput
+    challenge: ChallengeCreateNestedOneWithoutParticipantsInput
+  }
+
+  export type UserChallengeUncheckedCreateInput = {
+    id?: number
+    userId: number
+    challengeId: number
+    joinedAt?: Date | string
+    completedAt?: Date | string | null
+    progress?: number
+  }
+
+  export type UserChallengeUpdateInput = {
+    joinedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    progress?: IntFieldUpdateOperationsInput | number
+    user?: UserUpdateOneRequiredWithoutChallengesNestedInput
+    challenge?: ChallengeUpdateOneRequiredWithoutParticipantsNestedInput
+  }
+
+  export type UserChallengeUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    challengeId?: IntFieldUpdateOperationsInput | number
+    joinedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    progress?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type UserChallengeCreateManyInput = {
+    id?: number
+    userId: number
+    challengeId: number
+    joinedAt?: Date | string
+    completedAt?: Date | string | null
+    progress?: number
+  }
+
+  export type UserChallengeUpdateManyMutationInput = {
+    joinedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    progress?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type UserChallengeUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    challengeId?: IntFieldUpdateOperationsInput | number
+    joinedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    progress?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type AIInsightCreateInput = {
+    type: string
+    content: string
+    generatedAt?: Date | string
+    isRead?: boolean
+    user: UserCreateNestedOneWithoutInsightsInput
+    habit?: HabitCreateNestedOneWithoutInsightsInput
+  }
+
+  export type AIInsightUncheckedCreateInput = {
+    id?: number
+    userId: number
+    habitId?: number | null
+    type: string
+    content: string
+    generatedAt?: Date | string
+    isRead?: boolean
+  }
+
+  export type AIInsightUpdateInput = {
+    type?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    generatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isRead?: BoolFieldUpdateOperationsInput | boolean
+    user?: UserUpdateOneRequiredWithoutInsightsNestedInput
+    habit?: HabitUpdateOneWithoutInsightsNestedInput
+  }
+
+  export type AIInsightUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    habitId?: NullableIntFieldUpdateOperationsInput | number | null
+    type?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    generatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isRead?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type AIInsightCreateManyInput = {
+    id?: number
+    userId: number
+    habitId?: number | null
+    type: string
+    content: string
+    generatedAt?: Date | string
+    isRead?: boolean
+  }
+
+  export type AIInsightUpdateManyMutationInput = {
+    type?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    generatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isRead?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type AIInsightUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    habitId?: NullableIntFieldUpdateOperationsInput | number | null
+    type?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    generatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isRead?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type FriendCreateInput = {
+    status?: string
+    createdAt?: Date | string
+    user: UserCreateNestedOneWithoutFriendsInput
+    friend: UserCreateNestedOneWithoutFriendOfInput
+  }
+
+  export type FriendUncheckedCreateInput = {
+    id?: number
+    userId: number
+    friendId: number
+    status?: string
+    createdAt?: Date | string
+  }
+
+  export type FriendUpdateInput = {
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutFriendsNestedInput
+    friend?: UserUpdateOneRequiredWithoutFriendOfNestedInput
+  }
+
+  export type FriendUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    friendId?: IntFieldUpdateOperationsInput | number
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FriendCreateManyInput = {
+    id?: number
+    userId: number
+    friendId: number
+    status?: string
+    createdAt?: Date | string
+  }
+
+  export type FriendUpdateManyMutationInput = {
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FriendUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    friendId?: IntFieldUpdateOperationsInput | number
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SocialPostCreateInput = {
+    content: string
+    likesCount?: number
+    createdAt?: Date | string
+    user: UserCreateNestedOneWithoutPostsInput
+    badge?: BadgeCreateNestedOneWithoutPostsInput
+    habit?: HabitCreateNestedOneWithoutPostsInput
+  }
+
+  export type SocialPostUncheckedCreateInput = {
+    id?: number
+    userId: number
+    content: string
+    badgeId?: number | null
+    habitId?: number | null
+    likesCount?: number
+    createdAt?: Date | string
+  }
+
+  export type SocialPostUpdateInput = {
+    content?: StringFieldUpdateOperationsInput | string
+    likesCount?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutPostsNestedInput
+    badge?: BadgeUpdateOneWithoutPostsNestedInput
+    habit?: HabitUpdateOneWithoutPostsNestedInput
+  }
+
+  export type SocialPostUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    content?: StringFieldUpdateOperationsInput | string
+    badgeId?: NullableIntFieldUpdateOperationsInput | number | null
+    habitId?: NullableIntFieldUpdateOperationsInput | number | null
+    likesCount?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SocialPostCreateManyInput = {
+    id?: number
+    userId: number
+    content: string
+    badgeId?: number | null
+    habitId?: number | null
+    likesCount?: number
+    createdAt?: Date | string
+  }
+
+  export type SocialPostUpdateManyMutationInput = {
+    content?: StringFieldUpdateOperationsInput | string
+    likesCount?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SocialPostUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    content?: StringFieldUpdateOperationsInput | string
+    badgeId?: NullableIntFieldUpdateOperationsInput | number | null
+    habitId?: NullableIntFieldUpdateOperationsInput | number | null
+    likesCount?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type IntFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[]
+    notIn?: number[]
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntFilter<$PrismaModel> | number
+  }
+
+  export type StringFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel>
+    in?: string[]
+    notIn?: string[]
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringFilter<$PrismaModel> | string
+  }
+
+  export type StringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | null
+    notIn?: string[] | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
+  export type DateTimeFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[]
+    notIn?: Date[] | string[]
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
+  }
+
+  export type HabitListRelationFilter = {
+    every?: HabitWhereInput
+    some?: HabitWhereInput
+    none?: HabitWhereInput
+  }
+
+  export type HabitLogListRelationFilter = {
+    every?: HabitLogWhereInput
+    some?: HabitLogWhereInput
+    none?: HabitLogWhereInput
+  }
+
+  export type UserBadgeListRelationFilter = {
+    every?: UserBadgeWhereInput
+    some?: UserBadgeWhereInput
+    none?: UserBadgeWhereInput
+  }
+
+  export type UserChallengeListRelationFilter = {
+    every?: UserChallengeWhereInput
+    some?: UserChallengeWhereInput
+    none?: UserChallengeWhereInput
+  }
+
+  export type AIInsightListRelationFilter = {
+    every?: AIInsightWhereInput
+    some?: AIInsightWhereInput
+    none?: AIInsightWhereInput
+  }
+
+  export type SocialPostListRelationFilter = {
+    every?: SocialPostWhereInput
+    some?: SocialPostWhereInput
+    none?: SocialPostWhereInput
+  }
+
+  export type FriendListRelationFilter = {
+    every?: FriendWhereInput
+    some?: FriendWhereInput
+    none?: FriendWhereInput
+  }
+
+  export type ChallengeListRelationFilter = {
+    every?: ChallengeWhereInput
+    some?: ChallengeWhereInput
+    none?: ChallengeWhereInput
+  }
+
+  export type SortOrderInput = {
+    sort: SortOrder
+    nulls?: NullsOrder
+  }
+
+  export type HabitOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type HabitLogOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type UserBadgeOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type UserChallengeOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type AIInsightOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type SocialPostOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type FriendOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type ChallengeOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type UserCountOrderByAggregateInput = {
+    id?: SortOrder
+    username?: SortOrder
+    avatar?: SortOrder
+    level?: SortOrder
+    totalPoints?: SortOrder
+    currentStreak?: SortOrder
+    longestStreak?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type UserAvgOrderByAggregateInput = {
+    id?: SortOrder
+    level?: SortOrder
+    totalPoints?: SortOrder
+    currentStreak?: SortOrder
+    longestStreak?: SortOrder
+  }
+
+  export type UserMaxOrderByAggregateInput = {
+    id?: SortOrder
+    username?: SortOrder
+    avatar?: SortOrder
+    level?: SortOrder
+    totalPoints?: SortOrder
+    currentStreak?: SortOrder
+    longestStreak?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type UserMinOrderByAggregateInput = {
+    id?: SortOrder
+    username?: SortOrder
+    avatar?: SortOrder
+    level?: SortOrder
+    totalPoints?: SortOrder
+    currentStreak?: SortOrder
+    longestStreak?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type UserSumOrderByAggregateInput = {
+    id?: SortOrder
+    level?: SortOrder
+    totalPoints?: SortOrder
+    currentStreak?: SortOrder
+    longestStreak?: SortOrder
+  }
+
+  export type IntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[]
+    notIn?: number[]
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedIntFilter<$PrismaModel>
+    _min?: NestedIntFilter<$PrismaModel>
+    _max?: NestedIntFilter<$PrismaModel>
+  }
+
+  export type StringWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel>
+    in?: string[]
+    notIn?: string[]
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringWithAggregatesFilter<$PrismaModel> | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedStringFilter<$PrismaModel>
+    _max?: NestedStringFilter<$PrismaModel>
+  }
+
+  export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | null
+    notIn?: string[] | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
+  }
+
+  export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[]
+    notIn?: Date[] | string[]
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedDateTimeFilter<$PrismaModel>
+    _max?: NestedDateTimeFilter<$PrismaModel>
+  }
+
+  export type BoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
+  export type UserRelationFilter = {
+    is?: UserWhereInput
+    isNot?: UserWhereInput
+  }
+
+  export type HabitCountOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    category?: SortOrder
+    color?: SortOrder
+    icon?: SortOrder
+    frequency?: SortOrder
+    targetDaysPerWeek?: SortOrder
+    reminderTime?: SortOrder
+    isArchived?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type HabitAvgOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    targetDaysPerWeek?: SortOrder
+  }
+
+  export type HabitMaxOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    category?: SortOrder
+    color?: SortOrder
+    icon?: SortOrder
+    frequency?: SortOrder
+    targetDaysPerWeek?: SortOrder
+    reminderTime?: SortOrder
+    isArchived?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type HabitMinOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    category?: SortOrder
+    color?: SortOrder
+    icon?: SortOrder
+    frequency?: SortOrder
+    targetDaysPerWeek?: SortOrder
+    reminderTime?: SortOrder
+    isArchived?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type HabitSumOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    targetDaysPerWeek?: SortOrder
+  }
+
+  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
+  }
+
+  export type IntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | null
+    notIn?: number[] | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type HabitRelationFilter = {
+    is?: HabitWhereInput
+    isNot?: HabitWhereInput
+  }
+
+  export type HabitLogCountOrderByAggregateInput = {
+    id?: SortOrder
+    habitId?: SortOrder
+    userId?: SortOrder
+    completedAt?: SortOrder
+    note?: SortOrder
+    moodRating?: SortOrder
+    durationMinutes?: SortOrder
+  }
+
+  export type HabitLogAvgOrderByAggregateInput = {
+    id?: SortOrder
+    habitId?: SortOrder
+    userId?: SortOrder
+    moodRating?: SortOrder
+    durationMinutes?: SortOrder
+  }
+
+  export type HabitLogMaxOrderByAggregateInput = {
+    id?: SortOrder
+    habitId?: SortOrder
+    userId?: SortOrder
+    completedAt?: SortOrder
+    note?: SortOrder
+    moodRating?: SortOrder
+    durationMinutes?: SortOrder
+  }
+
+  export type HabitLogMinOrderByAggregateInput = {
+    id?: SortOrder
+    habitId?: SortOrder
+    userId?: SortOrder
+    completedAt?: SortOrder
+    note?: SortOrder
+    moodRating?: SortOrder
+    durationMinutes?: SortOrder
+  }
+
+  export type HabitLogSumOrderByAggregateInput = {
+    id?: SortOrder
+    habitId?: SortOrder
+    userId?: SortOrder
+    moodRating?: SortOrder
+    durationMinutes?: SortOrder
+  }
+
+  export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | null
+    notIn?: number[] | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedIntNullableFilter<$PrismaModel>
+    _max?: NestedIntNullableFilter<$PrismaModel>
+  }
+
+  export type BadgeCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    icon?: SortOrder
+    rarity?: SortOrder
+    pointValue?: SortOrder
+    condition?: SortOrder
+  }
+
+  export type BadgeAvgOrderByAggregateInput = {
+    id?: SortOrder
+    pointValue?: SortOrder
+  }
+
+  export type BadgeMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    icon?: SortOrder
+    rarity?: SortOrder
+    pointValue?: SortOrder
+    condition?: SortOrder
+  }
+
+  export type BadgeMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    icon?: SortOrder
+    rarity?: SortOrder
+    pointValue?: SortOrder
+    condition?: SortOrder
+  }
+
+  export type BadgeSumOrderByAggregateInput = {
+    id?: SortOrder
+    pointValue?: SortOrder
+  }
+
+  export type BadgeRelationFilter = {
+    is?: BadgeWhereInput
+    isNot?: BadgeWhereInput
+  }
+
+  export type UserBadgeUserIdBadgeIdCompoundUniqueInput = {
+    userId: number
+    badgeId: number
+  }
+
+  export type UserBadgeCountOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    badgeId?: SortOrder
+    earnedAt?: SortOrder
+  }
+
+  export type UserBadgeAvgOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    badgeId?: SortOrder
+  }
+
+  export type UserBadgeMaxOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    badgeId?: SortOrder
+    earnedAt?: SortOrder
+  }
+
+  export type UserBadgeMinOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    badgeId?: SortOrder
+    earnedAt?: SortOrder
+  }
+
+  export type UserBadgeSumOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    badgeId?: SortOrder
+  }
+
+  export type ChallengeCountOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    description?: SortOrder
+    startDate?: SortOrder
+    endDate?: SortOrder
+    habitCategory?: SortOrder
+    pointReward?: SortOrder
+    createdBy?: SortOrder
+  }
+
+  export type ChallengeAvgOrderByAggregateInput = {
+    id?: SortOrder
+    pointReward?: SortOrder
+    createdBy?: SortOrder
+  }
+
+  export type ChallengeMaxOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    description?: SortOrder
+    startDate?: SortOrder
+    endDate?: SortOrder
+    habitCategory?: SortOrder
+    pointReward?: SortOrder
+    createdBy?: SortOrder
+  }
+
+  export type ChallengeMinOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    description?: SortOrder
+    startDate?: SortOrder
+    endDate?: SortOrder
+    habitCategory?: SortOrder
+    pointReward?: SortOrder
+    createdBy?: SortOrder
+  }
+
+  export type ChallengeSumOrderByAggregateInput = {
+    id?: SortOrder
+    pointReward?: SortOrder
+    createdBy?: SortOrder
+  }
+
+  export type DateTimeNullableFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | null
+    notIn?: Date[] | string[] | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+  }
+
+  export type ChallengeRelationFilter = {
+    is?: ChallengeWhereInput
+    isNot?: ChallengeWhereInput
+  }
+
+  export type UserChallengeUserIdChallengeIdCompoundUniqueInput = {
+    userId: number
+    challengeId: number
+  }
+
+  export type UserChallengeCountOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    challengeId?: SortOrder
+    joinedAt?: SortOrder
+    completedAt?: SortOrder
+    progress?: SortOrder
+  }
+
+  export type UserChallengeAvgOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    challengeId?: SortOrder
+    progress?: SortOrder
+  }
+
+  export type UserChallengeMaxOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    challengeId?: SortOrder
+    joinedAt?: SortOrder
+    completedAt?: SortOrder
+    progress?: SortOrder
+  }
+
+  export type UserChallengeMinOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    challengeId?: SortOrder
+    joinedAt?: SortOrder
+    completedAt?: SortOrder
+    progress?: SortOrder
+  }
+
+  export type UserChallengeSumOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    challengeId?: SortOrder
+    progress?: SortOrder
+  }
+
+  export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | null
+    notIn?: Date[] | string[] | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedDateTimeNullableFilter<$PrismaModel>
+    _max?: NestedDateTimeNullableFilter<$PrismaModel>
+  }
+
+  export type HabitNullableRelationFilter = {
+    is?: HabitWhereInput | null
+    isNot?: HabitWhereInput | null
+  }
+
+  export type AIInsightCountOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    habitId?: SortOrder
+    type?: SortOrder
+    content?: SortOrder
+    generatedAt?: SortOrder
+    isRead?: SortOrder
+  }
+
+  export type AIInsightAvgOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    habitId?: SortOrder
+  }
+
+  export type AIInsightMaxOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    habitId?: SortOrder
+    type?: SortOrder
+    content?: SortOrder
+    generatedAt?: SortOrder
+    isRead?: SortOrder
+  }
+
+  export type AIInsightMinOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    habitId?: SortOrder
+    type?: SortOrder
+    content?: SortOrder
+    generatedAt?: SortOrder
+    isRead?: SortOrder
+  }
+
+  export type AIInsightSumOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    habitId?: SortOrder
+  }
+
+  export type FriendUserIdFriendIdCompoundUniqueInput = {
+    userId: number
+    friendId: number
+  }
+
+  export type FriendCountOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    friendId?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type FriendAvgOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    friendId?: SortOrder
+  }
+
+  export type FriendMaxOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    friendId?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type FriendMinOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    friendId?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type FriendSumOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    friendId?: SortOrder
+  }
+
+  export type BadgeNullableRelationFilter = {
+    is?: BadgeWhereInput | null
+    isNot?: BadgeWhereInput | null
+  }
+
+  export type SocialPostCountOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    content?: SortOrder
+    badgeId?: SortOrder
+    habitId?: SortOrder
+    likesCount?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type SocialPostAvgOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    badgeId?: SortOrder
+    habitId?: SortOrder
+    likesCount?: SortOrder
+  }
+
+  export type SocialPostMaxOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    content?: SortOrder
+    badgeId?: SortOrder
+    habitId?: SortOrder
+    likesCount?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type SocialPostMinOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    content?: SortOrder
+    badgeId?: SortOrder
+    habitId?: SortOrder
+    likesCount?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type SocialPostSumOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    badgeId?: SortOrder
+    habitId?: SortOrder
+    likesCount?: SortOrder
+  }
+
+  export type HabitCreateNestedManyWithoutUserInput = {
+    create?: XOR<HabitCreateWithoutUserInput, HabitUncheckedCreateWithoutUserInput> | HabitCreateWithoutUserInput[] | HabitUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: HabitCreateOrConnectWithoutUserInput | HabitCreateOrConnectWithoutUserInput[]
+    createMany?: HabitCreateManyUserInputEnvelope
+    connect?: HabitWhereUniqueInput | HabitWhereUniqueInput[]
+  }
+
+  export type HabitLogCreateNestedManyWithoutUserInput = {
+    create?: XOR<HabitLogCreateWithoutUserInput, HabitLogUncheckedCreateWithoutUserInput> | HabitLogCreateWithoutUserInput[] | HabitLogUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: HabitLogCreateOrConnectWithoutUserInput | HabitLogCreateOrConnectWithoutUserInput[]
+    createMany?: HabitLogCreateManyUserInputEnvelope
+    connect?: HabitLogWhereUniqueInput | HabitLogWhereUniqueInput[]
+  }
+
+  export type UserBadgeCreateNestedManyWithoutUserInput = {
+    create?: XOR<UserBadgeCreateWithoutUserInput, UserBadgeUncheckedCreateWithoutUserInput> | UserBadgeCreateWithoutUserInput[] | UserBadgeUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UserBadgeCreateOrConnectWithoutUserInput | UserBadgeCreateOrConnectWithoutUserInput[]
+    createMany?: UserBadgeCreateManyUserInputEnvelope
+    connect?: UserBadgeWhereUniqueInput | UserBadgeWhereUniqueInput[]
+  }
+
+  export type UserChallengeCreateNestedManyWithoutUserInput = {
+    create?: XOR<UserChallengeCreateWithoutUserInput, UserChallengeUncheckedCreateWithoutUserInput> | UserChallengeCreateWithoutUserInput[] | UserChallengeUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UserChallengeCreateOrConnectWithoutUserInput | UserChallengeCreateOrConnectWithoutUserInput[]
+    createMany?: UserChallengeCreateManyUserInputEnvelope
+    connect?: UserChallengeWhereUniqueInput | UserChallengeWhereUniqueInput[]
+  }
+
+  export type AIInsightCreateNestedManyWithoutUserInput = {
+    create?: XOR<AIInsightCreateWithoutUserInput, AIInsightUncheckedCreateWithoutUserInput> | AIInsightCreateWithoutUserInput[] | AIInsightUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: AIInsightCreateOrConnectWithoutUserInput | AIInsightCreateOrConnectWithoutUserInput[]
+    createMany?: AIInsightCreateManyUserInputEnvelope
+    connect?: AIInsightWhereUniqueInput | AIInsightWhereUniqueInput[]
+  }
+
+  export type SocialPostCreateNestedManyWithoutUserInput = {
+    create?: XOR<SocialPostCreateWithoutUserInput, SocialPostUncheckedCreateWithoutUserInput> | SocialPostCreateWithoutUserInput[] | SocialPostUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: SocialPostCreateOrConnectWithoutUserInput | SocialPostCreateOrConnectWithoutUserInput[]
+    createMany?: SocialPostCreateManyUserInputEnvelope
+    connect?: SocialPostWhereUniqueInput | SocialPostWhereUniqueInput[]
+  }
+
+  export type FriendCreateNestedManyWithoutUserInput = {
+    create?: XOR<FriendCreateWithoutUserInput, FriendUncheckedCreateWithoutUserInput> | FriendCreateWithoutUserInput[] | FriendUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: FriendCreateOrConnectWithoutUserInput | FriendCreateOrConnectWithoutUserInput[]
+    createMany?: FriendCreateManyUserInputEnvelope
+    connect?: FriendWhereUniqueInput | FriendWhereUniqueInput[]
+  }
+
+  export type FriendCreateNestedManyWithoutFriendInput = {
+    create?: XOR<FriendCreateWithoutFriendInput, FriendUncheckedCreateWithoutFriendInput> | FriendCreateWithoutFriendInput[] | FriendUncheckedCreateWithoutFriendInput[]
+    connectOrCreate?: FriendCreateOrConnectWithoutFriendInput | FriendCreateOrConnectWithoutFriendInput[]
+    createMany?: FriendCreateManyFriendInputEnvelope
+    connect?: FriendWhereUniqueInput | FriendWhereUniqueInput[]
+  }
+
+  export type ChallengeCreateNestedManyWithoutCreatorInput = {
+    create?: XOR<ChallengeCreateWithoutCreatorInput, ChallengeUncheckedCreateWithoutCreatorInput> | ChallengeCreateWithoutCreatorInput[] | ChallengeUncheckedCreateWithoutCreatorInput[]
+    connectOrCreate?: ChallengeCreateOrConnectWithoutCreatorInput | ChallengeCreateOrConnectWithoutCreatorInput[]
+    createMany?: ChallengeCreateManyCreatorInputEnvelope
+    connect?: ChallengeWhereUniqueInput | ChallengeWhereUniqueInput[]
+  }
+
+  export type HabitUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<HabitCreateWithoutUserInput, HabitUncheckedCreateWithoutUserInput> | HabitCreateWithoutUserInput[] | HabitUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: HabitCreateOrConnectWithoutUserInput | HabitCreateOrConnectWithoutUserInput[]
+    createMany?: HabitCreateManyUserInputEnvelope
+    connect?: HabitWhereUniqueInput | HabitWhereUniqueInput[]
+  }
+
+  export type HabitLogUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<HabitLogCreateWithoutUserInput, HabitLogUncheckedCreateWithoutUserInput> | HabitLogCreateWithoutUserInput[] | HabitLogUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: HabitLogCreateOrConnectWithoutUserInput | HabitLogCreateOrConnectWithoutUserInput[]
+    createMany?: HabitLogCreateManyUserInputEnvelope
+    connect?: HabitLogWhereUniqueInput | HabitLogWhereUniqueInput[]
+  }
+
+  export type UserBadgeUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<UserBadgeCreateWithoutUserInput, UserBadgeUncheckedCreateWithoutUserInput> | UserBadgeCreateWithoutUserInput[] | UserBadgeUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UserBadgeCreateOrConnectWithoutUserInput | UserBadgeCreateOrConnectWithoutUserInput[]
+    createMany?: UserBadgeCreateManyUserInputEnvelope
+    connect?: UserBadgeWhereUniqueInput | UserBadgeWhereUniqueInput[]
+  }
+
+  export type UserChallengeUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<UserChallengeCreateWithoutUserInput, UserChallengeUncheckedCreateWithoutUserInput> | UserChallengeCreateWithoutUserInput[] | UserChallengeUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UserChallengeCreateOrConnectWithoutUserInput | UserChallengeCreateOrConnectWithoutUserInput[]
+    createMany?: UserChallengeCreateManyUserInputEnvelope
+    connect?: UserChallengeWhereUniqueInput | UserChallengeWhereUniqueInput[]
+  }
+
+  export type AIInsightUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<AIInsightCreateWithoutUserInput, AIInsightUncheckedCreateWithoutUserInput> | AIInsightCreateWithoutUserInput[] | AIInsightUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: AIInsightCreateOrConnectWithoutUserInput | AIInsightCreateOrConnectWithoutUserInput[]
+    createMany?: AIInsightCreateManyUserInputEnvelope
+    connect?: AIInsightWhereUniqueInput | AIInsightWhereUniqueInput[]
+  }
+
+  export type SocialPostUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<SocialPostCreateWithoutUserInput, SocialPostUncheckedCreateWithoutUserInput> | SocialPostCreateWithoutUserInput[] | SocialPostUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: SocialPostCreateOrConnectWithoutUserInput | SocialPostCreateOrConnectWithoutUserInput[]
+    createMany?: SocialPostCreateManyUserInputEnvelope
+    connect?: SocialPostWhereUniqueInput | SocialPostWhereUniqueInput[]
+  }
+
+  export type FriendUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<FriendCreateWithoutUserInput, FriendUncheckedCreateWithoutUserInput> | FriendCreateWithoutUserInput[] | FriendUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: FriendCreateOrConnectWithoutUserInput | FriendCreateOrConnectWithoutUserInput[]
+    createMany?: FriendCreateManyUserInputEnvelope
+    connect?: FriendWhereUniqueInput | FriendWhereUniqueInput[]
+  }
+
+  export type FriendUncheckedCreateNestedManyWithoutFriendInput = {
+    create?: XOR<FriendCreateWithoutFriendInput, FriendUncheckedCreateWithoutFriendInput> | FriendCreateWithoutFriendInput[] | FriendUncheckedCreateWithoutFriendInput[]
+    connectOrCreate?: FriendCreateOrConnectWithoutFriendInput | FriendCreateOrConnectWithoutFriendInput[]
+    createMany?: FriendCreateManyFriendInputEnvelope
+    connect?: FriendWhereUniqueInput | FriendWhereUniqueInput[]
+  }
+
+  export type ChallengeUncheckedCreateNestedManyWithoutCreatorInput = {
+    create?: XOR<ChallengeCreateWithoutCreatorInput, ChallengeUncheckedCreateWithoutCreatorInput> | ChallengeCreateWithoutCreatorInput[] | ChallengeUncheckedCreateWithoutCreatorInput[]
+    connectOrCreate?: ChallengeCreateOrConnectWithoutCreatorInput | ChallengeCreateOrConnectWithoutCreatorInput[]
+    createMany?: ChallengeCreateManyCreatorInputEnvelope
+    connect?: ChallengeWhereUniqueInput | ChallengeWhereUniqueInput[]
+  }
+
+  export type StringFieldUpdateOperationsInput = {
+    set?: string
+  }
+
+  export type NullableStringFieldUpdateOperationsInput = {
+    set?: string | null
+  }
+
+  export type IntFieldUpdateOperationsInput = {
+    set?: number
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
+  export type DateTimeFieldUpdateOperationsInput = {
+    set?: Date | string
+  }
+
+  export type HabitUpdateManyWithoutUserNestedInput = {
+    create?: XOR<HabitCreateWithoutUserInput, HabitUncheckedCreateWithoutUserInput> | HabitCreateWithoutUserInput[] | HabitUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: HabitCreateOrConnectWithoutUserInput | HabitCreateOrConnectWithoutUserInput[]
+    upsert?: HabitUpsertWithWhereUniqueWithoutUserInput | HabitUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: HabitCreateManyUserInputEnvelope
+    set?: HabitWhereUniqueInput | HabitWhereUniqueInput[]
+    disconnect?: HabitWhereUniqueInput | HabitWhereUniqueInput[]
+    delete?: HabitWhereUniqueInput | HabitWhereUniqueInput[]
+    connect?: HabitWhereUniqueInput | HabitWhereUniqueInput[]
+    update?: HabitUpdateWithWhereUniqueWithoutUserInput | HabitUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: HabitUpdateManyWithWhereWithoutUserInput | HabitUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: HabitScalarWhereInput | HabitScalarWhereInput[]
+  }
+
+  export type HabitLogUpdateManyWithoutUserNestedInput = {
+    create?: XOR<HabitLogCreateWithoutUserInput, HabitLogUncheckedCreateWithoutUserInput> | HabitLogCreateWithoutUserInput[] | HabitLogUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: HabitLogCreateOrConnectWithoutUserInput | HabitLogCreateOrConnectWithoutUserInput[]
+    upsert?: HabitLogUpsertWithWhereUniqueWithoutUserInput | HabitLogUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: HabitLogCreateManyUserInputEnvelope
+    set?: HabitLogWhereUniqueInput | HabitLogWhereUniqueInput[]
+    disconnect?: HabitLogWhereUniqueInput | HabitLogWhereUniqueInput[]
+    delete?: HabitLogWhereUniqueInput | HabitLogWhereUniqueInput[]
+    connect?: HabitLogWhereUniqueInput | HabitLogWhereUniqueInput[]
+    update?: HabitLogUpdateWithWhereUniqueWithoutUserInput | HabitLogUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: HabitLogUpdateManyWithWhereWithoutUserInput | HabitLogUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: HabitLogScalarWhereInput | HabitLogScalarWhereInput[]
+  }
+
+  export type UserBadgeUpdateManyWithoutUserNestedInput = {
+    create?: XOR<UserBadgeCreateWithoutUserInput, UserBadgeUncheckedCreateWithoutUserInput> | UserBadgeCreateWithoutUserInput[] | UserBadgeUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UserBadgeCreateOrConnectWithoutUserInput | UserBadgeCreateOrConnectWithoutUserInput[]
+    upsert?: UserBadgeUpsertWithWhereUniqueWithoutUserInput | UserBadgeUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: UserBadgeCreateManyUserInputEnvelope
+    set?: UserBadgeWhereUniqueInput | UserBadgeWhereUniqueInput[]
+    disconnect?: UserBadgeWhereUniqueInput | UserBadgeWhereUniqueInput[]
+    delete?: UserBadgeWhereUniqueInput | UserBadgeWhereUniqueInput[]
+    connect?: UserBadgeWhereUniqueInput | UserBadgeWhereUniqueInput[]
+    update?: UserBadgeUpdateWithWhereUniqueWithoutUserInput | UserBadgeUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: UserBadgeUpdateManyWithWhereWithoutUserInput | UserBadgeUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: UserBadgeScalarWhereInput | UserBadgeScalarWhereInput[]
+  }
+
+  export type UserChallengeUpdateManyWithoutUserNestedInput = {
+    create?: XOR<UserChallengeCreateWithoutUserInput, UserChallengeUncheckedCreateWithoutUserInput> | UserChallengeCreateWithoutUserInput[] | UserChallengeUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UserChallengeCreateOrConnectWithoutUserInput | UserChallengeCreateOrConnectWithoutUserInput[]
+    upsert?: UserChallengeUpsertWithWhereUniqueWithoutUserInput | UserChallengeUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: UserChallengeCreateManyUserInputEnvelope
+    set?: UserChallengeWhereUniqueInput | UserChallengeWhereUniqueInput[]
+    disconnect?: UserChallengeWhereUniqueInput | UserChallengeWhereUniqueInput[]
+    delete?: UserChallengeWhereUniqueInput | UserChallengeWhereUniqueInput[]
+    connect?: UserChallengeWhereUniqueInput | UserChallengeWhereUniqueInput[]
+    update?: UserChallengeUpdateWithWhereUniqueWithoutUserInput | UserChallengeUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: UserChallengeUpdateManyWithWhereWithoutUserInput | UserChallengeUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: UserChallengeScalarWhereInput | UserChallengeScalarWhereInput[]
+  }
+
+  export type AIInsightUpdateManyWithoutUserNestedInput = {
+    create?: XOR<AIInsightCreateWithoutUserInput, AIInsightUncheckedCreateWithoutUserInput> | AIInsightCreateWithoutUserInput[] | AIInsightUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: AIInsightCreateOrConnectWithoutUserInput | AIInsightCreateOrConnectWithoutUserInput[]
+    upsert?: AIInsightUpsertWithWhereUniqueWithoutUserInput | AIInsightUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: AIInsightCreateManyUserInputEnvelope
+    set?: AIInsightWhereUniqueInput | AIInsightWhereUniqueInput[]
+    disconnect?: AIInsightWhereUniqueInput | AIInsightWhereUniqueInput[]
+    delete?: AIInsightWhereUniqueInput | AIInsightWhereUniqueInput[]
+    connect?: AIInsightWhereUniqueInput | AIInsightWhereUniqueInput[]
+    update?: AIInsightUpdateWithWhereUniqueWithoutUserInput | AIInsightUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: AIInsightUpdateManyWithWhereWithoutUserInput | AIInsightUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: AIInsightScalarWhereInput | AIInsightScalarWhereInput[]
+  }
+
+  export type SocialPostUpdateManyWithoutUserNestedInput = {
+    create?: XOR<SocialPostCreateWithoutUserInput, SocialPostUncheckedCreateWithoutUserInput> | SocialPostCreateWithoutUserInput[] | SocialPostUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: SocialPostCreateOrConnectWithoutUserInput | SocialPostCreateOrConnectWithoutUserInput[]
+    upsert?: SocialPostUpsertWithWhereUniqueWithoutUserInput | SocialPostUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: SocialPostCreateManyUserInputEnvelope
+    set?: SocialPostWhereUniqueInput | SocialPostWhereUniqueInput[]
+    disconnect?: SocialPostWhereUniqueInput | SocialPostWhereUniqueInput[]
+    delete?: SocialPostWhereUniqueInput | SocialPostWhereUniqueInput[]
+    connect?: SocialPostWhereUniqueInput | SocialPostWhereUniqueInput[]
+    update?: SocialPostUpdateWithWhereUniqueWithoutUserInput | SocialPostUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: SocialPostUpdateManyWithWhereWithoutUserInput | SocialPostUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: SocialPostScalarWhereInput | SocialPostScalarWhereInput[]
+  }
+
+  export type FriendUpdateManyWithoutUserNestedInput = {
+    create?: XOR<FriendCreateWithoutUserInput, FriendUncheckedCreateWithoutUserInput> | FriendCreateWithoutUserInput[] | FriendUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: FriendCreateOrConnectWithoutUserInput | FriendCreateOrConnectWithoutUserInput[]
+    upsert?: FriendUpsertWithWhereUniqueWithoutUserInput | FriendUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: FriendCreateManyUserInputEnvelope
+    set?: FriendWhereUniqueInput | FriendWhereUniqueInput[]
+    disconnect?: FriendWhereUniqueInput | FriendWhereUniqueInput[]
+    delete?: FriendWhereUniqueInput | FriendWhereUniqueInput[]
+    connect?: FriendWhereUniqueInput | FriendWhereUniqueInput[]
+    update?: FriendUpdateWithWhereUniqueWithoutUserInput | FriendUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: FriendUpdateManyWithWhereWithoutUserInput | FriendUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: FriendScalarWhereInput | FriendScalarWhereInput[]
+  }
+
+  export type FriendUpdateManyWithoutFriendNestedInput = {
+    create?: XOR<FriendCreateWithoutFriendInput, FriendUncheckedCreateWithoutFriendInput> | FriendCreateWithoutFriendInput[] | FriendUncheckedCreateWithoutFriendInput[]
+    connectOrCreate?: FriendCreateOrConnectWithoutFriendInput | FriendCreateOrConnectWithoutFriendInput[]
+    upsert?: FriendUpsertWithWhereUniqueWithoutFriendInput | FriendUpsertWithWhereUniqueWithoutFriendInput[]
+    createMany?: FriendCreateManyFriendInputEnvelope
+    set?: FriendWhereUniqueInput | FriendWhereUniqueInput[]
+    disconnect?: FriendWhereUniqueInput | FriendWhereUniqueInput[]
+    delete?: FriendWhereUniqueInput | FriendWhereUniqueInput[]
+    connect?: FriendWhereUniqueInput | FriendWhereUniqueInput[]
+    update?: FriendUpdateWithWhereUniqueWithoutFriendInput | FriendUpdateWithWhereUniqueWithoutFriendInput[]
+    updateMany?: FriendUpdateManyWithWhereWithoutFriendInput | FriendUpdateManyWithWhereWithoutFriendInput[]
+    deleteMany?: FriendScalarWhereInput | FriendScalarWhereInput[]
+  }
+
+  export type ChallengeUpdateManyWithoutCreatorNestedInput = {
+    create?: XOR<ChallengeCreateWithoutCreatorInput, ChallengeUncheckedCreateWithoutCreatorInput> | ChallengeCreateWithoutCreatorInput[] | ChallengeUncheckedCreateWithoutCreatorInput[]
+    connectOrCreate?: ChallengeCreateOrConnectWithoutCreatorInput | ChallengeCreateOrConnectWithoutCreatorInput[]
+    upsert?: ChallengeUpsertWithWhereUniqueWithoutCreatorInput | ChallengeUpsertWithWhereUniqueWithoutCreatorInput[]
+    createMany?: ChallengeCreateManyCreatorInputEnvelope
+    set?: ChallengeWhereUniqueInput | ChallengeWhereUniqueInput[]
+    disconnect?: ChallengeWhereUniqueInput | ChallengeWhereUniqueInput[]
+    delete?: ChallengeWhereUniqueInput | ChallengeWhereUniqueInput[]
+    connect?: ChallengeWhereUniqueInput | ChallengeWhereUniqueInput[]
+    update?: ChallengeUpdateWithWhereUniqueWithoutCreatorInput | ChallengeUpdateWithWhereUniqueWithoutCreatorInput[]
+    updateMany?: ChallengeUpdateManyWithWhereWithoutCreatorInput | ChallengeUpdateManyWithWhereWithoutCreatorInput[]
+    deleteMany?: ChallengeScalarWhereInput | ChallengeScalarWhereInput[]
+  }
+
+  export type HabitUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<HabitCreateWithoutUserInput, HabitUncheckedCreateWithoutUserInput> | HabitCreateWithoutUserInput[] | HabitUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: HabitCreateOrConnectWithoutUserInput | HabitCreateOrConnectWithoutUserInput[]
+    upsert?: HabitUpsertWithWhereUniqueWithoutUserInput | HabitUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: HabitCreateManyUserInputEnvelope
+    set?: HabitWhereUniqueInput | HabitWhereUniqueInput[]
+    disconnect?: HabitWhereUniqueInput | HabitWhereUniqueInput[]
+    delete?: HabitWhereUniqueInput | HabitWhereUniqueInput[]
+    connect?: HabitWhereUniqueInput | HabitWhereUniqueInput[]
+    update?: HabitUpdateWithWhereUniqueWithoutUserInput | HabitUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: HabitUpdateManyWithWhereWithoutUserInput | HabitUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: HabitScalarWhereInput | HabitScalarWhereInput[]
+  }
+
+  export type HabitLogUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<HabitLogCreateWithoutUserInput, HabitLogUncheckedCreateWithoutUserInput> | HabitLogCreateWithoutUserInput[] | HabitLogUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: HabitLogCreateOrConnectWithoutUserInput | HabitLogCreateOrConnectWithoutUserInput[]
+    upsert?: HabitLogUpsertWithWhereUniqueWithoutUserInput | HabitLogUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: HabitLogCreateManyUserInputEnvelope
+    set?: HabitLogWhereUniqueInput | HabitLogWhereUniqueInput[]
+    disconnect?: HabitLogWhereUniqueInput | HabitLogWhereUniqueInput[]
+    delete?: HabitLogWhereUniqueInput | HabitLogWhereUniqueInput[]
+    connect?: HabitLogWhereUniqueInput | HabitLogWhereUniqueInput[]
+    update?: HabitLogUpdateWithWhereUniqueWithoutUserInput | HabitLogUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: HabitLogUpdateManyWithWhereWithoutUserInput | HabitLogUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: HabitLogScalarWhereInput | HabitLogScalarWhereInput[]
+  }
+
+  export type UserBadgeUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<UserBadgeCreateWithoutUserInput, UserBadgeUncheckedCreateWithoutUserInput> | UserBadgeCreateWithoutUserInput[] | UserBadgeUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UserBadgeCreateOrConnectWithoutUserInput | UserBadgeCreateOrConnectWithoutUserInput[]
+    upsert?: UserBadgeUpsertWithWhereUniqueWithoutUserInput | UserBadgeUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: UserBadgeCreateManyUserInputEnvelope
+    set?: UserBadgeWhereUniqueInput | UserBadgeWhereUniqueInput[]
+    disconnect?: UserBadgeWhereUniqueInput | UserBadgeWhereUniqueInput[]
+    delete?: UserBadgeWhereUniqueInput | UserBadgeWhereUniqueInput[]
+    connect?: UserBadgeWhereUniqueInput | UserBadgeWhereUniqueInput[]
+    update?: UserBadgeUpdateWithWhereUniqueWithoutUserInput | UserBadgeUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: UserBadgeUpdateManyWithWhereWithoutUserInput | UserBadgeUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: UserBadgeScalarWhereInput | UserBadgeScalarWhereInput[]
+  }
+
+  export type UserChallengeUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<UserChallengeCreateWithoutUserInput, UserChallengeUncheckedCreateWithoutUserInput> | UserChallengeCreateWithoutUserInput[] | UserChallengeUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UserChallengeCreateOrConnectWithoutUserInput | UserChallengeCreateOrConnectWithoutUserInput[]
+    upsert?: UserChallengeUpsertWithWhereUniqueWithoutUserInput | UserChallengeUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: UserChallengeCreateManyUserInputEnvelope
+    set?: UserChallengeWhereUniqueInput | UserChallengeWhereUniqueInput[]
+    disconnect?: UserChallengeWhereUniqueInput | UserChallengeWhereUniqueInput[]
+    delete?: UserChallengeWhereUniqueInput | UserChallengeWhereUniqueInput[]
+    connect?: UserChallengeWhereUniqueInput | UserChallengeWhereUniqueInput[]
+    update?: UserChallengeUpdateWithWhereUniqueWithoutUserInput | UserChallengeUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: UserChallengeUpdateManyWithWhereWithoutUserInput | UserChallengeUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: UserChallengeScalarWhereInput | UserChallengeScalarWhereInput[]
+  }
+
+  export type AIInsightUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<AIInsightCreateWithoutUserInput, AIInsightUncheckedCreateWithoutUserInput> | AIInsightCreateWithoutUserInput[] | AIInsightUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: AIInsightCreateOrConnectWithoutUserInput | AIInsightCreateOrConnectWithoutUserInput[]
+    upsert?: AIInsightUpsertWithWhereUniqueWithoutUserInput | AIInsightUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: AIInsightCreateManyUserInputEnvelope
+    set?: AIInsightWhereUniqueInput | AIInsightWhereUniqueInput[]
+    disconnect?: AIInsightWhereUniqueInput | AIInsightWhereUniqueInput[]
+    delete?: AIInsightWhereUniqueInput | AIInsightWhereUniqueInput[]
+    connect?: AIInsightWhereUniqueInput | AIInsightWhereUniqueInput[]
+    update?: AIInsightUpdateWithWhereUniqueWithoutUserInput | AIInsightUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: AIInsightUpdateManyWithWhereWithoutUserInput | AIInsightUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: AIInsightScalarWhereInput | AIInsightScalarWhereInput[]
+  }
+
+  export type SocialPostUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<SocialPostCreateWithoutUserInput, SocialPostUncheckedCreateWithoutUserInput> | SocialPostCreateWithoutUserInput[] | SocialPostUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: SocialPostCreateOrConnectWithoutUserInput | SocialPostCreateOrConnectWithoutUserInput[]
+    upsert?: SocialPostUpsertWithWhereUniqueWithoutUserInput | SocialPostUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: SocialPostCreateManyUserInputEnvelope
+    set?: SocialPostWhereUniqueInput | SocialPostWhereUniqueInput[]
+    disconnect?: SocialPostWhereUniqueInput | SocialPostWhereUniqueInput[]
+    delete?: SocialPostWhereUniqueInput | SocialPostWhereUniqueInput[]
+    connect?: SocialPostWhereUniqueInput | SocialPostWhereUniqueInput[]
+    update?: SocialPostUpdateWithWhereUniqueWithoutUserInput | SocialPostUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: SocialPostUpdateManyWithWhereWithoutUserInput | SocialPostUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: SocialPostScalarWhereInput | SocialPostScalarWhereInput[]
+  }
+
+  export type FriendUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<FriendCreateWithoutUserInput, FriendUncheckedCreateWithoutUserInput> | FriendCreateWithoutUserInput[] | FriendUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: FriendCreateOrConnectWithoutUserInput | FriendCreateOrConnectWithoutUserInput[]
+    upsert?: FriendUpsertWithWhereUniqueWithoutUserInput | FriendUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: FriendCreateManyUserInputEnvelope
+    set?: FriendWhereUniqueInput | FriendWhereUniqueInput[]
+    disconnect?: FriendWhereUniqueInput | FriendWhereUniqueInput[]
+    delete?: FriendWhereUniqueInput | FriendWhereUniqueInput[]
+    connect?: FriendWhereUniqueInput | FriendWhereUniqueInput[]
+    update?: FriendUpdateWithWhereUniqueWithoutUserInput | FriendUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: FriendUpdateManyWithWhereWithoutUserInput | FriendUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: FriendScalarWhereInput | FriendScalarWhereInput[]
+  }
+
+  export type FriendUncheckedUpdateManyWithoutFriendNestedInput = {
+    create?: XOR<FriendCreateWithoutFriendInput, FriendUncheckedCreateWithoutFriendInput> | FriendCreateWithoutFriendInput[] | FriendUncheckedCreateWithoutFriendInput[]
+    connectOrCreate?: FriendCreateOrConnectWithoutFriendInput | FriendCreateOrConnectWithoutFriendInput[]
+    upsert?: FriendUpsertWithWhereUniqueWithoutFriendInput | FriendUpsertWithWhereUniqueWithoutFriendInput[]
+    createMany?: FriendCreateManyFriendInputEnvelope
+    set?: FriendWhereUniqueInput | FriendWhereUniqueInput[]
+    disconnect?: FriendWhereUniqueInput | FriendWhereUniqueInput[]
+    delete?: FriendWhereUniqueInput | FriendWhereUniqueInput[]
+    connect?: FriendWhereUniqueInput | FriendWhereUniqueInput[]
+    update?: FriendUpdateWithWhereUniqueWithoutFriendInput | FriendUpdateWithWhereUniqueWithoutFriendInput[]
+    updateMany?: FriendUpdateManyWithWhereWithoutFriendInput | FriendUpdateManyWithWhereWithoutFriendInput[]
+    deleteMany?: FriendScalarWhereInput | FriendScalarWhereInput[]
+  }
+
+  export type ChallengeUncheckedUpdateManyWithoutCreatorNestedInput = {
+    create?: XOR<ChallengeCreateWithoutCreatorInput, ChallengeUncheckedCreateWithoutCreatorInput> | ChallengeCreateWithoutCreatorInput[] | ChallengeUncheckedCreateWithoutCreatorInput[]
+    connectOrCreate?: ChallengeCreateOrConnectWithoutCreatorInput | ChallengeCreateOrConnectWithoutCreatorInput[]
+    upsert?: ChallengeUpsertWithWhereUniqueWithoutCreatorInput | ChallengeUpsertWithWhereUniqueWithoutCreatorInput[]
+    createMany?: ChallengeCreateManyCreatorInputEnvelope
+    set?: ChallengeWhereUniqueInput | ChallengeWhereUniqueInput[]
+    disconnect?: ChallengeWhereUniqueInput | ChallengeWhereUniqueInput[]
+    delete?: ChallengeWhereUniqueInput | ChallengeWhereUniqueInput[]
+    connect?: ChallengeWhereUniqueInput | ChallengeWhereUniqueInput[]
+    update?: ChallengeUpdateWithWhereUniqueWithoutCreatorInput | ChallengeUpdateWithWhereUniqueWithoutCreatorInput[]
+    updateMany?: ChallengeUpdateManyWithWhereWithoutCreatorInput | ChallengeUpdateManyWithWhereWithoutCreatorInput[]
+    deleteMany?: ChallengeScalarWhereInput | ChallengeScalarWhereInput[]
+  }
+
+  export type UserCreateNestedOneWithoutHabitsInput = {
+    create?: XOR<UserCreateWithoutHabitsInput, UserUncheckedCreateWithoutHabitsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutHabitsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type HabitLogCreateNestedManyWithoutHabitInput = {
+    create?: XOR<HabitLogCreateWithoutHabitInput, HabitLogUncheckedCreateWithoutHabitInput> | HabitLogCreateWithoutHabitInput[] | HabitLogUncheckedCreateWithoutHabitInput[]
+    connectOrCreate?: HabitLogCreateOrConnectWithoutHabitInput | HabitLogCreateOrConnectWithoutHabitInput[]
+    createMany?: HabitLogCreateManyHabitInputEnvelope
+    connect?: HabitLogWhereUniqueInput | HabitLogWhereUniqueInput[]
+  }
+
+  export type AIInsightCreateNestedManyWithoutHabitInput = {
+    create?: XOR<AIInsightCreateWithoutHabitInput, AIInsightUncheckedCreateWithoutHabitInput> | AIInsightCreateWithoutHabitInput[] | AIInsightUncheckedCreateWithoutHabitInput[]
+    connectOrCreate?: AIInsightCreateOrConnectWithoutHabitInput | AIInsightCreateOrConnectWithoutHabitInput[]
+    createMany?: AIInsightCreateManyHabitInputEnvelope
+    connect?: AIInsightWhereUniqueInput | AIInsightWhereUniqueInput[]
+  }
+
+  export type SocialPostCreateNestedManyWithoutHabitInput = {
+    create?: XOR<SocialPostCreateWithoutHabitInput, SocialPostUncheckedCreateWithoutHabitInput> | SocialPostCreateWithoutHabitInput[] | SocialPostUncheckedCreateWithoutHabitInput[]
+    connectOrCreate?: SocialPostCreateOrConnectWithoutHabitInput | SocialPostCreateOrConnectWithoutHabitInput[]
+    createMany?: SocialPostCreateManyHabitInputEnvelope
+    connect?: SocialPostWhereUniqueInput | SocialPostWhereUniqueInput[]
+  }
+
+  export type HabitLogUncheckedCreateNestedManyWithoutHabitInput = {
+    create?: XOR<HabitLogCreateWithoutHabitInput, HabitLogUncheckedCreateWithoutHabitInput> | HabitLogCreateWithoutHabitInput[] | HabitLogUncheckedCreateWithoutHabitInput[]
+    connectOrCreate?: HabitLogCreateOrConnectWithoutHabitInput | HabitLogCreateOrConnectWithoutHabitInput[]
+    createMany?: HabitLogCreateManyHabitInputEnvelope
+    connect?: HabitLogWhereUniqueInput | HabitLogWhereUniqueInput[]
+  }
+
+  export type AIInsightUncheckedCreateNestedManyWithoutHabitInput = {
+    create?: XOR<AIInsightCreateWithoutHabitInput, AIInsightUncheckedCreateWithoutHabitInput> | AIInsightCreateWithoutHabitInput[] | AIInsightUncheckedCreateWithoutHabitInput[]
+    connectOrCreate?: AIInsightCreateOrConnectWithoutHabitInput | AIInsightCreateOrConnectWithoutHabitInput[]
+    createMany?: AIInsightCreateManyHabitInputEnvelope
+    connect?: AIInsightWhereUniqueInput | AIInsightWhereUniqueInput[]
+  }
+
+  export type SocialPostUncheckedCreateNestedManyWithoutHabitInput = {
+    create?: XOR<SocialPostCreateWithoutHabitInput, SocialPostUncheckedCreateWithoutHabitInput> | SocialPostCreateWithoutHabitInput[] | SocialPostUncheckedCreateWithoutHabitInput[]
+    connectOrCreate?: SocialPostCreateOrConnectWithoutHabitInput | SocialPostCreateOrConnectWithoutHabitInput[]
+    createMany?: SocialPostCreateManyHabitInputEnvelope
+    connect?: SocialPostWhereUniqueInput | SocialPostWhereUniqueInput[]
+  }
+
+  export type BoolFieldUpdateOperationsInput = {
+    set?: boolean
+  }
+
+  export type UserUpdateOneRequiredWithoutHabitsNestedInput = {
+    create?: XOR<UserCreateWithoutHabitsInput, UserUncheckedCreateWithoutHabitsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutHabitsInput
+    upsert?: UserUpsertWithoutHabitsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutHabitsInput, UserUpdateWithoutHabitsInput>, UserUncheckedUpdateWithoutHabitsInput>
+  }
+
+  export type HabitLogUpdateManyWithoutHabitNestedInput = {
+    create?: XOR<HabitLogCreateWithoutHabitInput, HabitLogUncheckedCreateWithoutHabitInput> | HabitLogCreateWithoutHabitInput[] | HabitLogUncheckedCreateWithoutHabitInput[]
+    connectOrCreate?: HabitLogCreateOrConnectWithoutHabitInput | HabitLogCreateOrConnectWithoutHabitInput[]
+    upsert?: HabitLogUpsertWithWhereUniqueWithoutHabitInput | HabitLogUpsertWithWhereUniqueWithoutHabitInput[]
+    createMany?: HabitLogCreateManyHabitInputEnvelope
+    set?: HabitLogWhereUniqueInput | HabitLogWhereUniqueInput[]
+    disconnect?: HabitLogWhereUniqueInput | HabitLogWhereUniqueInput[]
+    delete?: HabitLogWhereUniqueInput | HabitLogWhereUniqueInput[]
+    connect?: HabitLogWhereUniqueInput | HabitLogWhereUniqueInput[]
+    update?: HabitLogUpdateWithWhereUniqueWithoutHabitInput | HabitLogUpdateWithWhereUniqueWithoutHabitInput[]
+    updateMany?: HabitLogUpdateManyWithWhereWithoutHabitInput | HabitLogUpdateManyWithWhereWithoutHabitInput[]
+    deleteMany?: HabitLogScalarWhereInput | HabitLogScalarWhereInput[]
+  }
+
+  export type AIInsightUpdateManyWithoutHabitNestedInput = {
+    create?: XOR<AIInsightCreateWithoutHabitInput, AIInsightUncheckedCreateWithoutHabitInput> | AIInsightCreateWithoutHabitInput[] | AIInsightUncheckedCreateWithoutHabitInput[]
+    connectOrCreate?: AIInsightCreateOrConnectWithoutHabitInput | AIInsightCreateOrConnectWithoutHabitInput[]
+    upsert?: AIInsightUpsertWithWhereUniqueWithoutHabitInput | AIInsightUpsertWithWhereUniqueWithoutHabitInput[]
+    createMany?: AIInsightCreateManyHabitInputEnvelope
+    set?: AIInsightWhereUniqueInput | AIInsightWhereUniqueInput[]
+    disconnect?: AIInsightWhereUniqueInput | AIInsightWhereUniqueInput[]
+    delete?: AIInsightWhereUniqueInput | AIInsightWhereUniqueInput[]
+    connect?: AIInsightWhereUniqueInput | AIInsightWhereUniqueInput[]
+    update?: AIInsightUpdateWithWhereUniqueWithoutHabitInput | AIInsightUpdateWithWhereUniqueWithoutHabitInput[]
+    updateMany?: AIInsightUpdateManyWithWhereWithoutHabitInput | AIInsightUpdateManyWithWhereWithoutHabitInput[]
+    deleteMany?: AIInsightScalarWhereInput | AIInsightScalarWhereInput[]
+  }
+
+  export type SocialPostUpdateManyWithoutHabitNestedInput = {
+    create?: XOR<SocialPostCreateWithoutHabitInput, SocialPostUncheckedCreateWithoutHabitInput> | SocialPostCreateWithoutHabitInput[] | SocialPostUncheckedCreateWithoutHabitInput[]
+    connectOrCreate?: SocialPostCreateOrConnectWithoutHabitInput | SocialPostCreateOrConnectWithoutHabitInput[]
+    upsert?: SocialPostUpsertWithWhereUniqueWithoutHabitInput | SocialPostUpsertWithWhereUniqueWithoutHabitInput[]
+    createMany?: SocialPostCreateManyHabitInputEnvelope
+    set?: SocialPostWhereUniqueInput | SocialPostWhereUniqueInput[]
+    disconnect?: SocialPostWhereUniqueInput | SocialPostWhereUniqueInput[]
+    delete?: SocialPostWhereUniqueInput | SocialPostWhereUniqueInput[]
+    connect?: SocialPostWhereUniqueInput | SocialPostWhereUniqueInput[]
+    update?: SocialPostUpdateWithWhereUniqueWithoutHabitInput | SocialPostUpdateWithWhereUniqueWithoutHabitInput[]
+    updateMany?: SocialPostUpdateManyWithWhereWithoutHabitInput | SocialPostUpdateManyWithWhereWithoutHabitInput[]
+    deleteMany?: SocialPostScalarWhereInput | SocialPostScalarWhereInput[]
+  }
+
+  export type HabitLogUncheckedUpdateManyWithoutHabitNestedInput = {
+    create?: XOR<HabitLogCreateWithoutHabitInput, HabitLogUncheckedCreateWithoutHabitInput> | HabitLogCreateWithoutHabitInput[] | HabitLogUncheckedCreateWithoutHabitInput[]
+    connectOrCreate?: HabitLogCreateOrConnectWithoutHabitInput | HabitLogCreateOrConnectWithoutHabitInput[]
+    upsert?: HabitLogUpsertWithWhereUniqueWithoutHabitInput | HabitLogUpsertWithWhereUniqueWithoutHabitInput[]
+    createMany?: HabitLogCreateManyHabitInputEnvelope
+    set?: HabitLogWhereUniqueInput | HabitLogWhereUniqueInput[]
+    disconnect?: HabitLogWhereUniqueInput | HabitLogWhereUniqueInput[]
+    delete?: HabitLogWhereUniqueInput | HabitLogWhereUniqueInput[]
+    connect?: HabitLogWhereUniqueInput | HabitLogWhereUniqueInput[]
+    update?: HabitLogUpdateWithWhereUniqueWithoutHabitInput | HabitLogUpdateWithWhereUniqueWithoutHabitInput[]
+    updateMany?: HabitLogUpdateManyWithWhereWithoutHabitInput | HabitLogUpdateManyWithWhereWithoutHabitInput[]
+    deleteMany?: HabitLogScalarWhereInput | HabitLogScalarWhereInput[]
+  }
+
+  export type AIInsightUncheckedUpdateManyWithoutHabitNestedInput = {
+    create?: XOR<AIInsightCreateWithoutHabitInput, AIInsightUncheckedCreateWithoutHabitInput> | AIInsightCreateWithoutHabitInput[] | AIInsightUncheckedCreateWithoutHabitInput[]
+    connectOrCreate?: AIInsightCreateOrConnectWithoutHabitInput | AIInsightCreateOrConnectWithoutHabitInput[]
+    upsert?: AIInsightUpsertWithWhereUniqueWithoutHabitInput | AIInsightUpsertWithWhereUniqueWithoutHabitInput[]
+    createMany?: AIInsightCreateManyHabitInputEnvelope
+    set?: AIInsightWhereUniqueInput | AIInsightWhereUniqueInput[]
+    disconnect?: AIInsightWhereUniqueInput | AIInsightWhereUniqueInput[]
+    delete?: AIInsightWhereUniqueInput | AIInsightWhereUniqueInput[]
+    connect?: AIInsightWhereUniqueInput | AIInsightWhereUniqueInput[]
+    update?: AIInsightUpdateWithWhereUniqueWithoutHabitInput | AIInsightUpdateWithWhereUniqueWithoutHabitInput[]
+    updateMany?: AIInsightUpdateManyWithWhereWithoutHabitInput | AIInsightUpdateManyWithWhereWithoutHabitInput[]
+    deleteMany?: AIInsightScalarWhereInput | AIInsightScalarWhereInput[]
+  }
+
+  export type SocialPostUncheckedUpdateManyWithoutHabitNestedInput = {
+    create?: XOR<SocialPostCreateWithoutHabitInput, SocialPostUncheckedCreateWithoutHabitInput> | SocialPostCreateWithoutHabitInput[] | SocialPostUncheckedCreateWithoutHabitInput[]
+    connectOrCreate?: SocialPostCreateOrConnectWithoutHabitInput | SocialPostCreateOrConnectWithoutHabitInput[]
+    upsert?: SocialPostUpsertWithWhereUniqueWithoutHabitInput | SocialPostUpsertWithWhereUniqueWithoutHabitInput[]
+    createMany?: SocialPostCreateManyHabitInputEnvelope
+    set?: SocialPostWhereUniqueInput | SocialPostWhereUniqueInput[]
+    disconnect?: SocialPostWhereUniqueInput | SocialPostWhereUniqueInput[]
+    delete?: SocialPostWhereUniqueInput | SocialPostWhereUniqueInput[]
+    connect?: SocialPostWhereUniqueInput | SocialPostWhereUniqueInput[]
+    update?: SocialPostUpdateWithWhereUniqueWithoutHabitInput | SocialPostUpdateWithWhereUniqueWithoutHabitInput[]
+    updateMany?: SocialPostUpdateManyWithWhereWithoutHabitInput | SocialPostUpdateManyWithWhereWithoutHabitInput[]
+    deleteMany?: SocialPostScalarWhereInput | SocialPostScalarWhereInput[]
+  }
+
+  export type HabitCreateNestedOneWithoutLogsInput = {
+    create?: XOR<HabitCreateWithoutLogsInput, HabitUncheckedCreateWithoutLogsInput>
+    connectOrCreate?: HabitCreateOrConnectWithoutLogsInput
+    connect?: HabitWhereUniqueInput
+  }
+
+  export type UserCreateNestedOneWithoutHabitLogsInput = {
+    create?: XOR<UserCreateWithoutHabitLogsInput, UserUncheckedCreateWithoutHabitLogsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutHabitLogsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type NullableIntFieldUpdateOperationsInput = {
+    set?: number | null
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
+  export type HabitUpdateOneRequiredWithoutLogsNestedInput = {
+    create?: XOR<HabitCreateWithoutLogsInput, HabitUncheckedCreateWithoutLogsInput>
+    connectOrCreate?: HabitCreateOrConnectWithoutLogsInput
+    upsert?: HabitUpsertWithoutLogsInput
+    connect?: HabitWhereUniqueInput
+    update?: XOR<XOR<HabitUpdateToOneWithWhereWithoutLogsInput, HabitUpdateWithoutLogsInput>, HabitUncheckedUpdateWithoutLogsInput>
+  }
+
+  export type UserUpdateOneRequiredWithoutHabitLogsNestedInput = {
+    create?: XOR<UserCreateWithoutHabitLogsInput, UserUncheckedCreateWithoutHabitLogsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutHabitLogsInput
+    upsert?: UserUpsertWithoutHabitLogsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutHabitLogsInput, UserUpdateWithoutHabitLogsInput>, UserUncheckedUpdateWithoutHabitLogsInput>
+  }
+
+  export type UserBadgeCreateNestedManyWithoutBadgeInput = {
+    create?: XOR<UserBadgeCreateWithoutBadgeInput, UserBadgeUncheckedCreateWithoutBadgeInput> | UserBadgeCreateWithoutBadgeInput[] | UserBadgeUncheckedCreateWithoutBadgeInput[]
+    connectOrCreate?: UserBadgeCreateOrConnectWithoutBadgeInput | UserBadgeCreateOrConnectWithoutBadgeInput[]
+    createMany?: UserBadgeCreateManyBadgeInputEnvelope
+    connect?: UserBadgeWhereUniqueInput | UserBadgeWhereUniqueInput[]
+  }
+
+  export type SocialPostCreateNestedManyWithoutBadgeInput = {
+    create?: XOR<SocialPostCreateWithoutBadgeInput, SocialPostUncheckedCreateWithoutBadgeInput> | SocialPostCreateWithoutBadgeInput[] | SocialPostUncheckedCreateWithoutBadgeInput[]
+    connectOrCreate?: SocialPostCreateOrConnectWithoutBadgeInput | SocialPostCreateOrConnectWithoutBadgeInput[]
+    createMany?: SocialPostCreateManyBadgeInputEnvelope
+    connect?: SocialPostWhereUniqueInput | SocialPostWhereUniqueInput[]
+  }
+
+  export type UserBadgeUncheckedCreateNestedManyWithoutBadgeInput = {
+    create?: XOR<UserBadgeCreateWithoutBadgeInput, UserBadgeUncheckedCreateWithoutBadgeInput> | UserBadgeCreateWithoutBadgeInput[] | UserBadgeUncheckedCreateWithoutBadgeInput[]
+    connectOrCreate?: UserBadgeCreateOrConnectWithoutBadgeInput | UserBadgeCreateOrConnectWithoutBadgeInput[]
+    createMany?: UserBadgeCreateManyBadgeInputEnvelope
+    connect?: UserBadgeWhereUniqueInput | UserBadgeWhereUniqueInput[]
+  }
+
+  export type SocialPostUncheckedCreateNestedManyWithoutBadgeInput = {
+    create?: XOR<SocialPostCreateWithoutBadgeInput, SocialPostUncheckedCreateWithoutBadgeInput> | SocialPostCreateWithoutBadgeInput[] | SocialPostUncheckedCreateWithoutBadgeInput[]
+    connectOrCreate?: SocialPostCreateOrConnectWithoutBadgeInput | SocialPostCreateOrConnectWithoutBadgeInput[]
+    createMany?: SocialPostCreateManyBadgeInputEnvelope
+    connect?: SocialPostWhereUniqueInput | SocialPostWhereUniqueInput[]
+  }
+
+  export type UserBadgeUpdateManyWithoutBadgeNestedInput = {
+    create?: XOR<UserBadgeCreateWithoutBadgeInput, UserBadgeUncheckedCreateWithoutBadgeInput> | UserBadgeCreateWithoutBadgeInput[] | UserBadgeUncheckedCreateWithoutBadgeInput[]
+    connectOrCreate?: UserBadgeCreateOrConnectWithoutBadgeInput | UserBadgeCreateOrConnectWithoutBadgeInput[]
+    upsert?: UserBadgeUpsertWithWhereUniqueWithoutBadgeInput | UserBadgeUpsertWithWhereUniqueWithoutBadgeInput[]
+    createMany?: UserBadgeCreateManyBadgeInputEnvelope
+    set?: UserBadgeWhereUniqueInput | UserBadgeWhereUniqueInput[]
+    disconnect?: UserBadgeWhereUniqueInput | UserBadgeWhereUniqueInput[]
+    delete?: UserBadgeWhereUniqueInput | UserBadgeWhereUniqueInput[]
+    connect?: UserBadgeWhereUniqueInput | UserBadgeWhereUniqueInput[]
+    update?: UserBadgeUpdateWithWhereUniqueWithoutBadgeInput | UserBadgeUpdateWithWhereUniqueWithoutBadgeInput[]
+    updateMany?: UserBadgeUpdateManyWithWhereWithoutBadgeInput | UserBadgeUpdateManyWithWhereWithoutBadgeInput[]
+    deleteMany?: UserBadgeScalarWhereInput | UserBadgeScalarWhereInput[]
+  }
+
+  export type SocialPostUpdateManyWithoutBadgeNestedInput = {
+    create?: XOR<SocialPostCreateWithoutBadgeInput, SocialPostUncheckedCreateWithoutBadgeInput> | SocialPostCreateWithoutBadgeInput[] | SocialPostUncheckedCreateWithoutBadgeInput[]
+    connectOrCreate?: SocialPostCreateOrConnectWithoutBadgeInput | SocialPostCreateOrConnectWithoutBadgeInput[]
+    upsert?: SocialPostUpsertWithWhereUniqueWithoutBadgeInput | SocialPostUpsertWithWhereUniqueWithoutBadgeInput[]
+    createMany?: SocialPostCreateManyBadgeInputEnvelope
+    set?: SocialPostWhereUniqueInput | SocialPostWhereUniqueInput[]
+    disconnect?: SocialPostWhereUniqueInput | SocialPostWhereUniqueInput[]
+    delete?: SocialPostWhereUniqueInput | SocialPostWhereUniqueInput[]
+    connect?: SocialPostWhereUniqueInput | SocialPostWhereUniqueInput[]
+    update?: SocialPostUpdateWithWhereUniqueWithoutBadgeInput | SocialPostUpdateWithWhereUniqueWithoutBadgeInput[]
+    updateMany?: SocialPostUpdateManyWithWhereWithoutBadgeInput | SocialPostUpdateManyWithWhereWithoutBadgeInput[]
+    deleteMany?: SocialPostScalarWhereInput | SocialPostScalarWhereInput[]
+  }
+
+  export type UserBadgeUncheckedUpdateManyWithoutBadgeNestedInput = {
+    create?: XOR<UserBadgeCreateWithoutBadgeInput, UserBadgeUncheckedCreateWithoutBadgeInput> | UserBadgeCreateWithoutBadgeInput[] | UserBadgeUncheckedCreateWithoutBadgeInput[]
+    connectOrCreate?: UserBadgeCreateOrConnectWithoutBadgeInput | UserBadgeCreateOrConnectWithoutBadgeInput[]
+    upsert?: UserBadgeUpsertWithWhereUniqueWithoutBadgeInput | UserBadgeUpsertWithWhereUniqueWithoutBadgeInput[]
+    createMany?: UserBadgeCreateManyBadgeInputEnvelope
+    set?: UserBadgeWhereUniqueInput | UserBadgeWhereUniqueInput[]
+    disconnect?: UserBadgeWhereUniqueInput | UserBadgeWhereUniqueInput[]
+    delete?: UserBadgeWhereUniqueInput | UserBadgeWhereUniqueInput[]
+    connect?: UserBadgeWhereUniqueInput | UserBadgeWhereUniqueInput[]
+    update?: UserBadgeUpdateWithWhereUniqueWithoutBadgeInput | UserBadgeUpdateWithWhereUniqueWithoutBadgeInput[]
+    updateMany?: UserBadgeUpdateManyWithWhereWithoutBadgeInput | UserBadgeUpdateManyWithWhereWithoutBadgeInput[]
+    deleteMany?: UserBadgeScalarWhereInput | UserBadgeScalarWhereInput[]
+  }
+
+  export type SocialPostUncheckedUpdateManyWithoutBadgeNestedInput = {
+    create?: XOR<SocialPostCreateWithoutBadgeInput, SocialPostUncheckedCreateWithoutBadgeInput> | SocialPostCreateWithoutBadgeInput[] | SocialPostUncheckedCreateWithoutBadgeInput[]
+    connectOrCreate?: SocialPostCreateOrConnectWithoutBadgeInput | SocialPostCreateOrConnectWithoutBadgeInput[]
+    upsert?: SocialPostUpsertWithWhereUniqueWithoutBadgeInput | SocialPostUpsertWithWhereUniqueWithoutBadgeInput[]
+    createMany?: SocialPostCreateManyBadgeInputEnvelope
+    set?: SocialPostWhereUniqueInput | SocialPostWhereUniqueInput[]
+    disconnect?: SocialPostWhereUniqueInput | SocialPostWhereUniqueInput[]
+    delete?: SocialPostWhereUniqueInput | SocialPostWhereUniqueInput[]
+    connect?: SocialPostWhereUniqueInput | SocialPostWhereUniqueInput[]
+    update?: SocialPostUpdateWithWhereUniqueWithoutBadgeInput | SocialPostUpdateWithWhereUniqueWithoutBadgeInput[]
+    updateMany?: SocialPostUpdateManyWithWhereWithoutBadgeInput | SocialPostUpdateManyWithWhereWithoutBadgeInput[]
+    deleteMany?: SocialPostScalarWhereInput | SocialPostScalarWhereInput[]
+  }
+
+  export type UserCreateNestedOneWithoutBadgesInput = {
+    create?: XOR<UserCreateWithoutBadgesInput, UserUncheckedCreateWithoutBadgesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutBadgesInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type BadgeCreateNestedOneWithoutUsersInput = {
+    create?: XOR<BadgeCreateWithoutUsersInput, BadgeUncheckedCreateWithoutUsersInput>
+    connectOrCreate?: BadgeCreateOrConnectWithoutUsersInput
+    connect?: BadgeWhereUniqueInput
+  }
+
+  export type UserUpdateOneRequiredWithoutBadgesNestedInput = {
+    create?: XOR<UserCreateWithoutBadgesInput, UserUncheckedCreateWithoutBadgesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutBadgesInput
+    upsert?: UserUpsertWithoutBadgesInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutBadgesInput, UserUpdateWithoutBadgesInput>, UserUncheckedUpdateWithoutBadgesInput>
+  }
+
+  export type BadgeUpdateOneRequiredWithoutUsersNestedInput = {
+    create?: XOR<BadgeCreateWithoutUsersInput, BadgeUncheckedCreateWithoutUsersInput>
+    connectOrCreate?: BadgeCreateOrConnectWithoutUsersInput
+    upsert?: BadgeUpsertWithoutUsersInput
+    connect?: BadgeWhereUniqueInput
+    update?: XOR<XOR<BadgeUpdateToOneWithWhereWithoutUsersInput, BadgeUpdateWithoutUsersInput>, BadgeUncheckedUpdateWithoutUsersInput>
+  }
+
+  export type UserCreateNestedOneWithoutChallenges_createdInput = {
+    create?: XOR<UserCreateWithoutChallenges_createdInput, UserUncheckedCreateWithoutChallenges_createdInput>
+    connectOrCreate?: UserCreateOrConnectWithoutChallenges_createdInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type UserChallengeCreateNestedManyWithoutChallengeInput = {
+    create?: XOR<UserChallengeCreateWithoutChallengeInput, UserChallengeUncheckedCreateWithoutChallengeInput> | UserChallengeCreateWithoutChallengeInput[] | UserChallengeUncheckedCreateWithoutChallengeInput[]
+    connectOrCreate?: UserChallengeCreateOrConnectWithoutChallengeInput | UserChallengeCreateOrConnectWithoutChallengeInput[]
+    createMany?: UserChallengeCreateManyChallengeInputEnvelope
+    connect?: UserChallengeWhereUniqueInput | UserChallengeWhereUniqueInput[]
+  }
+
+  export type UserChallengeUncheckedCreateNestedManyWithoutChallengeInput = {
+    create?: XOR<UserChallengeCreateWithoutChallengeInput, UserChallengeUncheckedCreateWithoutChallengeInput> | UserChallengeCreateWithoutChallengeInput[] | UserChallengeUncheckedCreateWithoutChallengeInput[]
+    connectOrCreate?: UserChallengeCreateOrConnectWithoutChallengeInput | UserChallengeCreateOrConnectWithoutChallengeInput[]
+    createMany?: UserChallengeCreateManyChallengeInputEnvelope
+    connect?: UserChallengeWhereUniqueInput | UserChallengeWhereUniqueInput[]
+  }
+
+  export type UserUpdateOneRequiredWithoutChallenges_createdNestedInput = {
+    create?: XOR<UserCreateWithoutChallenges_createdInput, UserUncheckedCreateWithoutChallenges_createdInput>
+    connectOrCreate?: UserCreateOrConnectWithoutChallenges_createdInput
+    upsert?: UserUpsertWithoutChallenges_createdInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutChallenges_createdInput, UserUpdateWithoutChallenges_createdInput>, UserUncheckedUpdateWithoutChallenges_createdInput>
+  }
+
+  export type UserChallengeUpdateManyWithoutChallengeNestedInput = {
+    create?: XOR<UserChallengeCreateWithoutChallengeInput, UserChallengeUncheckedCreateWithoutChallengeInput> | UserChallengeCreateWithoutChallengeInput[] | UserChallengeUncheckedCreateWithoutChallengeInput[]
+    connectOrCreate?: UserChallengeCreateOrConnectWithoutChallengeInput | UserChallengeCreateOrConnectWithoutChallengeInput[]
+    upsert?: UserChallengeUpsertWithWhereUniqueWithoutChallengeInput | UserChallengeUpsertWithWhereUniqueWithoutChallengeInput[]
+    createMany?: UserChallengeCreateManyChallengeInputEnvelope
+    set?: UserChallengeWhereUniqueInput | UserChallengeWhereUniqueInput[]
+    disconnect?: UserChallengeWhereUniqueInput | UserChallengeWhereUniqueInput[]
+    delete?: UserChallengeWhereUniqueInput | UserChallengeWhereUniqueInput[]
+    connect?: UserChallengeWhereUniqueInput | UserChallengeWhereUniqueInput[]
+    update?: UserChallengeUpdateWithWhereUniqueWithoutChallengeInput | UserChallengeUpdateWithWhereUniqueWithoutChallengeInput[]
+    updateMany?: UserChallengeUpdateManyWithWhereWithoutChallengeInput | UserChallengeUpdateManyWithWhereWithoutChallengeInput[]
+    deleteMany?: UserChallengeScalarWhereInput | UserChallengeScalarWhereInput[]
+  }
+
+  export type UserChallengeUncheckedUpdateManyWithoutChallengeNestedInput = {
+    create?: XOR<UserChallengeCreateWithoutChallengeInput, UserChallengeUncheckedCreateWithoutChallengeInput> | UserChallengeCreateWithoutChallengeInput[] | UserChallengeUncheckedCreateWithoutChallengeInput[]
+    connectOrCreate?: UserChallengeCreateOrConnectWithoutChallengeInput | UserChallengeCreateOrConnectWithoutChallengeInput[]
+    upsert?: UserChallengeUpsertWithWhereUniqueWithoutChallengeInput | UserChallengeUpsertWithWhereUniqueWithoutChallengeInput[]
+    createMany?: UserChallengeCreateManyChallengeInputEnvelope
+    set?: UserChallengeWhereUniqueInput | UserChallengeWhereUniqueInput[]
+    disconnect?: UserChallengeWhereUniqueInput | UserChallengeWhereUniqueInput[]
+    delete?: UserChallengeWhereUniqueInput | UserChallengeWhereUniqueInput[]
+    connect?: UserChallengeWhereUniqueInput | UserChallengeWhereUniqueInput[]
+    update?: UserChallengeUpdateWithWhereUniqueWithoutChallengeInput | UserChallengeUpdateWithWhereUniqueWithoutChallengeInput[]
+    updateMany?: UserChallengeUpdateManyWithWhereWithoutChallengeInput | UserChallengeUpdateManyWithWhereWithoutChallengeInput[]
+    deleteMany?: UserChallengeScalarWhereInput | UserChallengeScalarWhereInput[]
+  }
+
+  export type UserCreateNestedOneWithoutChallengesInput = {
+    create?: XOR<UserCreateWithoutChallengesInput, UserUncheckedCreateWithoutChallengesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutChallengesInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type ChallengeCreateNestedOneWithoutParticipantsInput = {
+    create?: XOR<ChallengeCreateWithoutParticipantsInput, ChallengeUncheckedCreateWithoutParticipantsInput>
+    connectOrCreate?: ChallengeCreateOrConnectWithoutParticipantsInput
+    connect?: ChallengeWhereUniqueInput
+  }
+
+  export type NullableDateTimeFieldUpdateOperationsInput = {
+    set?: Date | string | null
+  }
+
+  export type UserUpdateOneRequiredWithoutChallengesNestedInput = {
+    create?: XOR<UserCreateWithoutChallengesInput, UserUncheckedCreateWithoutChallengesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutChallengesInput
+    upsert?: UserUpsertWithoutChallengesInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutChallengesInput, UserUpdateWithoutChallengesInput>, UserUncheckedUpdateWithoutChallengesInput>
+  }
+
+  export type ChallengeUpdateOneRequiredWithoutParticipantsNestedInput = {
+    create?: XOR<ChallengeCreateWithoutParticipantsInput, ChallengeUncheckedCreateWithoutParticipantsInput>
+    connectOrCreate?: ChallengeCreateOrConnectWithoutParticipantsInput
+    upsert?: ChallengeUpsertWithoutParticipantsInput
+    connect?: ChallengeWhereUniqueInput
+    update?: XOR<XOR<ChallengeUpdateToOneWithWhereWithoutParticipantsInput, ChallengeUpdateWithoutParticipantsInput>, ChallengeUncheckedUpdateWithoutParticipantsInput>
+  }
+
+  export type UserCreateNestedOneWithoutInsightsInput = {
+    create?: XOR<UserCreateWithoutInsightsInput, UserUncheckedCreateWithoutInsightsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutInsightsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type HabitCreateNestedOneWithoutInsightsInput = {
+    create?: XOR<HabitCreateWithoutInsightsInput, HabitUncheckedCreateWithoutInsightsInput>
+    connectOrCreate?: HabitCreateOrConnectWithoutInsightsInput
+    connect?: HabitWhereUniqueInput
+  }
+
+  export type UserUpdateOneRequiredWithoutInsightsNestedInput = {
+    create?: XOR<UserCreateWithoutInsightsInput, UserUncheckedCreateWithoutInsightsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutInsightsInput
+    upsert?: UserUpsertWithoutInsightsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutInsightsInput, UserUpdateWithoutInsightsInput>, UserUncheckedUpdateWithoutInsightsInput>
+  }
+
+  export type HabitUpdateOneWithoutInsightsNestedInput = {
+    create?: XOR<HabitCreateWithoutInsightsInput, HabitUncheckedCreateWithoutInsightsInput>
+    connectOrCreate?: HabitCreateOrConnectWithoutInsightsInput
+    upsert?: HabitUpsertWithoutInsightsInput
+    disconnect?: HabitWhereInput | boolean
+    delete?: HabitWhereInput | boolean
+    connect?: HabitWhereUniqueInput
+    update?: XOR<XOR<HabitUpdateToOneWithWhereWithoutInsightsInput, HabitUpdateWithoutInsightsInput>, HabitUncheckedUpdateWithoutInsightsInput>
+  }
+
+  export type UserCreateNestedOneWithoutFriendsInput = {
+    create?: XOR<UserCreateWithoutFriendsInput, UserUncheckedCreateWithoutFriendsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutFriendsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type UserCreateNestedOneWithoutFriendOfInput = {
+    create?: XOR<UserCreateWithoutFriendOfInput, UserUncheckedCreateWithoutFriendOfInput>
+    connectOrCreate?: UserCreateOrConnectWithoutFriendOfInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type UserUpdateOneRequiredWithoutFriendsNestedInput = {
+    create?: XOR<UserCreateWithoutFriendsInput, UserUncheckedCreateWithoutFriendsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutFriendsInput
+    upsert?: UserUpsertWithoutFriendsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutFriendsInput, UserUpdateWithoutFriendsInput>, UserUncheckedUpdateWithoutFriendsInput>
+  }
+
+  export type UserUpdateOneRequiredWithoutFriendOfNestedInput = {
+    create?: XOR<UserCreateWithoutFriendOfInput, UserUncheckedCreateWithoutFriendOfInput>
+    connectOrCreate?: UserCreateOrConnectWithoutFriendOfInput
+    upsert?: UserUpsertWithoutFriendOfInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutFriendOfInput, UserUpdateWithoutFriendOfInput>, UserUncheckedUpdateWithoutFriendOfInput>
+  }
+
+  export type UserCreateNestedOneWithoutPostsInput = {
+    create?: XOR<UserCreateWithoutPostsInput, UserUncheckedCreateWithoutPostsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutPostsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type BadgeCreateNestedOneWithoutPostsInput = {
+    create?: XOR<BadgeCreateWithoutPostsInput, BadgeUncheckedCreateWithoutPostsInput>
+    connectOrCreate?: BadgeCreateOrConnectWithoutPostsInput
+    connect?: BadgeWhereUniqueInput
+  }
+
+  export type HabitCreateNestedOneWithoutPostsInput = {
+    create?: XOR<HabitCreateWithoutPostsInput, HabitUncheckedCreateWithoutPostsInput>
+    connectOrCreate?: HabitCreateOrConnectWithoutPostsInput
+    connect?: HabitWhereUniqueInput
+  }
+
+  export type UserUpdateOneRequiredWithoutPostsNestedInput = {
+    create?: XOR<UserCreateWithoutPostsInput, UserUncheckedCreateWithoutPostsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutPostsInput
+    upsert?: UserUpsertWithoutPostsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutPostsInput, UserUpdateWithoutPostsInput>, UserUncheckedUpdateWithoutPostsInput>
+  }
+
+  export type BadgeUpdateOneWithoutPostsNestedInput = {
+    create?: XOR<BadgeCreateWithoutPostsInput, BadgeUncheckedCreateWithoutPostsInput>
+    connectOrCreate?: BadgeCreateOrConnectWithoutPostsInput
+    upsert?: BadgeUpsertWithoutPostsInput
+    disconnect?: BadgeWhereInput | boolean
+    delete?: BadgeWhereInput | boolean
+    connect?: BadgeWhereUniqueInput
+    update?: XOR<XOR<BadgeUpdateToOneWithWhereWithoutPostsInput, BadgeUpdateWithoutPostsInput>, BadgeUncheckedUpdateWithoutPostsInput>
+  }
+
+  export type HabitUpdateOneWithoutPostsNestedInput = {
+    create?: XOR<HabitCreateWithoutPostsInput, HabitUncheckedCreateWithoutPostsInput>
+    connectOrCreate?: HabitCreateOrConnectWithoutPostsInput
+    upsert?: HabitUpsertWithoutPostsInput
+    disconnect?: HabitWhereInput | boolean
+    delete?: HabitWhereInput | boolean
+    connect?: HabitWhereUniqueInput
+    update?: XOR<XOR<HabitUpdateToOneWithWhereWithoutPostsInput, HabitUpdateWithoutPostsInput>, HabitUncheckedUpdateWithoutPostsInput>
+  }
+
+  export type NestedIntFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[]
+    notIn?: number[]
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntFilter<$PrismaModel> | number
+  }
+
+  export type NestedStringFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel>
+    in?: string[]
+    notIn?: string[]
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringFilter<$PrismaModel> | string
+  }
+
+  export type NestedStringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | null
+    notIn?: string[] | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
+  export type NestedDateTimeFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[]
+    notIn?: Date[] | string[]
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
+  }
+
+  export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[]
+    notIn?: number[]
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedIntFilter<$PrismaModel>
+    _min?: NestedIntFilter<$PrismaModel>
+    _max?: NestedIntFilter<$PrismaModel>
+  }
+
+  export type NestedFloatFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[]
+    notIn?: number[]
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatFilter<$PrismaModel> | number
+  }
+
+  export type NestedStringWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel>
+    in?: string[]
+    notIn?: string[]
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringWithAggregatesFilter<$PrismaModel> | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedStringFilter<$PrismaModel>
+    _max?: NestedStringFilter<$PrismaModel>
+  }
+
+  export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | null
+    notIn?: string[] | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
+  }
+
+  export type NestedIntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | null
+    notIn?: number[] | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[]
+    notIn?: Date[] | string[]
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedDateTimeFilter<$PrismaModel>
+    _max?: NestedDateTimeFilter<$PrismaModel>
+  }
+
+  export type NestedBoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
+  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
+  }
+
+  export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | null
+    notIn?: number[] | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedIntNullableFilter<$PrismaModel>
+    _max?: NestedIntNullableFilter<$PrismaModel>
+  }
+
+  export type NestedFloatNullableFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | null
+    notIn?: number[] | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | null
+    notIn?: Date[] | string[] | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+  }
+
+  export type NestedDateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | null
+    notIn?: Date[] | string[] | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedDateTimeNullableFilter<$PrismaModel>
+    _max?: NestedDateTimeNullableFilter<$PrismaModel>
+  }
+
+  export type HabitCreateWithoutUserInput = {
+    name: string
+    description?: string | null
+    category: string
+    color?: string
+    icon?: string
+    frequency?: string
+    targetDaysPerWeek?: number
+    reminderTime?: string | null
+    isArchived?: boolean
+    createdAt?: Date | string
+    logs?: HabitLogCreateNestedManyWithoutHabitInput
+    insights?: AIInsightCreateNestedManyWithoutHabitInput
+    posts?: SocialPostCreateNestedManyWithoutHabitInput
+  }
+
+  export type HabitUncheckedCreateWithoutUserInput = {
+    id?: number
+    name: string
+    description?: string | null
+    category: string
+    color?: string
+    icon?: string
+    frequency?: string
+    targetDaysPerWeek?: number
+    reminderTime?: string | null
+    isArchived?: boolean
+    createdAt?: Date | string
+    logs?: HabitLogUncheckedCreateNestedManyWithoutHabitInput
+    insights?: AIInsightUncheckedCreateNestedManyWithoutHabitInput
+    posts?: SocialPostUncheckedCreateNestedManyWithoutHabitInput
+  }
+
+  export type HabitCreateOrConnectWithoutUserInput = {
+    where: HabitWhereUniqueInput
+    create: XOR<HabitCreateWithoutUserInput, HabitUncheckedCreateWithoutUserInput>
+  }
+
+  export type HabitCreateManyUserInputEnvelope = {
+    data: HabitCreateManyUserInput | HabitCreateManyUserInput[]
+  }
+
+  export type HabitLogCreateWithoutUserInput = {
+    completedAt?: Date | string
+    note?: string | null
+    moodRating?: number | null
+    durationMinutes?: number | null
+    habit: HabitCreateNestedOneWithoutLogsInput
+  }
+
+  export type HabitLogUncheckedCreateWithoutUserInput = {
+    id?: number
+    habitId: number
+    completedAt?: Date | string
+    note?: string | null
+    moodRating?: number | null
+    durationMinutes?: number | null
+  }
+
+  export type HabitLogCreateOrConnectWithoutUserInput = {
+    where: HabitLogWhereUniqueInput
+    create: XOR<HabitLogCreateWithoutUserInput, HabitLogUncheckedCreateWithoutUserInput>
+  }
+
+  export type HabitLogCreateManyUserInputEnvelope = {
+    data: HabitLogCreateManyUserInput | HabitLogCreateManyUserInput[]
+  }
+
+  export type UserBadgeCreateWithoutUserInput = {
+    earnedAt?: Date | string
+    badge: BadgeCreateNestedOneWithoutUsersInput
+  }
+
+  export type UserBadgeUncheckedCreateWithoutUserInput = {
+    id?: number
+    badgeId: number
+    earnedAt?: Date | string
+  }
+
+  export type UserBadgeCreateOrConnectWithoutUserInput = {
+    where: UserBadgeWhereUniqueInput
+    create: XOR<UserBadgeCreateWithoutUserInput, UserBadgeUncheckedCreateWithoutUserInput>
+  }
+
+  export type UserBadgeCreateManyUserInputEnvelope = {
+    data: UserBadgeCreateManyUserInput | UserBadgeCreateManyUserInput[]
+  }
+
+  export type UserChallengeCreateWithoutUserInput = {
+    joinedAt?: Date | string
+    completedAt?: Date | string | null
+    progress?: number
+    challenge: ChallengeCreateNestedOneWithoutParticipantsInput
+  }
+
+  export type UserChallengeUncheckedCreateWithoutUserInput = {
+    id?: number
+    challengeId: number
+    joinedAt?: Date | string
+    completedAt?: Date | string | null
+    progress?: number
+  }
+
+  export type UserChallengeCreateOrConnectWithoutUserInput = {
+    where: UserChallengeWhereUniqueInput
+    create: XOR<UserChallengeCreateWithoutUserInput, UserChallengeUncheckedCreateWithoutUserInput>
+  }
+
+  export type UserChallengeCreateManyUserInputEnvelope = {
+    data: UserChallengeCreateManyUserInput | UserChallengeCreateManyUserInput[]
+  }
+
+  export type AIInsightCreateWithoutUserInput = {
+    type: string
+    content: string
+    generatedAt?: Date | string
+    isRead?: boolean
+    habit?: HabitCreateNestedOneWithoutInsightsInput
+  }
+
+  export type AIInsightUncheckedCreateWithoutUserInput = {
+    id?: number
+    habitId?: number | null
+    type: string
+    content: string
+    generatedAt?: Date | string
+    isRead?: boolean
+  }
+
+  export type AIInsightCreateOrConnectWithoutUserInput = {
+    where: AIInsightWhereUniqueInput
+    create: XOR<AIInsightCreateWithoutUserInput, AIInsightUncheckedCreateWithoutUserInput>
+  }
+
+  export type AIInsightCreateManyUserInputEnvelope = {
+    data: AIInsightCreateManyUserInput | AIInsightCreateManyUserInput[]
+  }
+
+  export type SocialPostCreateWithoutUserInput = {
+    content: string
+    likesCount?: number
+    createdAt?: Date | string
+    badge?: BadgeCreateNestedOneWithoutPostsInput
+    habit?: HabitCreateNestedOneWithoutPostsInput
+  }
+
+  export type SocialPostUncheckedCreateWithoutUserInput = {
+    id?: number
+    content: string
+    badgeId?: number | null
+    habitId?: number | null
+    likesCount?: number
+    createdAt?: Date | string
+  }
+
+  export type SocialPostCreateOrConnectWithoutUserInput = {
+    where: SocialPostWhereUniqueInput
+    create: XOR<SocialPostCreateWithoutUserInput, SocialPostUncheckedCreateWithoutUserInput>
+  }
+
+  export type SocialPostCreateManyUserInputEnvelope = {
+    data: SocialPostCreateManyUserInput | SocialPostCreateManyUserInput[]
+  }
+
+  export type FriendCreateWithoutUserInput = {
+    status?: string
+    createdAt?: Date | string
+    friend: UserCreateNestedOneWithoutFriendOfInput
+  }
+
+  export type FriendUncheckedCreateWithoutUserInput = {
+    id?: number
+    friendId: number
+    status?: string
+    createdAt?: Date | string
+  }
+
+  export type FriendCreateOrConnectWithoutUserInput = {
+    where: FriendWhereUniqueInput
+    create: XOR<FriendCreateWithoutUserInput, FriendUncheckedCreateWithoutUserInput>
+  }
+
+  export type FriendCreateManyUserInputEnvelope = {
+    data: FriendCreateManyUserInput | FriendCreateManyUserInput[]
+  }
+
+  export type FriendCreateWithoutFriendInput = {
+    status?: string
+    createdAt?: Date | string
+    user: UserCreateNestedOneWithoutFriendsInput
+  }
+
+  export type FriendUncheckedCreateWithoutFriendInput = {
+    id?: number
+    userId: number
+    status?: string
+    createdAt?: Date | string
+  }
+
+  export type FriendCreateOrConnectWithoutFriendInput = {
+    where: FriendWhereUniqueInput
+    create: XOR<FriendCreateWithoutFriendInput, FriendUncheckedCreateWithoutFriendInput>
+  }
+
+  export type FriendCreateManyFriendInputEnvelope = {
+    data: FriendCreateManyFriendInput | FriendCreateManyFriendInput[]
+  }
+
+  export type ChallengeCreateWithoutCreatorInput = {
+    title: string
+    description: string
+    startDate: Date | string
+    endDate: Date | string
+    habitCategory?: string | null
+    pointReward?: number
+    participants?: UserChallengeCreateNestedManyWithoutChallengeInput
+  }
+
+  export type ChallengeUncheckedCreateWithoutCreatorInput = {
+    id?: number
+    title: string
+    description: string
+    startDate: Date | string
+    endDate: Date | string
+    habitCategory?: string | null
+    pointReward?: number
+    participants?: UserChallengeUncheckedCreateNestedManyWithoutChallengeInput
+  }
+
+  export type ChallengeCreateOrConnectWithoutCreatorInput = {
+    where: ChallengeWhereUniqueInput
+    create: XOR<ChallengeCreateWithoutCreatorInput, ChallengeUncheckedCreateWithoutCreatorInput>
+  }
+
+  export type ChallengeCreateManyCreatorInputEnvelope = {
+    data: ChallengeCreateManyCreatorInput | ChallengeCreateManyCreatorInput[]
+  }
+
+  export type HabitUpsertWithWhereUniqueWithoutUserInput = {
+    where: HabitWhereUniqueInput
+    update: XOR<HabitUpdateWithoutUserInput, HabitUncheckedUpdateWithoutUserInput>
+    create: XOR<HabitCreateWithoutUserInput, HabitUncheckedCreateWithoutUserInput>
+  }
+
+  export type HabitUpdateWithWhereUniqueWithoutUserInput = {
+    where: HabitWhereUniqueInput
+    data: XOR<HabitUpdateWithoutUserInput, HabitUncheckedUpdateWithoutUserInput>
+  }
+
+  export type HabitUpdateManyWithWhereWithoutUserInput = {
+    where: HabitScalarWhereInput
+    data: XOR<HabitUpdateManyMutationInput, HabitUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type HabitScalarWhereInput = {
+    AND?: HabitScalarWhereInput | HabitScalarWhereInput[]
+    OR?: HabitScalarWhereInput[]
+    NOT?: HabitScalarWhereInput | HabitScalarWhereInput[]
+    id?: IntFilter<"Habit"> | number
+    userId?: IntFilter<"Habit"> | number
+    name?: StringFilter<"Habit"> | string
+    description?: StringNullableFilter<"Habit"> | string | null
+    category?: StringFilter<"Habit"> | string
+    color?: StringFilter<"Habit"> | string
+    icon?: StringFilter<"Habit"> | string
+    frequency?: StringFilter<"Habit"> | string
+    targetDaysPerWeek?: IntFilter<"Habit"> | number
+    reminderTime?: StringNullableFilter<"Habit"> | string | null
+    isArchived?: BoolFilter<"Habit"> | boolean
+    createdAt?: DateTimeFilter<"Habit"> | Date | string
+  }
+
+  export type HabitLogUpsertWithWhereUniqueWithoutUserInput = {
+    where: HabitLogWhereUniqueInput
+    update: XOR<HabitLogUpdateWithoutUserInput, HabitLogUncheckedUpdateWithoutUserInput>
+    create: XOR<HabitLogCreateWithoutUserInput, HabitLogUncheckedCreateWithoutUserInput>
+  }
+
+  export type HabitLogUpdateWithWhereUniqueWithoutUserInput = {
+    where: HabitLogWhereUniqueInput
+    data: XOR<HabitLogUpdateWithoutUserInput, HabitLogUncheckedUpdateWithoutUserInput>
+  }
+
+  export type HabitLogUpdateManyWithWhereWithoutUserInput = {
+    where: HabitLogScalarWhereInput
+    data: XOR<HabitLogUpdateManyMutationInput, HabitLogUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type HabitLogScalarWhereInput = {
+    AND?: HabitLogScalarWhereInput | HabitLogScalarWhereInput[]
+    OR?: HabitLogScalarWhereInput[]
+    NOT?: HabitLogScalarWhereInput | HabitLogScalarWhereInput[]
+    id?: IntFilter<"HabitLog"> | number
+    habitId?: IntFilter<"HabitLog"> | number
+    userId?: IntFilter<"HabitLog"> | number
+    completedAt?: DateTimeFilter<"HabitLog"> | Date | string
+    note?: StringNullableFilter<"HabitLog"> | string | null
+    moodRating?: IntNullableFilter<"HabitLog"> | number | null
+    durationMinutes?: IntNullableFilter<"HabitLog"> | number | null
+  }
+
+  export type UserBadgeUpsertWithWhereUniqueWithoutUserInput = {
+    where: UserBadgeWhereUniqueInput
+    update: XOR<UserBadgeUpdateWithoutUserInput, UserBadgeUncheckedUpdateWithoutUserInput>
+    create: XOR<UserBadgeCreateWithoutUserInput, UserBadgeUncheckedCreateWithoutUserInput>
+  }
+
+  export type UserBadgeUpdateWithWhereUniqueWithoutUserInput = {
+    where: UserBadgeWhereUniqueInput
+    data: XOR<UserBadgeUpdateWithoutUserInput, UserBadgeUncheckedUpdateWithoutUserInput>
+  }
+
+  export type UserBadgeUpdateManyWithWhereWithoutUserInput = {
+    where: UserBadgeScalarWhereInput
+    data: XOR<UserBadgeUpdateManyMutationInput, UserBadgeUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type UserBadgeScalarWhereInput = {
+    AND?: UserBadgeScalarWhereInput | UserBadgeScalarWhereInput[]
+    OR?: UserBadgeScalarWhereInput[]
+    NOT?: UserBadgeScalarWhereInput | UserBadgeScalarWhereInput[]
+    id?: IntFilter<"UserBadge"> | number
+    userId?: IntFilter<"UserBadge"> | number
+    badgeId?: IntFilter<"UserBadge"> | number
+    earnedAt?: DateTimeFilter<"UserBadge"> | Date | string
+  }
+
+  export type UserChallengeUpsertWithWhereUniqueWithoutUserInput = {
+    where: UserChallengeWhereUniqueInput
+    update: XOR<UserChallengeUpdateWithoutUserInput, UserChallengeUncheckedUpdateWithoutUserInput>
+    create: XOR<UserChallengeCreateWithoutUserInput, UserChallengeUncheckedCreateWithoutUserInput>
+  }
+
+  export type UserChallengeUpdateWithWhereUniqueWithoutUserInput = {
+    where: UserChallengeWhereUniqueInput
+    data: XOR<UserChallengeUpdateWithoutUserInput, UserChallengeUncheckedUpdateWithoutUserInput>
+  }
+
+  export type UserChallengeUpdateManyWithWhereWithoutUserInput = {
+    where: UserChallengeScalarWhereInput
+    data: XOR<UserChallengeUpdateManyMutationInput, UserChallengeUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type UserChallengeScalarWhereInput = {
+    AND?: UserChallengeScalarWhereInput | UserChallengeScalarWhereInput[]
+    OR?: UserChallengeScalarWhereInput[]
+    NOT?: UserChallengeScalarWhereInput | UserChallengeScalarWhereInput[]
+    id?: IntFilter<"UserChallenge"> | number
+    userId?: IntFilter<"UserChallenge"> | number
+    challengeId?: IntFilter<"UserChallenge"> | number
+    joinedAt?: DateTimeFilter<"UserChallenge"> | Date | string
+    completedAt?: DateTimeNullableFilter<"UserChallenge"> | Date | string | null
+    progress?: IntFilter<"UserChallenge"> | number
+  }
+
+  export type AIInsightUpsertWithWhereUniqueWithoutUserInput = {
+    where: AIInsightWhereUniqueInput
+    update: XOR<AIInsightUpdateWithoutUserInput, AIInsightUncheckedUpdateWithoutUserInput>
+    create: XOR<AIInsightCreateWithoutUserInput, AIInsightUncheckedCreateWithoutUserInput>
+  }
+
+  export type AIInsightUpdateWithWhereUniqueWithoutUserInput = {
+    where: AIInsightWhereUniqueInput
+    data: XOR<AIInsightUpdateWithoutUserInput, AIInsightUncheckedUpdateWithoutUserInput>
+  }
+
+  export type AIInsightUpdateManyWithWhereWithoutUserInput = {
+    where: AIInsightScalarWhereInput
+    data: XOR<AIInsightUpdateManyMutationInput, AIInsightUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type AIInsightScalarWhereInput = {
+    AND?: AIInsightScalarWhereInput | AIInsightScalarWhereInput[]
+    OR?: AIInsightScalarWhereInput[]
+    NOT?: AIInsightScalarWhereInput | AIInsightScalarWhereInput[]
+    id?: IntFilter<"AIInsight"> | number
+    userId?: IntFilter<"AIInsight"> | number
+    habitId?: IntNullableFilter<"AIInsight"> | number | null
+    type?: StringFilter<"AIInsight"> | string
+    content?: StringFilter<"AIInsight"> | string
+    generatedAt?: DateTimeFilter<"AIInsight"> | Date | string
+    isRead?: BoolFilter<"AIInsight"> | boolean
+  }
+
+  export type SocialPostUpsertWithWhereUniqueWithoutUserInput = {
+    where: SocialPostWhereUniqueInput
+    update: XOR<SocialPostUpdateWithoutUserInput, SocialPostUncheckedUpdateWithoutUserInput>
+    create: XOR<SocialPostCreateWithoutUserInput, SocialPostUncheckedCreateWithoutUserInput>
+  }
+
+  export type SocialPostUpdateWithWhereUniqueWithoutUserInput = {
+    where: SocialPostWhereUniqueInput
+    data: XOR<SocialPostUpdateWithoutUserInput, SocialPostUncheckedUpdateWithoutUserInput>
+  }
+
+  export type SocialPostUpdateManyWithWhereWithoutUserInput = {
+    where: SocialPostScalarWhereInput
+    data: XOR<SocialPostUpdateManyMutationInput, SocialPostUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type SocialPostScalarWhereInput = {
+    AND?: SocialPostScalarWhereInput | SocialPostScalarWhereInput[]
+    OR?: SocialPostScalarWhereInput[]
+    NOT?: SocialPostScalarWhereInput | SocialPostScalarWhereInput[]
+    id?: IntFilter<"SocialPost"> | number
+    userId?: IntFilter<"SocialPost"> | number
+    content?: StringFilter<"SocialPost"> | string
+    badgeId?: IntNullableFilter<"SocialPost"> | number | null
+    habitId?: IntNullableFilter<"SocialPost"> | number | null
+    likesCount?: IntFilter<"SocialPost"> | number
+    createdAt?: DateTimeFilter<"SocialPost"> | Date | string
+  }
+
+  export type FriendUpsertWithWhereUniqueWithoutUserInput = {
+    where: FriendWhereUniqueInput
+    update: XOR<FriendUpdateWithoutUserInput, FriendUncheckedUpdateWithoutUserInput>
+    create: XOR<FriendCreateWithoutUserInput, FriendUncheckedCreateWithoutUserInput>
+  }
+
+  export type FriendUpdateWithWhereUniqueWithoutUserInput = {
+    where: FriendWhereUniqueInput
+    data: XOR<FriendUpdateWithoutUserInput, FriendUncheckedUpdateWithoutUserInput>
+  }
+
+  export type FriendUpdateManyWithWhereWithoutUserInput = {
+    where: FriendScalarWhereInput
+    data: XOR<FriendUpdateManyMutationInput, FriendUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type FriendScalarWhereInput = {
+    AND?: FriendScalarWhereInput | FriendScalarWhereInput[]
+    OR?: FriendScalarWhereInput[]
+    NOT?: FriendScalarWhereInput | FriendScalarWhereInput[]
+    id?: IntFilter<"Friend"> | number
+    userId?: IntFilter<"Friend"> | number
+    friendId?: IntFilter<"Friend"> | number
+    status?: StringFilter<"Friend"> | string
+    createdAt?: DateTimeFilter<"Friend"> | Date | string
+  }
+
+  export type FriendUpsertWithWhereUniqueWithoutFriendInput = {
+    where: FriendWhereUniqueInput
+    update: XOR<FriendUpdateWithoutFriendInput, FriendUncheckedUpdateWithoutFriendInput>
+    create: XOR<FriendCreateWithoutFriendInput, FriendUncheckedCreateWithoutFriendInput>
+  }
+
+  export type FriendUpdateWithWhereUniqueWithoutFriendInput = {
+    where: FriendWhereUniqueInput
+    data: XOR<FriendUpdateWithoutFriendInput, FriendUncheckedUpdateWithoutFriendInput>
+  }
+
+  export type FriendUpdateManyWithWhereWithoutFriendInput = {
+    where: FriendScalarWhereInput
+    data: XOR<FriendUpdateManyMutationInput, FriendUncheckedUpdateManyWithoutFriendInput>
+  }
+
+  export type ChallengeUpsertWithWhereUniqueWithoutCreatorInput = {
+    where: ChallengeWhereUniqueInput
+    update: XOR<ChallengeUpdateWithoutCreatorInput, ChallengeUncheckedUpdateWithoutCreatorInput>
+    create: XOR<ChallengeCreateWithoutCreatorInput, ChallengeUncheckedCreateWithoutCreatorInput>
+  }
+
+  export type ChallengeUpdateWithWhereUniqueWithoutCreatorInput = {
+    where: ChallengeWhereUniqueInput
+    data: XOR<ChallengeUpdateWithoutCreatorInput, ChallengeUncheckedUpdateWithoutCreatorInput>
+  }
+
+  export type ChallengeUpdateManyWithWhereWithoutCreatorInput = {
+    where: ChallengeScalarWhereInput
+    data: XOR<ChallengeUpdateManyMutationInput, ChallengeUncheckedUpdateManyWithoutCreatorInput>
+  }
+
+  export type ChallengeScalarWhereInput = {
+    AND?: ChallengeScalarWhereInput | ChallengeScalarWhereInput[]
+    OR?: ChallengeScalarWhereInput[]
+    NOT?: ChallengeScalarWhereInput | ChallengeScalarWhereInput[]
+    id?: IntFilter<"Challenge"> | number
+    title?: StringFilter<"Challenge"> | string
+    description?: StringFilter<"Challenge"> | string
+    startDate?: DateTimeFilter<"Challenge"> | Date | string
+    endDate?: DateTimeFilter<"Challenge"> | Date | string
+    habitCategory?: StringNullableFilter<"Challenge"> | string | null
+    pointReward?: IntFilter<"Challenge"> | number
+    createdBy?: IntFilter<"Challenge"> | number
+  }
+
+  export type UserCreateWithoutHabitsInput = {
+    username: string
+    avatar?: string | null
+    level?: number
+    totalPoints?: number
+    currentStreak?: number
+    longestStreak?: number
+    createdAt?: Date | string
+    habitLogs?: HabitLogCreateNestedManyWithoutUserInput
+    badges?: UserBadgeCreateNestedManyWithoutUserInput
+    challenges?: UserChallengeCreateNestedManyWithoutUserInput
+    insights?: AIInsightCreateNestedManyWithoutUserInput
+    posts?: SocialPostCreateNestedManyWithoutUserInput
+    friends?: FriendCreateNestedManyWithoutUserInput
+    friendOf?: FriendCreateNestedManyWithoutFriendInput
+    challenges_created?: ChallengeCreateNestedManyWithoutCreatorInput
+  }
+
+  export type UserUncheckedCreateWithoutHabitsInput = {
+    id?: number
+    username: string
+    avatar?: string | null
+    level?: number
+    totalPoints?: number
+    currentStreak?: number
+    longestStreak?: number
+    createdAt?: Date | string
+    habitLogs?: HabitLogUncheckedCreateNestedManyWithoutUserInput
+    badges?: UserBadgeUncheckedCreateNestedManyWithoutUserInput
+    challenges?: UserChallengeUncheckedCreateNestedManyWithoutUserInput
+    insights?: AIInsightUncheckedCreateNestedManyWithoutUserInput
+    posts?: SocialPostUncheckedCreateNestedManyWithoutUserInput
+    friends?: FriendUncheckedCreateNestedManyWithoutUserInput
+    friendOf?: FriendUncheckedCreateNestedManyWithoutFriendInput
+    challenges_created?: ChallengeUncheckedCreateNestedManyWithoutCreatorInput
+  }
+
+  export type UserCreateOrConnectWithoutHabitsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutHabitsInput, UserUncheckedCreateWithoutHabitsInput>
+  }
+
+  export type HabitLogCreateWithoutHabitInput = {
+    completedAt?: Date | string
+    note?: string | null
+    moodRating?: number | null
+    durationMinutes?: number | null
+    user: UserCreateNestedOneWithoutHabitLogsInput
+  }
+
+  export type HabitLogUncheckedCreateWithoutHabitInput = {
+    id?: number
+    userId: number
+    completedAt?: Date | string
+    note?: string | null
+    moodRating?: number | null
+    durationMinutes?: number | null
+  }
+
+  export type HabitLogCreateOrConnectWithoutHabitInput = {
+    where: HabitLogWhereUniqueInput
+    create: XOR<HabitLogCreateWithoutHabitInput, HabitLogUncheckedCreateWithoutHabitInput>
+  }
+
+  export type HabitLogCreateManyHabitInputEnvelope = {
+    data: HabitLogCreateManyHabitInput | HabitLogCreateManyHabitInput[]
+  }
+
+  export type AIInsightCreateWithoutHabitInput = {
+    type: string
+    content: string
+    generatedAt?: Date | string
+    isRead?: boolean
+    user: UserCreateNestedOneWithoutInsightsInput
+  }
+
+  export type AIInsightUncheckedCreateWithoutHabitInput = {
+    id?: number
+    userId: number
+    type: string
+    content: string
+    generatedAt?: Date | string
+    isRead?: boolean
+  }
+
+  export type AIInsightCreateOrConnectWithoutHabitInput = {
+    where: AIInsightWhereUniqueInput
+    create: XOR<AIInsightCreateWithoutHabitInput, AIInsightUncheckedCreateWithoutHabitInput>
+  }
+
+  export type AIInsightCreateManyHabitInputEnvelope = {
+    data: AIInsightCreateManyHabitInput | AIInsightCreateManyHabitInput[]
+  }
+
+  export type SocialPostCreateWithoutHabitInput = {
+    content: string
+    likesCount?: number
+    createdAt?: Date | string
+    user: UserCreateNestedOneWithoutPostsInput
+    badge?: BadgeCreateNestedOneWithoutPostsInput
+  }
+
+  export type SocialPostUncheckedCreateWithoutHabitInput = {
+    id?: number
+    userId: number
+    content: string
+    badgeId?: number | null
+    likesCount?: number
+    createdAt?: Date | string
+  }
+
+  export type SocialPostCreateOrConnectWithoutHabitInput = {
+    where: SocialPostWhereUniqueInput
+    create: XOR<SocialPostCreateWithoutHabitInput, SocialPostUncheckedCreateWithoutHabitInput>
+  }
+
+  export type SocialPostCreateManyHabitInputEnvelope = {
+    data: SocialPostCreateManyHabitInput | SocialPostCreateManyHabitInput[]
+  }
+
+  export type UserUpsertWithoutHabitsInput = {
+    update: XOR<UserUpdateWithoutHabitsInput, UserUncheckedUpdateWithoutHabitsInput>
+    create: XOR<UserCreateWithoutHabitsInput, UserUncheckedCreateWithoutHabitsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutHabitsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutHabitsInput, UserUncheckedUpdateWithoutHabitsInput>
+  }
+
+  export type UserUpdateWithoutHabitsInput = {
+    username?: StringFieldUpdateOperationsInput | string
+    avatar?: NullableStringFieldUpdateOperationsInput | string | null
+    level?: IntFieldUpdateOperationsInput | number
+    totalPoints?: IntFieldUpdateOperationsInput | number
+    currentStreak?: IntFieldUpdateOperationsInput | number
+    longestStreak?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    habitLogs?: HabitLogUpdateManyWithoutUserNestedInput
+    badges?: UserBadgeUpdateManyWithoutUserNestedInput
+    challenges?: UserChallengeUpdateManyWithoutUserNestedInput
+    insights?: AIInsightUpdateManyWithoutUserNestedInput
+    posts?: SocialPostUpdateManyWithoutUserNestedInput
+    friends?: FriendUpdateManyWithoutUserNestedInput
+    friendOf?: FriendUpdateManyWithoutFriendNestedInput
+    challenges_created?: ChallengeUpdateManyWithoutCreatorNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutHabitsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    username?: StringFieldUpdateOperationsInput | string
+    avatar?: NullableStringFieldUpdateOperationsInput | string | null
+    level?: IntFieldUpdateOperationsInput | number
+    totalPoints?: IntFieldUpdateOperationsInput | number
+    currentStreak?: IntFieldUpdateOperationsInput | number
+    longestStreak?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    habitLogs?: HabitLogUncheckedUpdateManyWithoutUserNestedInput
+    badges?: UserBadgeUncheckedUpdateManyWithoutUserNestedInput
+    challenges?: UserChallengeUncheckedUpdateManyWithoutUserNestedInput
+    insights?: AIInsightUncheckedUpdateManyWithoutUserNestedInput
+    posts?: SocialPostUncheckedUpdateManyWithoutUserNestedInput
+    friends?: FriendUncheckedUpdateManyWithoutUserNestedInput
+    friendOf?: FriendUncheckedUpdateManyWithoutFriendNestedInput
+    challenges_created?: ChallengeUncheckedUpdateManyWithoutCreatorNestedInput
+  }
+
+  export type HabitLogUpsertWithWhereUniqueWithoutHabitInput = {
+    where: HabitLogWhereUniqueInput
+    update: XOR<HabitLogUpdateWithoutHabitInput, HabitLogUncheckedUpdateWithoutHabitInput>
+    create: XOR<HabitLogCreateWithoutHabitInput, HabitLogUncheckedCreateWithoutHabitInput>
+  }
+
+  export type HabitLogUpdateWithWhereUniqueWithoutHabitInput = {
+    where: HabitLogWhereUniqueInput
+    data: XOR<HabitLogUpdateWithoutHabitInput, HabitLogUncheckedUpdateWithoutHabitInput>
+  }
+
+  export type HabitLogUpdateManyWithWhereWithoutHabitInput = {
+    where: HabitLogScalarWhereInput
+    data: XOR<HabitLogUpdateManyMutationInput, HabitLogUncheckedUpdateManyWithoutHabitInput>
+  }
+
+  export type AIInsightUpsertWithWhereUniqueWithoutHabitInput = {
+    where: AIInsightWhereUniqueInput
+    update: XOR<AIInsightUpdateWithoutHabitInput, AIInsightUncheckedUpdateWithoutHabitInput>
+    create: XOR<AIInsightCreateWithoutHabitInput, AIInsightUncheckedCreateWithoutHabitInput>
+  }
+
+  export type AIInsightUpdateWithWhereUniqueWithoutHabitInput = {
+    where: AIInsightWhereUniqueInput
+    data: XOR<AIInsightUpdateWithoutHabitInput, AIInsightUncheckedUpdateWithoutHabitInput>
+  }
+
+  export type AIInsightUpdateManyWithWhereWithoutHabitInput = {
+    where: AIInsightScalarWhereInput
+    data: XOR<AIInsightUpdateManyMutationInput, AIInsightUncheckedUpdateManyWithoutHabitInput>
+  }
+
+  export type SocialPostUpsertWithWhereUniqueWithoutHabitInput = {
+    where: SocialPostWhereUniqueInput
+    update: XOR<SocialPostUpdateWithoutHabitInput, SocialPostUncheckedUpdateWithoutHabitInput>
+    create: XOR<SocialPostCreateWithoutHabitInput, SocialPostUncheckedCreateWithoutHabitInput>
+  }
+
+  export type SocialPostUpdateWithWhereUniqueWithoutHabitInput = {
+    where: SocialPostWhereUniqueInput
+    data: XOR<SocialPostUpdateWithoutHabitInput, SocialPostUncheckedUpdateWithoutHabitInput>
+  }
+
+  export type SocialPostUpdateManyWithWhereWithoutHabitInput = {
+    where: SocialPostScalarWhereInput
+    data: XOR<SocialPostUpdateManyMutationInput, SocialPostUncheckedUpdateManyWithoutHabitInput>
+  }
+
+  export type HabitCreateWithoutLogsInput = {
+    name: string
+    description?: string | null
+    category: string
+    color?: string
+    icon?: string
+    frequency?: string
+    targetDaysPerWeek?: number
+    reminderTime?: string | null
+    isArchived?: boolean
+    createdAt?: Date | string
+    user: UserCreateNestedOneWithoutHabitsInput
+    insights?: AIInsightCreateNestedManyWithoutHabitInput
+    posts?: SocialPostCreateNestedManyWithoutHabitInput
+  }
+
+  export type HabitUncheckedCreateWithoutLogsInput = {
+    id?: number
+    userId: number
+    name: string
+    description?: string | null
+    category: string
+    color?: string
+    icon?: string
+    frequency?: string
+    targetDaysPerWeek?: number
+    reminderTime?: string | null
+    isArchived?: boolean
+    createdAt?: Date | string
+    insights?: AIInsightUncheckedCreateNestedManyWithoutHabitInput
+    posts?: SocialPostUncheckedCreateNestedManyWithoutHabitInput
+  }
+
+  export type HabitCreateOrConnectWithoutLogsInput = {
+    where: HabitWhereUniqueInput
+    create: XOR<HabitCreateWithoutLogsInput, HabitUncheckedCreateWithoutLogsInput>
+  }
+
+  export type UserCreateWithoutHabitLogsInput = {
+    username: string
+    avatar?: string | null
+    level?: number
+    totalPoints?: number
+    currentStreak?: number
+    longestStreak?: number
+    createdAt?: Date | string
+    habits?: HabitCreateNestedManyWithoutUserInput
+    badges?: UserBadgeCreateNestedManyWithoutUserInput
+    challenges?: UserChallengeCreateNestedManyWithoutUserInput
+    insights?: AIInsightCreateNestedManyWithoutUserInput
+    posts?: SocialPostCreateNestedManyWithoutUserInput
+    friends?: FriendCreateNestedManyWithoutUserInput
+    friendOf?: FriendCreateNestedManyWithoutFriendInput
+    challenges_created?: ChallengeCreateNestedManyWithoutCreatorInput
+  }
+
+  export type UserUncheckedCreateWithoutHabitLogsInput = {
+    id?: number
+    username: string
+    avatar?: string | null
+    level?: number
+    totalPoints?: number
+    currentStreak?: number
+    longestStreak?: number
+    createdAt?: Date | string
+    habits?: HabitUncheckedCreateNestedManyWithoutUserInput
+    badges?: UserBadgeUncheckedCreateNestedManyWithoutUserInput
+    challenges?: UserChallengeUncheckedCreateNestedManyWithoutUserInput
+    insights?: AIInsightUncheckedCreateNestedManyWithoutUserInput
+    posts?: SocialPostUncheckedCreateNestedManyWithoutUserInput
+    friends?: FriendUncheckedCreateNestedManyWithoutUserInput
+    friendOf?: FriendUncheckedCreateNestedManyWithoutFriendInput
+    challenges_created?: ChallengeUncheckedCreateNestedManyWithoutCreatorInput
+  }
+
+  export type UserCreateOrConnectWithoutHabitLogsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutHabitLogsInput, UserUncheckedCreateWithoutHabitLogsInput>
+  }
+
+  export type HabitUpsertWithoutLogsInput = {
+    update: XOR<HabitUpdateWithoutLogsInput, HabitUncheckedUpdateWithoutLogsInput>
+    create: XOR<HabitCreateWithoutLogsInput, HabitUncheckedCreateWithoutLogsInput>
+    where?: HabitWhereInput
+  }
+
+  export type HabitUpdateToOneWithWhereWithoutLogsInput = {
+    where?: HabitWhereInput
+    data: XOR<HabitUpdateWithoutLogsInput, HabitUncheckedUpdateWithoutLogsInput>
+  }
+
+  export type HabitUpdateWithoutLogsInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    category?: StringFieldUpdateOperationsInput | string
+    color?: StringFieldUpdateOperationsInput | string
+    icon?: StringFieldUpdateOperationsInput | string
+    frequency?: StringFieldUpdateOperationsInput | string
+    targetDaysPerWeek?: IntFieldUpdateOperationsInput | number
+    reminderTime?: NullableStringFieldUpdateOperationsInput | string | null
+    isArchived?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutHabitsNestedInput
+    insights?: AIInsightUpdateManyWithoutHabitNestedInput
+    posts?: SocialPostUpdateManyWithoutHabitNestedInput
+  }
+
+  export type HabitUncheckedUpdateWithoutLogsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    category?: StringFieldUpdateOperationsInput | string
+    color?: StringFieldUpdateOperationsInput | string
+    icon?: StringFieldUpdateOperationsInput | string
+    frequency?: StringFieldUpdateOperationsInput | string
+    targetDaysPerWeek?: IntFieldUpdateOperationsInput | number
+    reminderTime?: NullableStringFieldUpdateOperationsInput | string | null
+    isArchived?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    insights?: AIInsightUncheckedUpdateManyWithoutHabitNestedInput
+    posts?: SocialPostUncheckedUpdateManyWithoutHabitNestedInput
+  }
+
+  export type UserUpsertWithoutHabitLogsInput = {
+    update: XOR<UserUpdateWithoutHabitLogsInput, UserUncheckedUpdateWithoutHabitLogsInput>
+    create: XOR<UserCreateWithoutHabitLogsInput, UserUncheckedCreateWithoutHabitLogsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutHabitLogsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutHabitLogsInput, UserUncheckedUpdateWithoutHabitLogsInput>
+  }
+
+  export type UserUpdateWithoutHabitLogsInput = {
+    username?: StringFieldUpdateOperationsInput | string
+    avatar?: NullableStringFieldUpdateOperationsInput | string | null
+    level?: IntFieldUpdateOperationsInput | number
+    totalPoints?: IntFieldUpdateOperationsInput | number
+    currentStreak?: IntFieldUpdateOperationsInput | number
+    longestStreak?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    habits?: HabitUpdateManyWithoutUserNestedInput
+    badges?: UserBadgeUpdateManyWithoutUserNestedInput
+    challenges?: UserChallengeUpdateManyWithoutUserNestedInput
+    insights?: AIInsightUpdateManyWithoutUserNestedInput
+    posts?: SocialPostUpdateManyWithoutUserNestedInput
+    friends?: FriendUpdateManyWithoutUserNestedInput
+    friendOf?: FriendUpdateManyWithoutFriendNestedInput
+    challenges_created?: ChallengeUpdateManyWithoutCreatorNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutHabitLogsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    username?: StringFieldUpdateOperationsInput | string
+    avatar?: NullableStringFieldUpdateOperationsInput | string | null
+    level?: IntFieldUpdateOperationsInput | number
+    totalPoints?: IntFieldUpdateOperationsInput | number
+    currentStreak?: IntFieldUpdateOperationsInput | number
+    longestStreak?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    habits?: HabitUncheckedUpdateManyWithoutUserNestedInput
+    badges?: UserBadgeUncheckedUpdateManyWithoutUserNestedInput
+    challenges?: UserChallengeUncheckedUpdateManyWithoutUserNestedInput
+    insights?: AIInsightUncheckedUpdateManyWithoutUserNestedInput
+    posts?: SocialPostUncheckedUpdateManyWithoutUserNestedInput
+    friends?: FriendUncheckedUpdateManyWithoutUserNestedInput
+    friendOf?: FriendUncheckedUpdateManyWithoutFriendNestedInput
+    challenges_created?: ChallengeUncheckedUpdateManyWithoutCreatorNestedInput
+  }
+
+  export type UserBadgeCreateWithoutBadgeInput = {
+    earnedAt?: Date | string
+    user: UserCreateNestedOneWithoutBadgesInput
+  }
+
+  export type UserBadgeUncheckedCreateWithoutBadgeInput = {
+    id?: number
+    userId: number
+    earnedAt?: Date | string
+  }
+
+  export type UserBadgeCreateOrConnectWithoutBadgeInput = {
+    where: UserBadgeWhereUniqueInput
+    create: XOR<UserBadgeCreateWithoutBadgeInput, UserBadgeUncheckedCreateWithoutBadgeInput>
+  }
+
+  export type UserBadgeCreateManyBadgeInputEnvelope = {
+    data: UserBadgeCreateManyBadgeInput | UserBadgeCreateManyBadgeInput[]
+  }
+
+  export type SocialPostCreateWithoutBadgeInput = {
+    content: string
+    likesCount?: number
+    createdAt?: Date | string
+    user: UserCreateNestedOneWithoutPostsInput
+    habit?: HabitCreateNestedOneWithoutPostsInput
+  }
+
+  export type SocialPostUncheckedCreateWithoutBadgeInput = {
+    id?: number
+    userId: number
+    content: string
+    habitId?: number | null
+    likesCount?: number
+    createdAt?: Date | string
+  }
+
+  export type SocialPostCreateOrConnectWithoutBadgeInput = {
+    where: SocialPostWhereUniqueInput
+    create: XOR<SocialPostCreateWithoutBadgeInput, SocialPostUncheckedCreateWithoutBadgeInput>
+  }
+
+  export type SocialPostCreateManyBadgeInputEnvelope = {
+    data: SocialPostCreateManyBadgeInput | SocialPostCreateManyBadgeInput[]
+  }
+
+  export type UserBadgeUpsertWithWhereUniqueWithoutBadgeInput = {
+    where: UserBadgeWhereUniqueInput
+    update: XOR<UserBadgeUpdateWithoutBadgeInput, UserBadgeUncheckedUpdateWithoutBadgeInput>
+    create: XOR<UserBadgeCreateWithoutBadgeInput, UserBadgeUncheckedCreateWithoutBadgeInput>
+  }
+
+  export type UserBadgeUpdateWithWhereUniqueWithoutBadgeInput = {
+    where: UserBadgeWhereUniqueInput
+    data: XOR<UserBadgeUpdateWithoutBadgeInput, UserBadgeUncheckedUpdateWithoutBadgeInput>
+  }
+
+  export type UserBadgeUpdateManyWithWhereWithoutBadgeInput = {
+    where: UserBadgeScalarWhereInput
+    data: XOR<UserBadgeUpdateManyMutationInput, UserBadgeUncheckedUpdateManyWithoutBadgeInput>
+  }
+
+  export type SocialPostUpsertWithWhereUniqueWithoutBadgeInput = {
+    where: SocialPostWhereUniqueInput
+    update: XOR<SocialPostUpdateWithoutBadgeInput, SocialPostUncheckedUpdateWithoutBadgeInput>
+    create: XOR<SocialPostCreateWithoutBadgeInput, SocialPostUncheckedCreateWithoutBadgeInput>
+  }
+
+  export type SocialPostUpdateWithWhereUniqueWithoutBadgeInput = {
+    where: SocialPostWhereUniqueInput
+    data: XOR<SocialPostUpdateWithoutBadgeInput, SocialPostUncheckedUpdateWithoutBadgeInput>
+  }
+
+  export type SocialPostUpdateManyWithWhereWithoutBadgeInput = {
+    where: SocialPostScalarWhereInput
+    data: XOR<SocialPostUpdateManyMutationInput, SocialPostUncheckedUpdateManyWithoutBadgeInput>
+  }
+
+  export type UserCreateWithoutBadgesInput = {
+    username: string
+    avatar?: string | null
+    level?: number
+    totalPoints?: number
+    currentStreak?: number
+    longestStreak?: number
+    createdAt?: Date | string
+    habits?: HabitCreateNestedManyWithoutUserInput
+    habitLogs?: HabitLogCreateNestedManyWithoutUserInput
+    challenges?: UserChallengeCreateNestedManyWithoutUserInput
+    insights?: AIInsightCreateNestedManyWithoutUserInput
+    posts?: SocialPostCreateNestedManyWithoutUserInput
+    friends?: FriendCreateNestedManyWithoutUserInput
+    friendOf?: FriendCreateNestedManyWithoutFriendInput
+    challenges_created?: ChallengeCreateNestedManyWithoutCreatorInput
+  }
+
+  export type UserUncheckedCreateWithoutBadgesInput = {
+    id?: number
+    username: string
+    avatar?: string | null
+    level?: number
+    totalPoints?: number
+    currentStreak?: number
+    longestStreak?: number
+    createdAt?: Date | string
+    habits?: HabitUncheckedCreateNestedManyWithoutUserInput
+    habitLogs?: HabitLogUncheckedCreateNestedManyWithoutUserInput
+    challenges?: UserChallengeUncheckedCreateNestedManyWithoutUserInput
+    insights?: AIInsightUncheckedCreateNestedManyWithoutUserInput
+    posts?: SocialPostUncheckedCreateNestedManyWithoutUserInput
+    friends?: FriendUncheckedCreateNestedManyWithoutUserInput
+    friendOf?: FriendUncheckedCreateNestedManyWithoutFriendInput
+    challenges_created?: ChallengeUncheckedCreateNestedManyWithoutCreatorInput
+  }
+
+  export type UserCreateOrConnectWithoutBadgesInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutBadgesInput, UserUncheckedCreateWithoutBadgesInput>
+  }
+
+  export type BadgeCreateWithoutUsersInput = {
+    name: string
+    description: string
+    icon: string
+    rarity: string
+    pointValue: number
+    condition: string
+    posts?: SocialPostCreateNestedManyWithoutBadgeInput
+  }
+
+  export type BadgeUncheckedCreateWithoutUsersInput = {
+    id?: number
+    name: string
+    description: string
+    icon: string
+    rarity: string
+    pointValue: number
+    condition: string
+    posts?: SocialPostUncheckedCreateNestedManyWithoutBadgeInput
+  }
+
+  export type BadgeCreateOrConnectWithoutUsersInput = {
+    where: BadgeWhereUniqueInput
+    create: XOR<BadgeCreateWithoutUsersInput, BadgeUncheckedCreateWithoutUsersInput>
+  }
+
+  export type UserUpsertWithoutBadgesInput = {
+    update: XOR<UserUpdateWithoutBadgesInput, UserUncheckedUpdateWithoutBadgesInput>
+    create: XOR<UserCreateWithoutBadgesInput, UserUncheckedCreateWithoutBadgesInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutBadgesInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutBadgesInput, UserUncheckedUpdateWithoutBadgesInput>
+  }
+
+  export type UserUpdateWithoutBadgesInput = {
+    username?: StringFieldUpdateOperationsInput | string
+    avatar?: NullableStringFieldUpdateOperationsInput | string | null
+    level?: IntFieldUpdateOperationsInput | number
+    totalPoints?: IntFieldUpdateOperationsInput | number
+    currentStreak?: IntFieldUpdateOperationsInput | number
+    longestStreak?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    habits?: HabitUpdateManyWithoutUserNestedInput
+    habitLogs?: HabitLogUpdateManyWithoutUserNestedInput
+    challenges?: UserChallengeUpdateManyWithoutUserNestedInput
+    insights?: AIInsightUpdateManyWithoutUserNestedInput
+    posts?: SocialPostUpdateManyWithoutUserNestedInput
+    friends?: FriendUpdateManyWithoutUserNestedInput
+    friendOf?: FriendUpdateManyWithoutFriendNestedInput
+    challenges_created?: ChallengeUpdateManyWithoutCreatorNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutBadgesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    username?: StringFieldUpdateOperationsInput | string
+    avatar?: NullableStringFieldUpdateOperationsInput | string | null
+    level?: IntFieldUpdateOperationsInput | number
+    totalPoints?: IntFieldUpdateOperationsInput | number
+    currentStreak?: IntFieldUpdateOperationsInput | number
+    longestStreak?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    habits?: HabitUncheckedUpdateManyWithoutUserNestedInput
+    habitLogs?: HabitLogUncheckedUpdateManyWithoutUserNestedInput
+    challenges?: UserChallengeUncheckedUpdateManyWithoutUserNestedInput
+    insights?: AIInsightUncheckedUpdateManyWithoutUserNestedInput
+    posts?: SocialPostUncheckedUpdateManyWithoutUserNestedInput
+    friends?: FriendUncheckedUpdateManyWithoutUserNestedInput
+    friendOf?: FriendUncheckedUpdateManyWithoutFriendNestedInput
+    challenges_created?: ChallengeUncheckedUpdateManyWithoutCreatorNestedInput
+  }
+
+  export type BadgeUpsertWithoutUsersInput = {
+    update: XOR<BadgeUpdateWithoutUsersInput, BadgeUncheckedUpdateWithoutUsersInput>
+    create: XOR<BadgeCreateWithoutUsersInput, BadgeUncheckedCreateWithoutUsersInput>
+    where?: BadgeWhereInput
+  }
+
+  export type BadgeUpdateToOneWithWhereWithoutUsersInput = {
+    where?: BadgeWhereInput
+    data: XOR<BadgeUpdateWithoutUsersInput, BadgeUncheckedUpdateWithoutUsersInput>
+  }
+
+  export type BadgeUpdateWithoutUsersInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    icon?: StringFieldUpdateOperationsInput | string
+    rarity?: StringFieldUpdateOperationsInput | string
+    pointValue?: IntFieldUpdateOperationsInput | number
+    condition?: StringFieldUpdateOperationsInput | string
+    posts?: SocialPostUpdateManyWithoutBadgeNestedInput
+  }
+
+  export type BadgeUncheckedUpdateWithoutUsersInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    icon?: StringFieldUpdateOperationsInput | string
+    rarity?: StringFieldUpdateOperationsInput | string
+    pointValue?: IntFieldUpdateOperationsInput | number
+    condition?: StringFieldUpdateOperationsInput | string
+    posts?: SocialPostUncheckedUpdateManyWithoutBadgeNestedInput
+  }
+
+  export type UserCreateWithoutChallenges_createdInput = {
+    username: string
+    avatar?: string | null
+    level?: number
+    totalPoints?: number
+    currentStreak?: number
+    longestStreak?: number
+    createdAt?: Date | string
+    habits?: HabitCreateNestedManyWithoutUserInput
+    habitLogs?: HabitLogCreateNestedManyWithoutUserInput
+    badges?: UserBadgeCreateNestedManyWithoutUserInput
+    challenges?: UserChallengeCreateNestedManyWithoutUserInput
+    insights?: AIInsightCreateNestedManyWithoutUserInput
+    posts?: SocialPostCreateNestedManyWithoutUserInput
+    friends?: FriendCreateNestedManyWithoutUserInput
+    friendOf?: FriendCreateNestedManyWithoutFriendInput
+  }
+
+  export type UserUncheckedCreateWithoutChallenges_createdInput = {
+    id?: number
+    username: string
+    avatar?: string | null
+    level?: number
+    totalPoints?: number
+    currentStreak?: number
+    longestStreak?: number
+    createdAt?: Date | string
+    habits?: HabitUncheckedCreateNestedManyWithoutUserInput
+    habitLogs?: HabitLogUncheckedCreateNestedManyWithoutUserInput
+    badges?: UserBadgeUncheckedCreateNestedManyWithoutUserInput
+    challenges?: UserChallengeUncheckedCreateNestedManyWithoutUserInput
+    insights?: AIInsightUncheckedCreateNestedManyWithoutUserInput
+    posts?: SocialPostUncheckedCreateNestedManyWithoutUserInput
+    friends?: FriendUncheckedCreateNestedManyWithoutUserInput
+    friendOf?: FriendUncheckedCreateNestedManyWithoutFriendInput
+  }
+
+  export type UserCreateOrConnectWithoutChallenges_createdInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutChallenges_createdInput, UserUncheckedCreateWithoutChallenges_createdInput>
+  }
+
+  export type UserChallengeCreateWithoutChallengeInput = {
+    joinedAt?: Date | string
+    completedAt?: Date | string | null
+    progress?: number
+    user: UserCreateNestedOneWithoutChallengesInput
+  }
+
+  export type UserChallengeUncheckedCreateWithoutChallengeInput = {
+    id?: number
+    userId: number
+    joinedAt?: Date | string
+    completedAt?: Date | string | null
+    progress?: number
+  }
+
+  export type UserChallengeCreateOrConnectWithoutChallengeInput = {
+    where: UserChallengeWhereUniqueInput
+    create: XOR<UserChallengeCreateWithoutChallengeInput, UserChallengeUncheckedCreateWithoutChallengeInput>
+  }
+
+  export type UserChallengeCreateManyChallengeInputEnvelope = {
+    data: UserChallengeCreateManyChallengeInput | UserChallengeCreateManyChallengeInput[]
+  }
+
+  export type UserUpsertWithoutChallenges_createdInput = {
+    update: XOR<UserUpdateWithoutChallenges_createdInput, UserUncheckedUpdateWithoutChallenges_createdInput>
+    create: XOR<UserCreateWithoutChallenges_createdInput, UserUncheckedCreateWithoutChallenges_createdInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutChallenges_createdInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutChallenges_createdInput, UserUncheckedUpdateWithoutChallenges_createdInput>
+  }
+
+  export type UserUpdateWithoutChallenges_createdInput = {
+    username?: StringFieldUpdateOperationsInput | string
+    avatar?: NullableStringFieldUpdateOperationsInput | string | null
+    level?: IntFieldUpdateOperationsInput | number
+    totalPoints?: IntFieldUpdateOperationsInput | number
+    currentStreak?: IntFieldUpdateOperationsInput | number
+    longestStreak?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    habits?: HabitUpdateManyWithoutUserNestedInput
+    habitLogs?: HabitLogUpdateManyWithoutUserNestedInput
+    badges?: UserBadgeUpdateManyWithoutUserNestedInput
+    challenges?: UserChallengeUpdateManyWithoutUserNestedInput
+    insights?: AIInsightUpdateManyWithoutUserNestedInput
+    posts?: SocialPostUpdateManyWithoutUserNestedInput
+    friends?: FriendUpdateManyWithoutUserNestedInput
+    friendOf?: FriendUpdateManyWithoutFriendNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutChallenges_createdInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    username?: StringFieldUpdateOperationsInput | string
+    avatar?: NullableStringFieldUpdateOperationsInput | string | null
+    level?: IntFieldUpdateOperationsInput | number
+    totalPoints?: IntFieldUpdateOperationsInput | number
+    currentStreak?: IntFieldUpdateOperationsInput | number
+    longestStreak?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    habits?: HabitUncheckedUpdateManyWithoutUserNestedInput
+    habitLogs?: HabitLogUncheckedUpdateManyWithoutUserNestedInput
+    badges?: UserBadgeUncheckedUpdateManyWithoutUserNestedInput
+    challenges?: UserChallengeUncheckedUpdateManyWithoutUserNestedInput
+    insights?: AIInsightUncheckedUpdateManyWithoutUserNestedInput
+    posts?: SocialPostUncheckedUpdateManyWithoutUserNestedInput
+    friends?: FriendUncheckedUpdateManyWithoutUserNestedInput
+    friendOf?: FriendUncheckedUpdateManyWithoutFriendNestedInput
+  }
+
+  export type UserChallengeUpsertWithWhereUniqueWithoutChallengeInput = {
+    where: UserChallengeWhereUniqueInput
+    update: XOR<UserChallengeUpdateWithoutChallengeInput, UserChallengeUncheckedUpdateWithoutChallengeInput>
+    create: XOR<UserChallengeCreateWithoutChallengeInput, UserChallengeUncheckedCreateWithoutChallengeInput>
+  }
+
+  export type UserChallengeUpdateWithWhereUniqueWithoutChallengeInput = {
+    where: UserChallengeWhereUniqueInput
+    data: XOR<UserChallengeUpdateWithoutChallengeInput, UserChallengeUncheckedUpdateWithoutChallengeInput>
+  }
+
+  export type UserChallengeUpdateManyWithWhereWithoutChallengeInput = {
+    where: UserChallengeScalarWhereInput
+    data: XOR<UserChallengeUpdateManyMutationInput, UserChallengeUncheckedUpdateManyWithoutChallengeInput>
+  }
+
+  export type UserCreateWithoutChallengesInput = {
+    username: string
+    avatar?: string | null
+    level?: number
+    totalPoints?: number
+    currentStreak?: number
+    longestStreak?: number
+    createdAt?: Date | string
+    habits?: HabitCreateNestedManyWithoutUserInput
+    habitLogs?: HabitLogCreateNestedManyWithoutUserInput
+    badges?: UserBadgeCreateNestedManyWithoutUserInput
+    insights?: AIInsightCreateNestedManyWithoutUserInput
+    posts?: SocialPostCreateNestedManyWithoutUserInput
+    friends?: FriendCreateNestedManyWithoutUserInput
+    friendOf?: FriendCreateNestedManyWithoutFriendInput
+    challenges_created?: ChallengeCreateNestedManyWithoutCreatorInput
+  }
+
+  export type UserUncheckedCreateWithoutChallengesInput = {
+    id?: number
+    username: string
+    avatar?: string | null
+    level?: number
+    totalPoints?: number
+    currentStreak?: number
+    longestStreak?: number
+    createdAt?: Date | string
+    habits?: HabitUncheckedCreateNestedManyWithoutUserInput
+    habitLogs?: HabitLogUncheckedCreateNestedManyWithoutUserInput
+    badges?: UserBadgeUncheckedCreateNestedManyWithoutUserInput
+    insights?: AIInsightUncheckedCreateNestedManyWithoutUserInput
+    posts?: SocialPostUncheckedCreateNestedManyWithoutUserInput
+    friends?: FriendUncheckedCreateNestedManyWithoutUserInput
+    friendOf?: FriendUncheckedCreateNestedManyWithoutFriendInput
+    challenges_created?: ChallengeUncheckedCreateNestedManyWithoutCreatorInput
+  }
+
+  export type UserCreateOrConnectWithoutChallengesInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutChallengesInput, UserUncheckedCreateWithoutChallengesInput>
+  }
+
+  export type ChallengeCreateWithoutParticipantsInput = {
+    title: string
+    description: string
+    startDate: Date | string
+    endDate: Date | string
+    habitCategory?: string | null
+    pointReward?: number
+    creator: UserCreateNestedOneWithoutChallenges_createdInput
+  }
+
+  export type ChallengeUncheckedCreateWithoutParticipantsInput = {
+    id?: number
+    title: string
+    description: string
+    startDate: Date | string
+    endDate: Date | string
+    habitCategory?: string | null
+    pointReward?: number
+    createdBy: number
+  }
+
+  export type ChallengeCreateOrConnectWithoutParticipantsInput = {
+    where: ChallengeWhereUniqueInput
+    create: XOR<ChallengeCreateWithoutParticipantsInput, ChallengeUncheckedCreateWithoutParticipantsInput>
+  }
+
+  export type UserUpsertWithoutChallengesInput = {
+    update: XOR<UserUpdateWithoutChallengesInput, UserUncheckedUpdateWithoutChallengesInput>
+    create: XOR<UserCreateWithoutChallengesInput, UserUncheckedCreateWithoutChallengesInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutChallengesInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutChallengesInput, UserUncheckedUpdateWithoutChallengesInput>
+  }
+
+  export type UserUpdateWithoutChallengesInput = {
+    username?: StringFieldUpdateOperationsInput | string
+    avatar?: NullableStringFieldUpdateOperationsInput | string | null
+    level?: IntFieldUpdateOperationsInput | number
+    totalPoints?: IntFieldUpdateOperationsInput | number
+    currentStreak?: IntFieldUpdateOperationsInput | number
+    longestStreak?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    habits?: HabitUpdateManyWithoutUserNestedInput
+    habitLogs?: HabitLogUpdateManyWithoutUserNestedInput
+    badges?: UserBadgeUpdateManyWithoutUserNestedInput
+    insights?: AIInsightUpdateManyWithoutUserNestedInput
+    posts?: SocialPostUpdateManyWithoutUserNestedInput
+    friends?: FriendUpdateManyWithoutUserNestedInput
+    friendOf?: FriendUpdateManyWithoutFriendNestedInput
+    challenges_created?: ChallengeUpdateManyWithoutCreatorNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutChallengesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    username?: StringFieldUpdateOperationsInput | string
+    avatar?: NullableStringFieldUpdateOperationsInput | string | null
+    level?: IntFieldUpdateOperationsInput | number
+    totalPoints?: IntFieldUpdateOperationsInput | number
+    currentStreak?: IntFieldUpdateOperationsInput | number
+    longestStreak?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    habits?: HabitUncheckedUpdateManyWithoutUserNestedInput
+    habitLogs?: HabitLogUncheckedUpdateManyWithoutUserNestedInput
+    badges?: UserBadgeUncheckedUpdateManyWithoutUserNestedInput
+    insights?: AIInsightUncheckedUpdateManyWithoutUserNestedInput
+    posts?: SocialPostUncheckedUpdateManyWithoutUserNestedInput
+    friends?: FriendUncheckedUpdateManyWithoutUserNestedInput
+    friendOf?: FriendUncheckedUpdateManyWithoutFriendNestedInput
+    challenges_created?: ChallengeUncheckedUpdateManyWithoutCreatorNestedInput
+  }
+
+  export type ChallengeUpsertWithoutParticipantsInput = {
+    update: XOR<ChallengeUpdateWithoutParticipantsInput, ChallengeUncheckedUpdateWithoutParticipantsInput>
+    create: XOR<ChallengeCreateWithoutParticipantsInput, ChallengeUncheckedCreateWithoutParticipantsInput>
+    where?: ChallengeWhereInput
+  }
+
+  export type ChallengeUpdateToOneWithWhereWithoutParticipantsInput = {
+    where?: ChallengeWhereInput
+    data: XOR<ChallengeUpdateWithoutParticipantsInput, ChallengeUncheckedUpdateWithoutParticipantsInput>
+  }
+
+  export type ChallengeUpdateWithoutParticipantsInput = {
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    habitCategory?: NullableStringFieldUpdateOperationsInput | string | null
+    pointReward?: IntFieldUpdateOperationsInput | number
+    creator?: UserUpdateOneRequiredWithoutChallenges_createdNestedInput
+  }
+
+  export type ChallengeUncheckedUpdateWithoutParticipantsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    habitCategory?: NullableStringFieldUpdateOperationsInput | string | null
+    pointReward?: IntFieldUpdateOperationsInput | number
+    createdBy?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type UserCreateWithoutInsightsInput = {
+    username: string
+    avatar?: string | null
+    level?: number
+    totalPoints?: number
+    currentStreak?: number
+    longestStreak?: number
+    createdAt?: Date | string
+    habits?: HabitCreateNestedManyWithoutUserInput
+    habitLogs?: HabitLogCreateNestedManyWithoutUserInput
+    badges?: UserBadgeCreateNestedManyWithoutUserInput
+    challenges?: UserChallengeCreateNestedManyWithoutUserInput
+    posts?: SocialPostCreateNestedManyWithoutUserInput
+    friends?: FriendCreateNestedManyWithoutUserInput
+    friendOf?: FriendCreateNestedManyWithoutFriendInput
+    challenges_created?: ChallengeCreateNestedManyWithoutCreatorInput
+  }
+
+  export type UserUncheckedCreateWithoutInsightsInput = {
+    id?: number
+    username: string
+    avatar?: string | null
+    level?: number
+    totalPoints?: number
+    currentStreak?: number
+    longestStreak?: number
+    createdAt?: Date | string
+    habits?: HabitUncheckedCreateNestedManyWithoutUserInput
+    habitLogs?: HabitLogUncheckedCreateNestedManyWithoutUserInput
+    badges?: UserBadgeUncheckedCreateNestedManyWithoutUserInput
+    challenges?: UserChallengeUncheckedCreateNestedManyWithoutUserInput
+    posts?: SocialPostUncheckedCreateNestedManyWithoutUserInput
+    friends?: FriendUncheckedCreateNestedManyWithoutUserInput
+    friendOf?: FriendUncheckedCreateNestedManyWithoutFriendInput
+    challenges_created?: ChallengeUncheckedCreateNestedManyWithoutCreatorInput
+  }
+
+  export type UserCreateOrConnectWithoutInsightsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutInsightsInput, UserUncheckedCreateWithoutInsightsInput>
+  }
+
+  export type HabitCreateWithoutInsightsInput = {
+    name: string
+    description?: string | null
+    category: string
+    color?: string
+    icon?: string
+    frequency?: string
+    targetDaysPerWeek?: number
+    reminderTime?: string | null
+    isArchived?: boolean
+    createdAt?: Date | string
+    user: UserCreateNestedOneWithoutHabitsInput
+    logs?: HabitLogCreateNestedManyWithoutHabitInput
+    posts?: SocialPostCreateNestedManyWithoutHabitInput
+  }
+
+  export type HabitUncheckedCreateWithoutInsightsInput = {
+    id?: number
+    userId: number
+    name: string
+    description?: string | null
+    category: string
+    color?: string
+    icon?: string
+    frequency?: string
+    targetDaysPerWeek?: number
+    reminderTime?: string | null
+    isArchived?: boolean
+    createdAt?: Date | string
+    logs?: HabitLogUncheckedCreateNestedManyWithoutHabitInput
+    posts?: SocialPostUncheckedCreateNestedManyWithoutHabitInput
+  }
+
+  export type HabitCreateOrConnectWithoutInsightsInput = {
+    where: HabitWhereUniqueInput
+    create: XOR<HabitCreateWithoutInsightsInput, HabitUncheckedCreateWithoutInsightsInput>
+  }
+
+  export type UserUpsertWithoutInsightsInput = {
+    update: XOR<UserUpdateWithoutInsightsInput, UserUncheckedUpdateWithoutInsightsInput>
+    create: XOR<UserCreateWithoutInsightsInput, UserUncheckedCreateWithoutInsightsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutInsightsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutInsightsInput, UserUncheckedUpdateWithoutInsightsInput>
+  }
+
+  export type UserUpdateWithoutInsightsInput = {
+    username?: StringFieldUpdateOperationsInput | string
+    avatar?: NullableStringFieldUpdateOperationsInput | string | null
+    level?: IntFieldUpdateOperationsInput | number
+    totalPoints?: IntFieldUpdateOperationsInput | number
+    currentStreak?: IntFieldUpdateOperationsInput | number
+    longestStreak?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    habits?: HabitUpdateManyWithoutUserNestedInput
+    habitLogs?: HabitLogUpdateManyWithoutUserNestedInput
+    badges?: UserBadgeUpdateManyWithoutUserNestedInput
+    challenges?: UserChallengeUpdateManyWithoutUserNestedInput
+    posts?: SocialPostUpdateManyWithoutUserNestedInput
+    friends?: FriendUpdateManyWithoutUserNestedInput
+    friendOf?: FriendUpdateManyWithoutFriendNestedInput
+    challenges_created?: ChallengeUpdateManyWithoutCreatorNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutInsightsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    username?: StringFieldUpdateOperationsInput | string
+    avatar?: NullableStringFieldUpdateOperationsInput | string | null
+    level?: IntFieldUpdateOperationsInput | number
+    totalPoints?: IntFieldUpdateOperationsInput | number
+    currentStreak?: IntFieldUpdateOperationsInput | number
+    longestStreak?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    habits?: HabitUncheckedUpdateManyWithoutUserNestedInput
+    habitLogs?: HabitLogUncheckedUpdateManyWithoutUserNestedInput
+    badges?: UserBadgeUncheckedUpdateManyWithoutUserNestedInput
+    challenges?: UserChallengeUncheckedUpdateManyWithoutUserNestedInput
+    posts?: SocialPostUncheckedUpdateManyWithoutUserNestedInput
+    friends?: FriendUncheckedUpdateManyWithoutUserNestedInput
+    friendOf?: FriendUncheckedUpdateManyWithoutFriendNestedInput
+    challenges_created?: ChallengeUncheckedUpdateManyWithoutCreatorNestedInput
+  }
+
+  export type HabitUpsertWithoutInsightsInput = {
+    update: XOR<HabitUpdateWithoutInsightsInput, HabitUncheckedUpdateWithoutInsightsInput>
+    create: XOR<HabitCreateWithoutInsightsInput, HabitUncheckedCreateWithoutInsightsInput>
+    where?: HabitWhereInput
+  }
+
+  export type HabitUpdateToOneWithWhereWithoutInsightsInput = {
+    where?: HabitWhereInput
+    data: XOR<HabitUpdateWithoutInsightsInput, HabitUncheckedUpdateWithoutInsightsInput>
+  }
+
+  export type HabitUpdateWithoutInsightsInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    category?: StringFieldUpdateOperationsInput | string
+    color?: StringFieldUpdateOperationsInput | string
+    icon?: StringFieldUpdateOperationsInput | string
+    frequency?: StringFieldUpdateOperationsInput | string
+    targetDaysPerWeek?: IntFieldUpdateOperationsInput | number
+    reminderTime?: NullableStringFieldUpdateOperationsInput | string | null
+    isArchived?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutHabitsNestedInput
+    logs?: HabitLogUpdateManyWithoutHabitNestedInput
+    posts?: SocialPostUpdateManyWithoutHabitNestedInput
+  }
+
+  export type HabitUncheckedUpdateWithoutInsightsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    category?: StringFieldUpdateOperationsInput | string
+    color?: StringFieldUpdateOperationsInput | string
+    icon?: StringFieldUpdateOperationsInput | string
+    frequency?: StringFieldUpdateOperationsInput | string
+    targetDaysPerWeek?: IntFieldUpdateOperationsInput | number
+    reminderTime?: NullableStringFieldUpdateOperationsInput | string | null
+    isArchived?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    logs?: HabitLogUncheckedUpdateManyWithoutHabitNestedInput
+    posts?: SocialPostUncheckedUpdateManyWithoutHabitNestedInput
+  }
+
+  export type UserCreateWithoutFriendsInput = {
+    username: string
+    avatar?: string | null
+    level?: number
+    totalPoints?: number
+    currentStreak?: number
+    longestStreak?: number
+    createdAt?: Date | string
+    habits?: HabitCreateNestedManyWithoutUserInput
+    habitLogs?: HabitLogCreateNestedManyWithoutUserInput
+    badges?: UserBadgeCreateNestedManyWithoutUserInput
+    challenges?: UserChallengeCreateNestedManyWithoutUserInput
+    insights?: AIInsightCreateNestedManyWithoutUserInput
+    posts?: SocialPostCreateNestedManyWithoutUserInput
+    friendOf?: FriendCreateNestedManyWithoutFriendInput
+    challenges_created?: ChallengeCreateNestedManyWithoutCreatorInput
+  }
+
+  export type UserUncheckedCreateWithoutFriendsInput = {
+    id?: number
+    username: string
+    avatar?: string | null
+    level?: number
+    totalPoints?: number
+    currentStreak?: number
+    longestStreak?: number
+    createdAt?: Date | string
+    habits?: HabitUncheckedCreateNestedManyWithoutUserInput
+    habitLogs?: HabitLogUncheckedCreateNestedManyWithoutUserInput
+    badges?: UserBadgeUncheckedCreateNestedManyWithoutUserInput
+    challenges?: UserChallengeUncheckedCreateNestedManyWithoutUserInput
+    insights?: AIInsightUncheckedCreateNestedManyWithoutUserInput
+    posts?: SocialPostUncheckedCreateNestedManyWithoutUserInput
+    friendOf?: FriendUncheckedCreateNestedManyWithoutFriendInput
+    challenges_created?: ChallengeUncheckedCreateNestedManyWithoutCreatorInput
+  }
+
+  export type UserCreateOrConnectWithoutFriendsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutFriendsInput, UserUncheckedCreateWithoutFriendsInput>
+  }
+
+  export type UserCreateWithoutFriendOfInput = {
+    username: string
+    avatar?: string | null
+    level?: number
+    totalPoints?: number
+    currentStreak?: number
+    longestStreak?: number
+    createdAt?: Date | string
+    habits?: HabitCreateNestedManyWithoutUserInput
+    habitLogs?: HabitLogCreateNestedManyWithoutUserInput
+    badges?: UserBadgeCreateNestedManyWithoutUserInput
+    challenges?: UserChallengeCreateNestedManyWithoutUserInput
+    insights?: AIInsightCreateNestedManyWithoutUserInput
+    posts?: SocialPostCreateNestedManyWithoutUserInput
+    friends?: FriendCreateNestedManyWithoutUserInput
+    challenges_created?: ChallengeCreateNestedManyWithoutCreatorInput
+  }
+
+  export type UserUncheckedCreateWithoutFriendOfInput = {
+    id?: number
+    username: string
+    avatar?: string | null
+    level?: number
+    totalPoints?: number
+    currentStreak?: number
+    longestStreak?: number
+    createdAt?: Date | string
+    habits?: HabitUncheckedCreateNestedManyWithoutUserInput
+    habitLogs?: HabitLogUncheckedCreateNestedManyWithoutUserInput
+    badges?: UserBadgeUncheckedCreateNestedManyWithoutUserInput
+    challenges?: UserChallengeUncheckedCreateNestedManyWithoutUserInput
+    insights?: AIInsightUncheckedCreateNestedManyWithoutUserInput
+    posts?: SocialPostUncheckedCreateNestedManyWithoutUserInput
+    friends?: FriendUncheckedCreateNestedManyWithoutUserInput
+    challenges_created?: ChallengeUncheckedCreateNestedManyWithoutCreatorInput
+  }
+
+  export type UserCreateOrConnectWithoutFriendOfInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutFriendOfInput, UserUncheckedCreateWithoutFriendOfInput>
+  }
+
+  export type UserUpsertWithoutFriendsInput = {
+    update: XOR<UserUpdateWithoutFriendsInput, UserUncheckedUpdateWithoutFriendsInput>
+    create: XOR<UserCreateWithoutFriendsInput, UserUncheckedCreateWithoutFriendsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutFriendsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutFriendsInput, UserUncheckedUpdateWithoutFriendsInput>
+  }
+
+  export type UserUpdateWithoutFriendsInput = {
+    username?: StringFieldUpdateOperationsInput | string
+    avatar?: NullableStringFieldUpdateOperationsInput | string | null
+    level?: IntFieldUpdateOperationsInput | number
+    totalPoints?: IntFieldUpdateOperationsInput | number
+    currentStreak?: IntFieldUpdateOperationsInput | number
+    longestStreak?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    habits?: HabitUpdateManyWithoutUserNestedInput
+    habitLogs?: HabitLogUpdateManyWithoutUserNestedInput
+    badges?: UserBadgeUpdateManyWithoutUserNestedInput
+    challenges?: UserChallengeUpdateManyWithoutUserNestedInput
+    insights?: AIInsightUpdateManyWithoutUserNestedInput
+    posts?: SocialPostUpdateManyWithoutUserNestedInput
+    friendOf?: FriendUpdateManyWithoutFriendNestedInput
+    challenges_created?: ChallengeUpdateManyWithoutCreatorNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutFriendsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    username?: StringFieldUpdateOperationsInput | string
+    avatar?: NullableStringFieldUpdateOperationsInput | string | null
+    level?: IntFieldUpdateOperationsInput | number
+    totalPoints?: IntFieldUpdateOperationsInput | number
+    currentStreak?: IntFieldUpdateOperationsInput | number
+    longestStreak?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    habits?: HabitUncheckedUpdateManyWithoutUserNestedInput
+    habitLogs?: HabitLogUncheckedUpdateManyWithoutUserNestedInput
+    badges?: UserBadgeUncheckedUpdateManyWithoutUserNestedInput
+    challenges?: UserChallengeUncheckedUpdateManyWithoutUserNestedInput
+    insights?: AIInsightUncheckedUpdateManyWithoutUserNestedInput
+    posts?: SocialPostUncheckedUpdateManyWithoutUserNestedInput
+    friendOf?: FriendUncheckedUpdateManyWithoutFriendNestedInput
+    challenges_created?: ChallengeUncheckedUpdateManyWithoutCreatorNestedInput
+  }
+
+  export type UserUpsertWithoutFriendOfInput = {
+    update: XOR<UserUpdateWithoutFriendOfInput, UserUncheckedUpdateWithoutFriendOfInput>
+    create: XOR<UserCreateWithoutFriendOfInput, UserUncheckedCreateWithoutFriendOfInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutFriendOfInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutFriendOfInput, UserUncheckedUpdateWithoutFriendOfInput>
+  }
+
+  export type UserUpdateWithoutFriendOfInput = {
+    username?: StringFieldUpdateOperationsInput | string
+    avatar?: NullableStringFieldUpdateOperationsInput | string | null
+    level?: IntFieldUpdateOperationsInput | number
+    totalPoints?: IntFieldUpdateOperationsInput | number
+    currentStreak?: IntFieldUpdateOperationsInput | number
+    longestStreak?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    habits?: HabitUpdateManyWithoutUserNestedInput
+    habitLogs?: HabitLogUpdateManyWithoutUserNestedInput
+    badges?: UserBadgeUpdateManyWithoutUserNestedInput
+    challenges?: UserChallengeUpdateManyWithoutUserNestedInput
+    insights?: AIInsightUpdateManyWithoutUserNestedInput
+    posts?: SocialPostUpdateManyWithoutUserNestedInput
+    friends?: FriendUpdateManyWithoutUserNestedInput
+    challenges_created?: ChallengeUpdateManyWithoutCreatorNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutFriendOfInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    username?: StringFieldUpdateOperationsInput | string
+    avatar?: NullableStringFieldUpdateOperationsInput | string | null
+    level?: IntFieldUpdateOperationsInput | number
+    totalPoints?: IntFieldUpdateOperationsInput | number
+    currentStreak?: IntFieldUpdateOperationsInput | number
+    longestStreak?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    habits?: HabitUncheckedUpdateManyWithoutUserNestedInput
+    habitLogs?: HabitLogUncheckedUpdateManyWithoutUserNestedInput
+    badges?: UserBadgeUncheckedUpdateManyWithoutUserNestedInput
+    challenges?: UserChallengeUncheckedUpdateManyWithoutUserNestedInput
+    insights?: AIInsightUncheckedUpdateManyWithoutUserNestedInput
+    posts?: SocialPostUncheckedUpdateManyWithoutUserNestedInput
+    friends?: FriendUncheckedUpdateManyWithoutUserNestedInput
+    challenges_created?: ChallengeUncheckedUpdateManyWithoutCreatorNestedInput
+  }
+
+  export type UserCreateWithoutPostsInput = {
+    username: string
+    avatar?: string | null
+    level?: number
+    totalPoints?: number
+    currentStreak?: number
+    longestStreak?: number
+    createdAt?: Date | string
+    habits?: HabitCreateNestedManyWithoutUserInput
+    habitLogs?: HabitLogCreateNestedManyWithoutUserInput
+    badges?: UserBadgeCreateNestedManyWithoutUserInput
+    challenges?: UserChallengeCreateNestedManyWithoutUserInput
+    insights?: AIInsightCreateNestedManyWithoutUserInput
+    friends?: FriendCreateNestedManyWithoutUserInput
+    friendOf?: FriendCreateNestedManyWithoutFriendInput
+    challenges_created?: ChallengeCreateNestedManyWithoutCreatorInput
+  }
+
+  export type UserUncheckedCreateWithoutPostsInput = {
+    id?: number
+    username: string
+    avatar?: string | null
+    level?: number
+    totalPoints?: number
+    currentStreak?: number
+    longestStreak?: number
+    createdAt?: Date | string
+    habits?: HabitUncheckedCreateNestedManyWithoutUserInput
+    habitLogs?: HabitLogUncheckedCreateNestedManyWithoutUserInput
+    badges?: UserBadgeUncheckedCreateNestedManyWithoutUserInput
+    challenges?: UserChallengeUncheckedCreateNestedManyWithoutUserInput
+    insights?: AIInsightUncheckedCreateNestedManyWithoutUserInput
+    friends?: FriendUncheckedCreateNestedManyWithoutUserInput
+    friendOf?: FriendUncheckedCreateNestedManyWithoutFriendInput
+    challenges_created?: ChallengeUncheckedCreateNestedManyWithoutCreatorInput
+  }
+
+  export type UserCreateOrConnectWithoutPostsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutPostsInput, UserUncheckedCreateWithoutPostsInput>
+  }
+
+  export type BadgeCreateWithoutPostsInput = {
+    name: string
+    description: string
+    icon: string
+    rarity: string
+    pointValue: number
+    condition: string
+    users?: UserBadgeCreateNestedManyWithoutBadgeInput
+  }
+
+  export type BadgeUncheckedCreateWithoutPostsInput = {
+    id?: number
+    name: string
+    description: string
+    icon: string
+    rarity: string
+    pointValue: number
+    condition: string
+    users?: UserBadgeUncheckedCreateNestedManyWithoutBadgeInput
+  }
+
+  export type BadgeCreateOrConnectWithoutPostsInput = {
+    where: BadgeWhereUniqueInput
+    create: XOR<BadgeCreateWithoutPostsInput, BadgeUncheckedCreateWithoutPostsInput>
+  }
+
+  export type HabitCreateWithoutPostsInput = {
+    name: string
+    description?: string | null
+    category: string
+    color?: string
+    icon?: string
+    frequency?: string
+    targetDaysPerWeek?: number
+    reminderTime?: string | null
+    isArchived?: boolean
+    createdAt?: Date | string
+    user: UserCreateNestedOneWithoutHabitsInput
+    logs?: HabitLogCreateNestedManyWithoutHabitInput
+    insights?: AIInsightCreateNestedManyWithoutHabitInput
+  }
+
+  export type HabitUncheckedCreateWithoutPostsInput = {
+    id?: number
+    userId: number
+    name: string
+    description?: string | null
+    category: string
+    color?: string
+    icon?: string
+    frequency?: string
+    targetDaysPerWeek?: number
+    reminderTime?: string | null
+    isArchived?: boolean
+    createdAt?: Date | string
+    logs?: HabitLogUncheckedCreateNestedManyWithoutHabitInput
+    insights?: AIInsightUncheckedCreateNestedManyWithoutHabitInput
+  }
+
+  export type HabitCreateOrConnectWithoutPostsInput = {
+    where: HabitWhereUniqueInput
+    create: XOR<HabitCreateWithoutPostsInput, HabitUncheckedCreateWithoutPostsInput>
+  }
+
+  export type UserUpsertWithoutPostsInput = {
+    update: XOR<UserUpdateWithoutPostsInput, UserUncheckedUpdateWithoutPostsInput>
+    create: XOR<UserCreateWithoutPostsInput, UserUncheckedCreateWithoutPostsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutPostsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutPostsInput, UserUncheckedUpdateWithoutPostsInput>
+  }
+
+  export type UserUpdateWithoutPostsInput = {
+    username?: StringFieldUpdateOperationsInput | string
+    avatar?: NullableStringFieldUpdateOperationsInput | string | null
+    level?: IntFieldUpdateOperationsInput | number
+    totalPoints?: IntFieldUpdateOperationsInput | number
+    currentStreak?: IntFieldUpdateOperationsInput | number
+    longestStreak?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    habits?: HabitUpdateManyWithoutUserNestedInput
+    habitLogs?: HabitLogUpdateManyWithoutUserNestedInput
+    badges?: UserBadgeUpdateManyWithoutUserNestedInput
+    challenges?: UserChallengeUpdateManyWithoutUserNestedInput
+    insights?: AIInsightUpdateManyWithoutUserNestedInput
+    friends?: FriendUpdateManyWithoutUserNestedInput
+    friendOf?: FriendUpdateManyWithoutFriendNestedInput
+    challenges_created?: ChallengeUpdateManyWithoutCreatorNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutPostsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    username?: StringFieldUpdateOperationsInput | string
+    avatar?: NullableStringFieldUpdateOperationsInput | string | null
+    level?: IntFieldUpdateOperationsInput | number
+    totalPoints?: IntFieldUpdateOperationsInput | number
+    currentStreak?: IntFieldUpdateOperationsInput | number
+    longestStreak?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    habits?: HabitUncheckedUpdateManyWithoutUserNestedInput
+    habitLogs?: HabitLogUncheckedUpdateManyWithoutUserNestedInput
+    badges?: UserBadgeUncheckedUpdateManyWithoutUserNestedInput
+    challenges?: UserChallengeUncheckedUpdateManyWithoutUserNestedInput
+    insights?: AIInsightUncheckedUpdateManyWithoutUserNestedInput
+    friends?: FriendUncheckedUpdateManyWithoutUserNestedInput
+    friendOf?: FriendUncheckedUpdateManyWithoutFriendNestedInput
+    challenges_created?: ChallengeUncheckedUpdateManyWithoutCreatorNestedInput
+  }
+
+  export type BadgeUpsertWithoutPostsInput = {
+    update: XOR<BadgeUpdateWithoutPostsInput, BadgeUncheckedUpdateWithoutPostsInput>
+    create: XOR<BadgeCreateWithoutPostsInput, BadgeUncheckedCreateWithoutPostsInput>
+    where?: BadgeWhereInput
+  }
+
+  export type BadgeUpdateToOneWithWhereWithoutPostsInput = {
+    where?: BadgeWhereInput
+    data: XOR<BadgeUpdateWithoutPostsInput, BadgeUncheckedUpdateWithoutPostsInput>
+  }
+
+  export type BadgeUpdateWithoutPostsInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    icon?: StringFieldUpdateOperationsInput | string
+    rarity?: StringFieldUpdateOperationsInput | string
+    pointValue?: IntFieldUpdateOperationsInput | number
+    condition?: StringFieldUpdateOperationsInput | string
+    users?: UserBadgeUpdateManyWithoutBadgeNestedInput
+  }
+
+  export type BadgeUncheckedUpdateWithoutPostsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    icon?: StringFieldUpdateOperationsInput | string
+    rarity?: StringFieldUpdateOperationsInput | string
+    pointValue?: IntFieldUpdateOperationsInput | number
+    condition?: StringFieldUpdateOperationsInput | string
+    users?: UserBadgeUncheckedUpdateManyWithoutBadgeNestedInput
+  }
+
+  export type HabitUpsertWithoutPostsInput = {
+    update: XOR<HabitUpdateWithoutPostsInput, HabitUncheckedUpdateWithoutPostsInput>
+    create: XOR<HabitCreateWithoutPostsInput, HabitUncheckedCreateWithoutPostsInput>
+    where?: HabitWhereInput
+  }
+
+  export type HabitUpdateToOneWithWhereWithoutPostsInput = {
+    where?: HabitWhereInput
+    data: XOR<HabitUpdateWithoutPostsInput, HabitUncheckedUpdateWithoutPostsInput>
+  }
+
+  export type HabitUpdateWithoutPostsInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    category?: StringFieldUpdateOperationsInput | string
+    color?: StringFieldUpdateOperationsInput | string
+    icon?: StringFieldUpdateOperationsInput | string
+    frequency?: StringFieldUpdateOperationsInput | string
+    targetDaysPerWeek?: IntFieldUpdateOperationsInput | number
+    reminderTime?: NullableStringFieldUpdateOperationsInput | string | null
+    isArchived?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutHabitsNestedInput
+    logs?: HabitLogUpdateManyWithoutHabitNestedInput
+    insights?: AIInsightUpdateManyWithoutHabitNestedInput
+  }
+
+  export type HabitUncheckedUpdateWithoutPostsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    category?: StringFieldUpdateOperationsInput | string
+    color?: StringFieldUpdateOperationsInput | string
+    icon?: StringFieldUpdateOperationsInput | string
+    frequency?: StringFieldUpdateOperationsInput | string
+    targetDaysPerWeek?: IntFieldUpdateOperationsInput | number
+    reminderTime?: NullableStringFieldUpdateOperationsInput | string | null
+    isArchived?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    logs?: HabitLogUncheckedUpdateManyWithoutHabitNestedInput
+    insights?: AIInsightUncheckedUpdateManyWithoutHabitNestedInput
+  }
+
+  export type HabitCreateManyUserInput = {
+    id?: number
+    name: string
+    description?: string | null
+    category: string
+    color?: string
+    icon?: string
+    frequency?: string
+    targetDaysPerWeek?: number
+    reminderTime?: string | null
+    isArchived?: boolean
+    createdAt?: Date | string
+  }
+
+  export type HabitLogCreateManyUserInput = {
+    id?: number
+    habitId: number
+    completedAt?: Date | string
+    note?: string | null
+    moodRating?: number | null
+    durationMinutes?: number | null
+  }
+
+  export type UserBadgeCreateManyUserInput = {
+    id?: number
+    badgeId: number
+    earnedAt?: Date | string
+  }
+
+  export type UserChallengeCreateManyUserInput = {
+    id?: number
+    challengeId: number
+    joinedAt?: Date | string
+    completedAt?: Date | string | null
+    progress?: number
+  }
+
+  export type AIInsightCreateManyUserInput = {
+    id?: number
+    habitId?: number | null
+    type: string
+    content: string
+    generatedAt?: Date | string
+    isRead?: boolean
+  }
+
+  export type SocialPostCreateManyUserInput = {
+    id?: number
+    content: string
+    badgeId?: number | null
+    habitId?: number | null
+    likesCount?: number
+    createdAt?: Date | string
+  }
+
+  export type FriendCreateManyUserInput = {
+    id?: number
+    friendId: number
+    status?: string
+    createdAt?: Date | string
+  }
+
+  export type FriendCreateManyFriendInput = {
+    id?: number
+    userId: number
+    status?: string
+    createdAt?: Date | string
+  }
+
+  export type ChallengeCreateManyCreatorInput = {
+    id?: number
+    title: string
+    description: string
+    startDate: Date | string
+    endDate: Date | string
+    habitCategory?: string | null
+    pointReward?: number
+  }
+
+  export type HabitUpdateWithoutUserInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    category?: StringFieldUpdateOperationsInput | string
+    color?: StringFieldUpdateOperationsInput | string
+    icon?: StringFieldUpdateOperationsInput | string
+    frequency?: StringFieldUpdateOperationsInput | string
+    targetDaysPerWeek?: IntFieldUpdateOperationsInput | number
+    reminderTime?: NullableStringFieldUpdateOperationsInput | string | null
+    isArchived?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    logs?: HabitLogUpdateManyWithoutHabitNestedInput
+    insights?: AIInsightUpdateManyWithoutHabitNestedInput
+    posts?: SocialPostUpdateManyWithoutHabitNestedInput
+  }
+
+  export type HabitUncheckedUpdateWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    category?: StringFieldUpdateOperationsInput | string
+    color?: StringFieldUpdateOperationsInput | string
+    icon?: StringFieldUpdateOperationsInput | string
+    frequency?: StringFieldUpdateOperationsInput | string
+    targetDaysPerWeek?: IntFieldUpdateOperationsInput | number
+    reminderTime?: NullableStringFieldUpdateOperationsInput | string | null
+    isArchived?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    logs?: HabitLogUncheckedUpdateManyWithoutHabitNestedInput
+    insights?: AIInsightUncheckedUpdateManyWithoutHabitNestedInput
+    posts?: SocialPostUncheckedUpdateManyWithoutHabitNestedInput
+  }
+
+  export type HabitUncheckedUpdateManyWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    category?: StringFieldUpdateOperationsInput | string
+    color?: StringFieldUpdateOperationsInput | string
+    icon?: StringFieldUpdateOperationsInput | string
+    frequency?: StringFieldUpdateOperationsInput | string
+    targetDaysPerWeek?: IntFieldUpdateOperationsInput | number
+    reminderTime?: NullableStringFieldUpdateOperationsInput | string | null
+    isArchived?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type HabitLogUpdateWithoutUserInput = {
+    completedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    note?: NullableStringFieldUpdateOperationsInput | string | null
+    moodRating?: NullableIntFieldUpdateOperationsInput | number | null
+    durationMinutes?: NullableIntFieldUpdateOperationsInput | number | null
+    habit?: HabitUpdateOneRequiredWithoutLogsNestedInput
+  }
+
+  export type HabitLogUncheckedUpdateWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    habitId?: IntFieldUpdateOperationsInput | number
+    completedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    note?: NullableStringFieldUpdateOperationsInput | string | null
+    moodRating?: NullableIntFieldUpdateOperationsInput | number | null
+    durationMinutes?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type HabitLogUncheckedUpdateManyWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    habitId?: IntFieldUpdateOperationsInput | number
+    completedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    note?: NullableStringFieldUpdateOperationsInput | string | null
+    moodRating?: NullableIntFieldUpdateOperationsInput | number | null
+    durationMinutes?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type UserBadgeUpdateWithoutUserInput = {
+    earnedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    badge?: BadgeUpdateOneRequiredWithoutUsersNestedInput
+  }
+
+  export type UserBadgeUncheckedUpdateWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    badgeId?: IntFieldUpdateOperationsInput | number
+    earnedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserBadgeUncheckedUpdateManyWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    badgeId?: IntFieldUpdateOperationsInput | number
+    earnedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserChallengeUpdateWithoutUserInput = {
+    joinedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    progress?: IntFieldUpdateOperationsInput | number
+    challenge?: ChallengeUpdateOneRequiredWithoutParticipantsNestedInput
+  }
+
+  export type UserChallengeUncheckedUpdateWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    challengeId?: IntFieldUpdateOperationsInput | number
+    joinedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    progress?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type UserChallengeUncheckedUpdateManyWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    challengeId?: IntFieldUpdateOperationsInput | number
+    joinedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    progress?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type AIInsightUpdateWithoutUserInput = {
+    type?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    generatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isRead?: BoolFieldUpdateOperationsInput | boolean
+    habit?: HabitUpdateOneWithoutInsightsNestedInput
+  }
+
+  export type AIInsightUncheckedUpdateWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    habitId?: NullableIntFieldUpdateOperationsInput | number | null
+    type?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    generatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isRead?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type AIInsightUncheckedUpdateManyWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    habitId?: NullableIntFieldUpdateOperationsInput | number | null
+    type?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    generatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isRead?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type SocialPostUpdateWithoutUserInput = {
+    content?: StringFieldUpdateOperationsInput | string
+    likesCount?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    badge?: BadgeUpdateOneWithoutPostsNestedInput
+    habit?: HabitUpdateOneWithoutPostsNestedInput
+  }
+
+  export type SocialPostUncheckedUpdateWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    content?: StringFieldUpdateOperationsInput | string
+    badgeId?: NullableIntFieldUpdateOperationsInput | number | null
+    habitId?: NullableIntFieldUpdateOperationsInput | number | null
+    likesCount?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SocialPostUncheckedUpdateManyWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    content?: StringFieldUpdateOperationsInput | string
+    badgeId?: NullableIntFieldUpdateOperationsInput | number | null
+    habitId?: NullableIntFieldUpdateOperationsInput | number | null
+    likesCount?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FriendUpdateWithoutUserInput = {
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    friend?: UserUpdateOneRequiredWithoutFriendOfNestedInput
+  }
+
+  export type FriendUncheckedUpdateWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    friendId?: IntFieldUpdateOperationsInput | number
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FriendUncheckedUpdateManyWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    friendId?: IntFieldUpdateOperationsInput | number
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FriendUpdateWithoutFriendInput = {
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutFriendsNestedInput
+  }
+
+  export type FriendUncheckedUpdateWithoutFriendInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FriendUncheckedUpdateManyWithoutFriendInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ChallengeUpdateWithoutCreatorInput = {
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    habitCategory?: NullableStringFieldUpdateOperationsInput | string | null
+    pointReward?: IntFieldUpdateOperationsInput | number
+    participants?: UserChallengeUpdateManyWithoutChallengeNestedInput
+  }
+
+  export type ChallengeUncheckedUpdateWithoutCreatorInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    habitCategory?: NullableStringFieldUpdateOperationsInput | string | null
+    pointReward?: IntFieldUpdateOperationsInput | number
+    participants?: UserChallengeUncheckedUpdateManyWithoutChallengeNestedInput
+  }
+
+  export type ChallengeUncheckedUpdateManyWithoutCreatorInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    habitCategory?: NullableStringFieldUpdateOperationsInput | string | null
+    pointReward?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type HabitLogCreateManyHabitInput = {
+    id?: number
+    userId: number
+    completedAt?: Date | string
+    note?: string | null
+    moodRating?: number | null
+    durationMinutes?: number | null
+  }
+
+  export type AIInsightCreateManyHabitInput = {
+    id?: number
+    userId: number
+    type: string
+    content: string
+    generatedAt?: Date | string
+    isRead?: boolean
+  }
+
+  export type SocialPostCreateManyHabitInput = {
+    id?: number
+    userId: number
+    content: string
+    badgeId?: number | null
+    likesCount?: number
+    createdAt?: Date | string
+  }
+
+  export type HabitLogUpdateWithoutHabitInput = {
+    completedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    note?: NullableStringFieldUpdateOperationsInput | string | null
+    moodRating?: NullableIntFieldUpdateOperationsInput | number | null
+    durationMinutes?: NullableIntFieldUpdateOperationsInput | number | null
+    user?: UserUpdateOneRequiredWithoutHabitLogsNestedInput
+  }
+
+  export type HabitLogUncheckedUpdateWithoutHabitInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    completedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    note?: NullableStringFieldUpdateOperationsInput | string | null
+    moodRating?: NullableIntFieldUpdateOperationsInput | number | null
+    durationMinutes?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type HabitLogUncheckedUpdateManyWithoutHabitInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    completedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    note?: NullableStringFieldUpdateOperationsInput | string | null
+    moodRating?: NullableIntFieldUpdateOperationsInput | number | null
+    durationMinutes?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type AIInsightUpdateWithoutHabitInput = {
+    type?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    generatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isRead?: BoolFieldUpdateOperationsInput | boolean
+    user?: UserUpdateOneRequiredWithoutInsightsNestedInput
+  }
+
+  export type AIInsightUncheckedUpdateWithoutHabitInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    type?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    generatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isRead?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type AIInsightUncheckedUpdateManyWithoutHabitInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    type?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    generatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isRead?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type SocialPostUpdateWithoutHabitInput = {
+    content?: StringFieldUpdateOperationsInput | string
+    likesCount?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutPostsNestedInput
+    badge?: BadgeUpdateOneWithoutPostsNestedInput
+  }
+
+  export type SocialPostUncheckedUpdateWithoutHabitInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    content?: StringFieldUpdateOperationsInput | string
+    badgeId?: NullableIntFieldUpdateOperationsInput | number | null
+    likesCount?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SocialPostUncheckedUpdateManyWithoutHabitInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    content?: StringFieldUpdateOperationsInput | string
+    badgeId?: NullableIntFieldUpdateOperationsInput | number | null
+    likesCount?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserBadgeCreateManyBadgeInput = {
+    id?: number
+    userId: number
+    earnedAt?: Date | string
+  }
+
+  export type SocialPostCreateManyBadgeInput = {
+    id?: number
+    userId: number
+    content: string
+    habitId?: number | null
+    likesCount?: number
+    createdAt?: Date | string
+  }
+
+  export type UserBadgeUpdateWithoutBadgeInput = {
+    earnedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutBadgesNestedInput
+  }
+
+  export type UserBadgeUncheckedUpdateWithoutBadgeInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    earnedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserBadgeUncheckedUpdateManyWithoutBadgeInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    earnedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SocialPostUpdateWithoutBadgeInput = {
+    content?: StringFieldUpdateOperationsInput | string
+    likesCount?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutPostsNestedInput
+    habit?: HabitUpdateOneWithoutPostsNestedInput
+  }
+
+  export type SocialPostUncheckedUpdateWithoutBadgeInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    content?: StringFieldUpdateOperationsInput | string
+    habitId?: NullableIntFieldUpdateOperationsInput | number | null
+    likesCount?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SocialPostUncheckedUpdateManyWithoutBadgeInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    content?: StringFieldUpdateOperationsInput | string
+    habitId?: NullableIntFieldUpdateOperationsInput | number | null
+    likesCount?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserChallengeCreateManyChallengeInput = {
+    id?: number
+    userId: number
+    joinedAt?: Date | string
+    completedAt?: Date | string | null
+    progress?: number
+  }
+
+  export type UserChallengeUpdateWithoutChallengeInput = {
+    joinedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    progress?: IntFieldUpdateOperationsInput | number
+    user?: UserUpdateOneRequiredWithoutChallengesNestedInput
+  }
+
+  export type UserChallengeUncheckedUpdateWithoutChallengeInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    joinedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    progress?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type UserChallengeUncheckedUpdateManyWithoutChallengeInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    joinedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    progress?: IntFieldUpdateOperationsInput | number
+  }
+
+
+
+  /**
+   * Aliases for legacy arg types
+   */
+    /**
+     * @deprecated Use UserCountOutputTypeDefaultArgs instead
+     */
+    export type UserCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = UserCountOutputTypeDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use HabitCountOutputTypeDefaultArgs instead
+     */
+    export type HabitCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = HabitCountOutputTypeDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use BadgeCountOutputTypeDefaultArgs instead
+     */
+    export type BadgeCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = BadgeCountOutputTypeDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use ChallengeCountOutputTypeDefaultArgs instead
+     */
+    export type ChallengeCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = ChallengeCountOutputTypeDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use UserDefaultArgs instead
+     */
+    export type UserArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = UserDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use HabitDefaultArgs instead
+     */
+    export type HabitArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = HabitDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use HabitLogDefaultArgs instead
+     */
+    export type HabitLogArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = HabitLogDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use BadgeDefaultArgs instead
+     */
+    export type BadgeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = BadgeDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use UserBadgeDefaultArgs instead
+     */
+    export type UserBadgeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = UserBadgeDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use ChallengeDefaultArgs instead
+     */
+    export type ChallengeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = ChallengeDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use UserChallengeDefaultArgs instead
+     */
+    export type UserChallengeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = UserChallengeDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use AIInsightDefaultArgs instead
+     */
+    export type AIInsightArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = AIInsightDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use FriendDefaultArgs instead
+     */
+    export type FriendArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = FriendDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use SocialPostDefaultArgs instead
+     */
+    export type SocialPostArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = SocialPostDefaultArgs<ExtArgs>
+
+  /**
+   * Batch Payload for updateMany & deleteMany & createMany
+   */
+
+  export type BatchPayload = {
+    count: number
+  }
+
+  /**
+   * DMMF
+   */
+  export const dmmf: runtime.BaseDMMF
+}
