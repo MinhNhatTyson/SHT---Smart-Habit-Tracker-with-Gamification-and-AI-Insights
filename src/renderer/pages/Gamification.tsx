@@ -1,0 +1,8 @@
+export default function Gamification() {
+  return (
+    <div>
+      <h1>Gamification</h1>
+      <p style={{ color: 'var(--text-secondary)', marginTop: 8 }}>Coming soon — we will build this page next.</p>
+    </div>
+  )
+}
