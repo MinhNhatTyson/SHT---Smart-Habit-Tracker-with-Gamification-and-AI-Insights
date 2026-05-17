@@ -1,58 +1,83 @@
 /* src/renderer/styles/globals.css */
-/* HabitQuest — Bold Gamified Design System */
+/* HabitQuest — Warm Editorial × Gamified Design System          */
+/* Inspired by Design.md: cream canvas, coral accent, dark navy  */
+/* surfaces, Syne display + DM Sans body                         */
 
-@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap');
 
 /* ── Design Tokens ─────────────────────────────────────────── */
 :root {
-  /* Background layers */
-  --bg-base:      #0a0a14;
-  --bg-surface:   #12121f;
-  --bg-elevated:  #1a1a2e;
-  --bg-overlay:   #22223a;
+  /* Canvas & Surfaces — warm cream system (Design.md) */
+  --canvas:              #faf9f5;   /* default page floor */
+  --surface-soft:        #f5f0e8;   /* section dividers   */
+  --surface-card:        #efe9de;   /* feature cards      */
+  --surface-cream-strong:#e8e0d2;   /* selected/emphasis  */
+  --surface-dark:        #181715;   /* code/data surfaces */
+  --surface-dark-elevated:#252320; /* elevated dark card  */
+  --surface-dark-soft:   #1f1e1b;   /* inner dark panels  */
 
-  /* Brand colors */
-  --accent-primary:   #7c3aed;   /* violet */
-  --accent-secondary: #f59e0b;   /* amber — XP/gold */
-  --accent-success:   #10b981;   /* emerald — completed */
-  --accent-danger:    #ef4444;   /* red — missed */
-  --accent-info:      #3b82f6;   /* blue — insights */
-  --accent-pink:      #ec4899;   /* pink — social */
+  /* Brand — coral primary (Design.md)  */
+  --coral:               #cc785c;
+  --coral-active:        #a9583e;
+  --coral-disabled:      #e6dfd8;
 
-  /* Rarity colors */
-  --rarity-common:    #6b7280;
-  --rarity-rare:      #3b82f6;
-  --rarity-epic:      #8b5cf6;
-  --rarity-legendary: #f59e0b;
-
-  /* Text */
-  --text-primary:   #f1f0ff;
-  --text-secondary: #8b8ba7;
-  --text-muted:     #4a4a6a;
+  /* Ink — warm dark text (Design.md) */
+  --ink:                 #141413;
+  --body-strong:         #252523;
+  --body:                #3d3d3a;
+  --muted:               #6c6a64;
+  --muted-soft:          #8e8b82;
 
   /* Borders */
-  --border-subtle:  rgba(255, 255, 255, 0.06);
-  --border-default: rgba(255, 255, 255, 0.12);
-  --border-strong:  rgba(255, 255, 255, 0.24);
+  --hairline:            #e6dfd8;
+  --hairline-soft:       #ebe6df;
 
-  /* Fonts */
-  --font-display: 'Syne', sans-serif;
-  --font-body:    'DM Sans', sans-serif;
+  /* On-surface text */
+  --on-primary:          #ffffff;
+  --on-dark:             #faf9f5;
+  --on-dark-soft:        #a09d96;
 
-  /* Radius */
-  --radius-sm:  6px;
-  --radius-md:  12px;
-  --radius-lg:  18px;
-  --radius-xl:  24px;
+  /* Semantic / game accents (kept from gamified system) */
+  --accent-success:      #5db872;
+  --accent-danger:       #ef4444;
+  --accent-info:         #3b82f6;
+  --accent-gold:         #e8a55a;   /* XP / gold = amber  */
+
+  /* Rarity (game-specific) */
+  --rarity-common:       #6b7280;
+  --rarity-rare:         #3b82f6;
+  --rarity-epic:         #8b5cf6;
+  --rarity-legendary:    #e8a55a;
+
+  /* Typography */
+  --font-display:        'Syne', sans-serif;      /* bold gamified display */
+  --font-body:           'DM Sans', sans-serif;   /* humanist body         */
+
+  /* Radius (Design.md scale) */
+  --radius-xs:   4px;
+  --radius-sm:   6px;
+  --radius-md:   8px;
+  --radius-lg:   12px;
+  --radius-xl:   16px;
   --radius-full: 9999px;
 
+  /* Spacing */
+  --space-xxs:  4px;
+  --space-xs:   8px;
+  --space-sm:   12px;
+  --space-md:   16px;
+  --space-lg:   24px;
+  --space-xl:   32px;
+  --space-xxl:  48px;
+  --space-section: 96px;
+
   /* Shadows */
-  --shadow-sm:  0 1px 3px rgba(0,0,0,0.4);
-  --shadow-md:  0 4px 16px rgba(0,0,0,0.5);
-  --shadow-lg:  0 8px 32px rgba(0,0,0,0.6);
-  --shadow-glow-violet: 0 0 24px rgba(124, 58, 237, 0.4);
-  --shadow-glow-amber:  0 0 24px rgba(245, 158, 11, 0.4);
-  --shadow-glow-green:  0 0 24px rgba(16, 185, 129, 0.3);
+  --shadow-sm:  0 1px 3px rgba(20,20,19,0.08);
+  --shadow-md:  0 4px 16px rgba(20,20,19,0.10);
+  --shadow-lg:  0 8px 32px rgba(20,20,19,0.14);
+  --shadow-glow-coral:  0 0 24px rgba(204,120,92,0.30);
+  --shadow-glow-gold:   0 0 24px rgba(232,165,90,0.30);
+  --shadow-glow-violet: 0 0 24px rgba(139,92,246,0.25);
 
   /* Transitions */
   --transition-fast:   150ms ease;
@@ -73,116 +98,85 @@ html, body, #root {
 }
 
 body {
-  background-color: var(--bg-base);
-  color: var(--text-primary);
+  background-color: var(--canvas);
+  color: var(--ink);
   font-family: var(--font-body);
   font-size: 15px;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
-  user-select: none; /* desktop app feel */
+  user-select: none;
 }
 
-/* Allow text selection in inputs */
 input, textarea, [contenteditable] {
   user-select: text;
 }
 
 /* ── Typography ────────────────────────────────────────────── */
+/* Display: Syne — bold game voice, large negative tracking */
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-display);
   font-weight: 700;
   line-height: 1.2;
-  color: var(--text-primary);
+  color: var(--ink);
 }
 
-h1 { font-size: 2rem;    font-weight: 800; }
-h2 { font-size: 1.5rem;  }
-h3 { font-size: 1.25rem; }
-h4 { font-size: 1rem;    }
+h1 { font-size: 2rem;   font-weight: 800; letter-spacing: -0.04em; }
+h2 { font-size: 1.35rem; font-weight: 700; letter-spacing: -0.02em; }
+h3 { font-size: 1.1rem;  font-weight: 600; letter-spacing: -0.01em; }
+h4 { font-size: 0.95rem; font-weight: 600; }
 
-p  { color: var(--text-secondary); }
+p  { color: var(--body); line-height: 1.65; }
 
 /* ── Scrollbar ─────────────────────────────────────────────── */
 ::-webkit-scrollbar       { width: 6px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: var(--bg-overlay); border-radius: var(--radius-full); }
-::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+::-webkit-scrollbar-thumb { background: var(--hairline); border-radius: var(--radius-full); }
+::-webkit-scrollbar-thumb:hover { background: var(--surface-cream-strong); }
 
 /* ── Utility Classes ───────────────────────────────────────── */
-.text-primary   { color: var(--text-primary); }
-.text-secondary { color: var(--text-secondary); }
-.text-muted     { color: var(--text-muted); }
-.text-accent    { color: var(--accent-primary); }
-.text-gold      { color: var(--accent-secondary); }
-.text-success   { color: var(--accent-success); }
-.text-danger    { color: var(--accent-danger); }
+.text-ink      { color: var(--ink); }
+.text-body     { color: var(--body); }
+.text-muted    { color: var(--muted); }
+.text-coral    { color: var(--coral); }
+.text-gold     { color: var(--accent-gold); }
+.text-success  { color: var(--accent-success); }
+.text-danger   { color: var(--accent-danger); }
+.text-on-dark  { color: var(--on-dark); }
 
-.font-display { font-family: var(--font-display); }
-.font-bold    { font-weight: 700; }
-.font-black   { font-weight: 800; }
+.font-display  { font-family: var(--font-display); }
+.font-bold     { font-weight: 700; }
+.font-black    { font-weight: 800; }
 
-.surface   { background: var(--bg-surface); }
-.elevated  { background: var(--bg-elevated); }
+/* Surfaces */
+.surface-canvas { background: var(--canvas); }
+.surface-card   { background: var(--surface-card); }
+.surface-dark   { background: var(--surface-dark); }
 
-.border-subtle  { border: 1px solid var(--border-subtle); }
-.border-default { border: 1px solid var(--border-default); }
+/* Borders */
+.border-hairline { border: 1px solid var(--hairline); }
+.border-soft     { border: 1px solid var(--hairline-soft); }
 
+/* Radius */
 .rounded-md   { border-radius: var(--radius-md); }
 .rounded-lg   { border-radius: var(--radius-lg); }
+.rounded-xl   { border-radius: var(--radius-xl); }
 .rounded-full { border-radius: var(--radius-full); }
 
-/* ── Animations ────────────────────────────────────────────── */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(8px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes pulse-glow {
-  0%, 100% { box-shadow: var(--shadow-glow-violet); }
-  50%       { box-shadow: 0 0 40px rgba(124, 58, 237, 0.7); }
-}
-
-@keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50%       { transform: translateY(-6px); }
-}
-
-@keyframes shimmer {
-  0%   { background-position: -200% center; }
-  100% { background-position:  200% center; }
-}
-
-.animate-fadein {
-  animation: fadeIn var(--transition-normal) forwards;
-}
-
-.animate-float {
-  animation: float 3s ease-in-out infinite;
-}
-
-/* ── Gradient text utility ─────────────────────────────────── */
-.gradient-text {
-  background: linear-gradient(135deg, #7c3aed, #f59e0b);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-/* ── XP bar ────────────────────────────────────────────────── */
+/* ── XP Bar ────────────────────────────────────────────────── */
 .xp-bar {
   height: 6px;
   border-radius: var(--radius-full);
-  background: var(--bg-overlay);
+  background: var(--hairline);
   overflow: hidden;
 }
 .xp-bar-fill {
   height: 100%;
   border-radius: var(--radius-full);
-  background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+  background: linear-gradient(90deg, var(--coral), var(--accent-gold));
   transition: width 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-/* ── Button base ───────────────────────────────────────────── */
+/* ── Button Base ───────────────────────────────────────────── */
 button {
   cursor: pointer;
   font-family: var(--font-body);
@@ -192,8 +186,137 @@ button {
   outline: none;
   transition: all var(--transition-fast);
 }
-
 button:disabled {
   opacity: 0.4;
   cursor: not-allowed;
 }
+
+/* Primary button — coral (Design.md button-primary) */
+.btn-primary {
+  background:    var(--coral);
+  color:         var(--on-primary);
+  border-radius: var(--radius-md);
+  padding:       10px 20px;
+  height:        40px;
+  font-weight:   500;
+  font-size:     14px;
+  border:        none;
+}
+.btn-primary:hover  { background: var(--coral-active); }
+
+/* Secondary button — cream (Design.md button-secondary) */
+.btn-secondary {
+  background:    var(--canvas);
+  color:         var(--ink);
+  border-radius: var(--radius-md);
+  padding:       10px 20px;
+  height:        40px;
+  font-weight:   500;
+  font-size:     14px;
+  border:        1px solid var(--hairline);
+}
+.btn-secondary:hover { background: var(--surface-soft); }
+
+/* Dark surface secondary (Design.md button-secondary-on-dark) */
+.btn-dark {
+  background:    var(--surface-dark-elevated);
+  color:         var(--on-dark);
+  border-radius: var(--radius-md);
+  padding:       10px 20px;
+  height:        40px;
+  font-weight:   500;
+  font-size:     14px;
+  border:        1px solid rgba(255,255,255,0.08);
+}
+.btn-dark:hover { background: #2e2c28; }
+
+/* ── Badges / Pills ────────────────────────────────────────── */
+.badge-pill {
+  display:       inline-flex;
+  align-items:   center;
+  padding:       4px 12px;
+  border-radius: var(--radius-full);
+  font-size:     13px;
+  font-weight:   500;
+  background:    var(--surface-card);
+  color:         var(--ink);
+}
+
+.badge-coral {
+  background:    var(--coral);
+  color:         var(--on-primary);
+  font-size:     12px;
+  font-weight:   600;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  padding:       4px 12px;
+  border-radius: var(--radius-full);
+}
+
+/* ── Cards ─────────────────────────────────────────────────── */
+/* Feature card — cream surface (Design.md feature-card) */
+.card {
+  background:    var(--surface-card);
+  border:        1px solid var(--hairline);
+  border-radius: var(--radius-lg);
+  padding:       var(--space-xl);
+}
+
+/* Dark product card (Design.md product-mockup-card-dark) */
+.card-dark {
+  background:    var(--surface-dark);
+  border:        1px solid rgba(255,255,255,0.06);
+  border-radius: var(--radius-lg);
+  padding:       var(--space-xl);
+  color:         var(--on-dark);
+}
+
+/* Coral callout card (Design.md callout-card-coral) */
+.card-coral {
+  background:    var(--coral);
+  border-radius: var(--radius-lg);
+  padding:       var(--space-xxl);
+  color:         var(--on-primary);
+}
+
+/* ── Gradient text ─────────────────────────────────────────── */
+.gradient-text {
+  background: linear-gradient(135deg, var(--coral), var(--accent-gold));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ── Animations ────────────────────────────────────────────── */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-5px); }
+}
+
+@keyframes shimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position:  200% center; }
+}
+
+@keyframes pulse-coral {
+  0%, 100% { box-shadow: var(--shadow-glow-coral); }
+  50%       { box-shadow: 0 0 40px rgba(204,120,92,0.5); }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.animate-fadein    { animation: fadeIn    var(--transition-normal) forwards; }
+.animate-fadein-up { animation: fadeInUp  400ms ease forwards; }
+.animate-float     { animation: float     3s ease-in-out infinite; }

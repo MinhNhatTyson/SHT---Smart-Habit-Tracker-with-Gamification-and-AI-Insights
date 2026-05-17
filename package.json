@@ -2,13 +2,13 @@
   "name": "habitquest",
   "version": "1.0.0",
   "description": "A gamified habit tracking desktop app",
-  "main": "dist-electron/main/index.js",
+  "main": "dist-electron/index.js",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build && electron-builder",
     "preview": "vite preview",
     "compile:main": "tsc -p tsconfig.electron.json",
-    "electron:dev": "npm run compile:main && concurrently \"vite\" \"wait-on tcp:5173 && electron .\"",
+    "electron:dev": "npm run compile:main && concurrently \"vite\" \"wait-on tcp:5173 && cross-env NODE_ENV=development electron .\"",
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev",
     "prisma:studio": "prisma studio"
@@ -40,6 +40,7 @@
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^6.0.2",
     "concurrently": "^9.2.1",
+    "cross-env": "^10.1.0",
     "electron": "^42.1.0",
     "electron-builder": "^26.8.1",
     "prisma": "^5.22.0",
