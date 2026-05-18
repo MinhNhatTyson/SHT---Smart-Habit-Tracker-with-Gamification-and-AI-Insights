@@ -1,7 +1,7 @@
 {
-  "name": "habitquest",
+  "name": "sht",
   "version": "1.0.0",
-  "description": "A gamified habit tracking desktop app",
+  "description": "SHT — Streak · Habit · Tracker. A gamified habit tracking desktop app.",
   "main": "dist-electron/index.js",
   "scripts": {
     "dev": "vite",
@@ -13,14 +13,70 @@
     "prisma:migrate": "prisma migrate dev",
     "prisma:studio": "prisma studio"
   },
-  "keywords": [
-    "habit",
-    "tracker",
-    "gamification",
-    "electron"
-  ],
+  "keywords": ["habit", "tracker", "gamification", "electron", "streak"],
   "author": "HabitQuest",
   "license": "MIT",
+  "build": {
+    "appId": "com.habitquest.sht",
+    "productName": "SHT",
+    "copyright": "Copyright © 2026 HabitQuest",
+    "directories": {
+      "output": "dist-app",
+      "buildResources": "resources"
+    },
+    "files": [
+      "dist-renderer/**/*",
+      "dist-electron/**/*",
+      "prisma/**/*",
+      "node_modules/**/*",
+      "package.json"
+    ],
+    "extraResources": [
+      {
+        "from": "prisma",
+        "to": "prisma",
+        "filter": ["**/*"]
+      }
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": ["x64"]
+        },
+        {
+          "target": "portable",
+          "arch": ["x64"]
+        }
+      ],
+      "icon": "resources/icon.ico",
+      "executableName": "SHT",
+      "artifactName": "SHT-Setup-${version}.${ext}"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "installerIcon": "resources/icon.ico",
+      "uninstallerIcon": "resources/icon.ico",
+      "installerHeaderIcon": "resources/icon.ico",
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "SHT — Habit Tracker",
+      "license": "LICENSE.txt"
+    },
+    "mac": {
+      "target": ["dmg", "zip"],
+      "icon": "resources/icon.png",
+      "category": "public.app-category.productivity",
+      "artifactName": "SHT-${version}-mac.${ext}"
+    },
+    "linux": {
+      "target": ["AppImage", "deb"],
+      "icon": "resources/icon.png",
+      "category": "Utility",
+      "artifactName": "SHT-${version}.${ext}"
+    }
+  },
   "dependencies": {
     "@libsql/client": "^0.17.3",
     "@prisma/adapter-libsql": "^7.8.0",
