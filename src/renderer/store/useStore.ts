@@ -4,7 +4,7 @@
 
 import { create } from 'zustand'
 
-// ── Types (mirror Prisma models for the renderer) ─────────────
+// ── Types ─────────────────────────────────────────────────────
 export interface User {
   id: number
   username: string
@@ -60,27 +60,33 @@ export interface UserBadge {
 }
 
 // ── XP / Level helpers ────────────────────────────────────────
-export const XP_PER_LEVEL = 100
-export const getXpForLevel  = (level: number) => level * XP_PER_LEVEL
-export const getXpProgress  = (totalPoints: number) => totalPoints % XP_PER_LEVEL
-export const getXpPercent   = (totalPoints: number) =>
+export const XP_PER_LEVEL  = 100
+export const getXpForLevel = (level: number) => level * XP_PER_LEVEL
+export const getXpProgress = (totalPoints: number) => totalPoints % XP_PER_LEVEL
+export const getXpPercent  = (totalPoints: number) =>
   Math.round((getXpProgress(totalPoints) / XP_PER_LEVEL) * 100)
 
-// ── Store ─────────────────────────────────────────────────────
+// ── Store interface ───────────────────────────────────────────
 interface AppState {
-  // Data
-  user:        User | null
-  habits:      Habit[]
-  logs:        HabitLog[]
-  userBadges:  UserBadge[]
+  user:       User | null
+  habits:     Habit[]
+  logs:       HabitLog[]
+  userBadges: UserBadge[]
+  loading:    boolean
+  error:      string | null
 
-  // UI state
-  loading:     boolean
-  error:       string | null
+  // Data loading
+  loadAll: (userId: number) => Promise<void>
 
-  // Actions
-  loadAll:          (userId: number) => Promise<void>
-  logHabit:         (habitId: number, userId: number) => Promise<void>
+  // Habit logging
+  logHabit: (habitId: number, userId: number) => Promise<void>
+
+  // Habit CRUD
+  addHabit:    (data: Omit<Habit, 'id' | 'createdAt' | 'isArchived'>) => Promise<void>
+  editHabit:   (id: number, data: Partial<Habit>) => Promise<void>
+  removeHabit: (id: number) => Promise<void>
+
+  // Computed helpers
   isCompletedToday: (habitId: number) => boolean
   getTodayLogs:     () => HabitLog[]
   getWeekLogs:      () => HabitLog[]
@@ -96,8 +102,8 @@ export const useStore = create<AppState>((set, get) => ({
   loading:    false,
   error:      null,
 
-  // ── Load everything for a user ──────────────────────────────
-  loadAll: async (userId: number) => {
+  // ── Load everything ─────────────────────────────────────────
+  loadAll: async (userId) => {
     set({ loading: true, error: null })
     try {
       const [user, habits, logs, userBadges] = await Promise.all([
@@ -113,21 +119,17 @@ export const useStore = create<AppState>((set, get) => ({
   },
 
   // ── Log a habit completion ──────────────────────────────────
-  logHabit: async (habitId: number, userId: number) => {
+  logHabit: async (habitId, userId) => {
     try {
       const newLog = await api.logs.create({ habitId, userId })
-      // Optimistically add to logs
       set(state => ({ logs: [newLog, ...state.logs] }))
-
-      // Award XP: +10 per completion, update user totalPoints
       const { user } = get()
       if (user) {
         const newPoints = user.totalPoints + 10
         const newLevel  = Math.floor(newPoints / XP_PER_LEVEL) + 1
         const updated   = await api.user.update(user.id, {
-          totalPoints:   newPoints,
-          level:         newLevel,
-          currentStreak: user.currentStreak, // streak logic kept simple here
+          totalPoints: newPoints, level: newLevel,
+          currentStreak: user.currentStreak,
         })
         set({ user: updated })
       }
@@ -136,8 +138,40 @@ export const useStore = create<AppState>((set, get) => ({
     }
   },
 
+  // ── Add habit ───────────────────────────────────────────────
+  addHabit: async (data) => {
+    try {
+      const created = await api.habits.create(data)
+      set(state => ({ habits: [...state.habits, created] }))
+    } catch (e: any) {
+      set({ error: e.message ?? 'Failed to create habit' })
+    }
+  },
+
+  // ── Edit habit ──────────────────────────────────────────────
+  editHabit: async (id, data) => {
+    try {
+      const updated = await api.habits.update(id, data)
+      set(state => ({
+        habits: state.habits.map(h => h.id === id ? { ...h, ...updated } : h),
+      }))
+    } catch (e: any) {
+      set({ error: e.message ?? 'Failed to update habit' })
+    }
+  },
+
+  // ── Remove (soft-archive) habit ─────────────────────────────
+  removeHabit: async (id) => {
+    try {
+      await api.habits.delete(id)
+      set(state => ({ habits: state.habits.filter(h => h.id !== id) }))
+    } catch (e: any) {
+      set({ error: e.message ?? 'Failed to delete habit' })
+    }
+  },
+
   // ── Helpers ─────────────────────────────────────────────────
-  isCompletedToday: (habitId: number) => {
+  isCompletedToday: (habitId) => {
     const today = new Date().toDateString()
     return get().logs.some(
       l => l.habitId === habitId &&
@@ -147,16 +181,11 @@ export const useStore = create<AppState>((set, get) => ({
 
   getTodayLogs: () => {
     const today = new Date().toDateString()
-    return get().logs.filter(
-      l => new Date(l.completedAt).toDateString() === today
-    )
+    return get().logs.filter(l => new Date(l.completedAt).toDateString() === today)
   },
 
   getWeekLogs: () => {
-    const now      = new Date()
-    const weekAgo  = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000)
-    return get().logs.filter(
-      l => new Date(l.completedAt) >= weekAgo
-    )
+    const weekAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)
+    return get().logs.filter(l => new Date(l.completedAt) >= weekAgo)
   },
 }))
