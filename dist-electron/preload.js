@@ -46,4 +46,8 @@ electron_1.contextBridge.exposeInMainWorld('api', {
         list: () => electron_1.ipcRenderer.invoke('challenges:list'),
         join: (userId, challengeId) => electron_1.ipcRenderer.invoke('challenges:join', userId, challengeId),
     },
+    // Reminders — tell main to re-check schedules immediately
+    reminders: {
+        refresh: () => electron_1.ipcRenderer.invoke('reminders:refresh'),
+    },
 });
