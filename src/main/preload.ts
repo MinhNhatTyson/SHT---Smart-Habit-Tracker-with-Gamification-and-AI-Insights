@@ -57,4 +57,10 @@ contextBridge.exposeInMainWorld('api', {
   reminders: {
     refresh: () => ipcRenderer.invoke('reminders:refresh'),
   },
+
+  // Dialog — native OS file picker
+  // Returns a base64 data URI string, or null if cancelled
+  dialog: {
+    openImage: () => ipcRenderer.invoke('dialog:openImage'),
+  },
 })

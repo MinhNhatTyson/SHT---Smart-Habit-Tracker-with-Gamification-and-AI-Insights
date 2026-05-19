@@ -10,17 +10,24 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// ─────────────────────────────────────────
+// ─────────────────────────────────────────────────────────────
 // 1. USER — the person using the app
-// ─────────────────────────────────────────
+// ─────────────────────────────────────────────────────────────
 model User {
   id            Int      @id @default(autoincrement())
   username      String   @unique
-  avatar        String?  // emoji or image path
+  avatar        String?  // emoji avatar (fallback)
   level         Int      @default(1)
   totalPoints   Int      @default(0)
   currentStreak Int      @default(0)
   longestStreak Int      @default(0)
+
+  // ── Profile fields (added migration 20260519) ──────────────
+  fullName      String?  // display name shown on profile
+  gender        String?  // optional self-identification
+  bio           String?  // short personal description
+  avatarUrl     String?  // Cloudinary URL — overrides emoji avatar
+
   createdAt     DateTime @default(now())
 
   // Relations
@@ -35,83 +42,79 @@ model User {
   challenges_created Challenge[] @relation("ChallengeCreator")
 }
 
-// ─────────────────────────────────────────
-// 2. HABIT — a habit the user wants to build
-// ─────────────────────────────────────────
+// ─────────────────────────────────────────────────────────────
+// 2. HABIT
+// ─────────────────────────────────────────────────────────────
 model Habit {
   id                Int      @id @default(autoincrement())
   userId            Int
   name              String
   description       String?
-  category          String   // Health, Study, Finance, Mindfulness, etc.
-  color             String   @default("#6366f1") // hex color for UI
-  icon              String   @default("⚡")       // emoji or icon name
-  frequency         String   @default("daily")   // daily | weekly | custom
+  category          String
+  color             String   @default("#6366f1")
+  icon              String   @default("⚡")
+  frequency         String   @default("daily")
   targetDaysPerWeek Int      @default(7)
-  reminderTime      String?  // "07:30" format
+  reminderTime      String?
   isArchived        Boolean  @default(false)
   createdAt         DateTime @default(now())
 
-  // Relations
   user     User       @relation(fields: [userId], references: [id], onDelete: Cascade)
   logs     HabitLog[]
   insights AIInsight[]
   posts    SocialPost[]
 }
 
-// ─────────────────────────────────────────
-// 3. HABITLOG — every completion event
-// ─────────────────────────────────────────
+// ─────────────────────────────────────────────────────────────
+// 3. HABITLOG
+// ─────────────────────────────────────────────────────────────
 model HabitLog {
   id              Int      @id @default(autoincrement())
   habitId         Int
   userId          Int
   completedAt     DateTime @default(now())
-  note            String?  // optional journal entry
-  moodRating      Int?     // 1–5 how user felt
-  durationMinutes Int?     // optional time tracking
+  note            String?
+  moodRating      Int?
+  durationMinutes Int?
 
-  // Relations
   habit Habit @relation(fields: [habitId], references: [id], onDelete: Cascade)
   user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
-// ─────────────────────────────────────────
-// 4. BADGE — all achievable badges
-// ─────────────────────────────────────────
+// ─────────────────────────────────────────────────────────────
+// 4. BADGE
+// ─────────────────────────────────────────────────────────────
 model Badge {
   id          Int    @id @default(autoincrement())
   name        String @unique
   description String
-  icon        String // emoji or image path
-  rarity      String // common | rare | epic | legendary
-  pointValue  Int    // XP rewarded on unlock
-  condition   String // e.g. "streak_7", "logs_100", "level_5"
+  icon        String
+  rarity      String
+  pointValue  Int
+  condition   String
 
-  // Relations
   users UserBadge[]
   posts SocialPost[]
 }
 
-// ─────────────────────────────────────────
-// 5. USERBADGE — badges a user has earned
-// ─────────────────────────────────────────
+// ─────────────────────────────────────────────────────────────
+// 5. USERBADGE
+// ─────────────────────────────────────────────────────────────
 model UserBadge {
   id       Int      @id @default(autoincrement())
   userId   Int
   badgeId  Int
   earnedAt DateTime @default(now())
 
-  // Relations
   user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
   badge Badge @relation(fields: [badgeId], references: [id])
 
-  @@unique([userId, badgeId]) // can't earn same badge twice
+  @@unique([userId, badgeId])
 }
 
-// ─────────────────────────────────────────
-// 6. CHALLENGE — time-limited group challenges
-// ─────────────────────────────────────────
+// ─────────────────────────────────────────────────────────────
+// 6. CHALLENGE
+// ─────────────────────────────────────────────────────────────
 model Challenge {
   id            Int      @id @default(autoincrement())
   title         String
@@ -122,76 +125,71 @@ model Challenge {
   pointReward   Int      @default(100)
   createdBy     Int
 
-  // Relations
   creator      User            @relation("ChallengeCreator", fields: [createdBy], references: [id])
   participants UserChallenge[]
 }
 
-// ─────────────────────────────────────────
-// 7. USERCHALLENGE — user participation in challenges
-// ─────────────────────────────────────────
+// ─────────────────────────────────────────────────────────────
+// 7. USERCHALLENGE
+// ─────────────────────────────────────────────────────────────
 model UserChallenge {
   id          Int       @id @default(autoincrement())
   userId      Int
   challengeId Int
   joinedAt    DateTime  @default(now())
   completedAt DateTime?
-  progress    Int       @default(0) // percentage 0-100
+  progress    Int       @default(0)
 
-  // Relations
   user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   challenge Challenge @relation(fields: [challengeId], references: [id])
 
-  @@unique([userId, challengeId]) // can't join same challenge twice
+  @@unique([userId, challengeId])
 }
 
-// ─────────────────────────────────────────
-// 8. AIINSIGHT — AI-generated messages & suggestions
-// ─────────────────────────────────────────
+// ─────────────────────────────────────────────────────────────
+// 8. AIINSIGHT
+// ─────────────────────────────────────────────────────────────
 model AIInsight {
   id          Int      @id @default(autoincrement())
   userId      Int
-  habitId     Int?     // related habit, if any
-  type        String   // pattern | suggestion | motivation
-  content     String   // the AI message text
+  habitId     Int?
+  type        String
+  content     String
   generatedAt DateTime @default(now())
   isRead      Boolean  @default(false)
 
-  // Relations
   user  User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   habit Habit? @relation(fields: [habitId], references: [id])
 }
 
-// ─────────────────────────────────────────
-// 9. FRIEND — social connections between users
-// ─────────────────────────────────────────
+// ─────────────────────────────────────────────────────────────
+// 9. FRIEND
+// ─────────────────────────────────────────────────────────────
 model Friend {
   id        Int      @id @default(autoincrement())
   userId    Int
   friendId  Int
-  status    String   @default("pending") // pending | accepted
+  status    String   @default("pending")
   createdAt DateTime @default(now())
 
-  // Relations
   user   User @relation("UserFriends", fields: [userId], references: [id], onDelete: Cascade)
   friend User @relation("FriendOf", fields: [friendId], references: [id], onDelete: Cascade)
 
-  @@unique([userId, friendId]) // no duplicate connections
+  @@unique([userId, friendId])
 }
 
-// ─────────────────────────────────────────
-// 10. SOCIALPOST — achievements shared to feed
-// ─────────────────────────────────────────
+// ─────────────────────────────────────────────────────────────
+// 10. SOCIALPOST
+// ─────────────────────────────────────────────────────────────
 model SocialPost {
   id         Int      @id @default(autoincrement())
   userId     Int
   content    String
-  badgeId    Int?     // badge being shared
-  habitId    Int?     // habit milestone being shared
+  badgeId    Int?
+  habitId    Int?
   likesCount Int      @default(0)
   createdAt  DateTime @default(now())
 
-  // Relations
   user  User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   badge Badge? @relation(fields: [badgeId], references: [id])
   habit Habit? @relation(fields: [habitId], references: [id])

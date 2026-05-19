@@ -8,6 +8,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const electron_1 = require("electron");
 const path_1 = __importDefault(require("path"));
+const fs_1 = __importDefault(require("fs"));
 const client_1 = require("@prisma/client");
 const prisma = new client_1.PrismaClient();
 const isDev = process.env.NODE_ENV === 'development';
@@ -169,3 +170,24 @@ electron_1.ipcMain.handle('challenges:list', async () => prisma.challenge.findMa
     orderBy: { startDate: 'asc' },
 }));
 electron_1.ipcMain.handle('challenges:join', async (_, userId, challengeId) => prisma.userChallenge.create({ data: { userId, challengeId } }));
+// DIALOG — open native file picker for image selection
+// Returns the file as a base64 data URI so the renderer can
+// upload it to Cloudinary without needing Node fs access.
+electron_1.ipcMain.handle('dialog:openImage', async () => {
+    const { canceled, filePaths } = await electron_1.dialog.showOpenDialog({
+        title: 'Choose profile photo',
+        buttonLabel: 'Select',
+        filters: [{ name: 'Images', extensions: ['jpg', 'jpeg', 'png', 'webp', 'gif'] }],
+        properties: ['openFile'],
+    });
+    if (canceled || filePaths.length === 0)
+        return null;
+    const filePath = filePaths[0];
+    const buffer = fs_1.default.readFileSync(filePath);
+    const ext = path_1.default.extname(filePath).toLowerCase().replace('.', '');
+    const mime = ext === 'png' ? 'image/png'
+        : ext === 'gif' ? 'image/gif'
+            : ext === 'webp' ? 'image/webp'
+                : 'image/jpeg';
+    return `data:${mime};base64,${buffer.toString('base64')}`;
+});

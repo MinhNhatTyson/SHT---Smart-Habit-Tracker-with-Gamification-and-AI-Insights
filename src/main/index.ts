@@ -2,8 +2,9 @@
 // Electron Main Process — creates the app window, bridges the database,
 // and runs the habit reminder scheduler.
 
-import { app, BrowserWindow, ipcMain, Notification, shell } from 'electron'
+import { app, BrowserWindow, ipcMain, Notification, shell, dialog } from 'electron'
 import path from 'path'
+import fs   from 'fs'
 import { PrismaClient } from '@prisma/client'
 
 const prisma = new PrismaClient()
@@ -208,3 +209,27 @@ ipcMain.handle('challenges:list', async () =>
 ipcMain.handle('challenges:join', async (_, userId: number, challengeId: number) =>
   prisma.userChallenge.create({ data: { userId, challengeId } })
 )
+
+// DIALOG — open native file picker for image selection
+// Returns the file as a base64 data URI so the renderer can
+// upload it to Cloudinary without needing Node fs access.
+ipcMain.handle('dialog:openImage', async () => {
+  const { canceled, filePaths } = await dialog.showOpenDialog({
+    title:       'Choose profile photo',
+    buttonLabel: 'Select',
+    filters:     [{ name: 'Images', extensions: ['jpg', 'jpeg', 'png', 'webp', 'gif'] }],
+    properties:  ['openFile'],
+  })
+
+  if (canceled || filePaths.length === 0) return null
+
+  const filePath = filePaths[0]
+  const buffer   = fs.readFileSync(filePath)
+  const ext      = path.extname(filePath).toLowerCase().replace('.', '')
+  const mime     = ext === 'png' ? 'image/png'
+                 : ext === 'gif' ? 'image/gif'
+                 : ext === 'webp'? 'image/webp'
+                 : 'image/jpeg'
+
+  return `data:${mime};base64,${buffer.toString('base64')}`
+})

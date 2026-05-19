@@ -1,0 +1,5 @@
+-- AlterTable
+ALTER TABLE "User" ADD COLUMN "avatarUrl" TEXT;
+ALTER TABLE "User" ADD COLUMN "bio" TEXT;
+ALTER TABLE "User" ADD COLUMN "fullName" TEXT;
+ALTER TABLE "User" ADD COLUMN "gender" TEXT;

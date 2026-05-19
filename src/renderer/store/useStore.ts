@@ -27,7 +27,11 @@ export interface User {
   totalPoints: number
   currentStreak: number
   longestStreak: number
-  createdAt: string
+  fullName:      string | null
+  gender:        string | null
+  bio:           string | null
+  avatarUrl:     string | null
+  createdAt:     string
 }
 
 export interface Habit {
@@ -185,7 +189,8 @@ interface AppState {
   logHabit:    (habitId: number, userId: number) => Promise<void>
   addHabit:    (data: Omit<Habit, 'id' | 'createdAt' | 'isArchived'>) => Promise<void>
   editHabit:   (id: number, data: Partial<Habit>) => Promise<void>
-  removeHabit: (id: number) => Promise<void>
+  removeHabit:     (id: number) => Promise<void>
+  updateProfile:   (data: Partial<User>) => Promise<void>
 
   isCompletedToday: (habitId: number) => boolean
   getTodayLogs:     () => HabitLog[]
@@ -304,6 +309,18 @@ export const useStore = create<AppState>((set, get) => ({
       api.reminders.refresh().catch(() => {})
     } catch (e: any) {
       set({ error: e.message ?? 'Failed to delete habit' })
+    }
+  },
+
+  // ── Update user profile ───────────────────────────────────────
+  updateProfile: async (data) => {
+    const { user } = get()
+    if (!user) return
+    try {
+      const updated = await api.user.update(user.id, data)
+      set({ user: updated })
+    } catch (e: any) {
+      set({ error: e.message ?? 'Failed to update profile' })
     }
   },
 

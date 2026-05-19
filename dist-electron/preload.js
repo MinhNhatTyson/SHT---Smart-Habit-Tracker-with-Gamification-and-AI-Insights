@@ -50,4 +50,9 @@ electron_1.contextBridge.exposeInMainWorld('api', {
     reminders: {
         refresh: () => electron_1.ipcRenderer.invoke('reminders:refresh'),
     },
+    // Dialog — native OS file picker
+    // Returns a base64 data URI string, or null if cancelled
+    dialog: {
+        openImage: () => electron_1.ipcRenderer.invoke('dialog:openImage'),
+    },
 });
