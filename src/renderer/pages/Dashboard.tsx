@@ -12,14 +12,15 @@
 //   • Generous padding (--space-xl = 32px inside cards)
 //   • Shadow: rare, warm, low alpha
 
-import { useEffect, useMemo } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import {
   Zap, Flame, Trophy, CheckCircle2, Circle,
-  TrendingUp, Star, Calendar, Target,
+  TrendingUp, Star, Calendar, Target, ChevronDown,
 } from 'lucide-react'
 import {
   BarChart, Bar, XAxis, YAxis, Tooltip,
   ResponsiveContainer, Cell,
+  AreaChart, Area, CartesianGrid,
 } from 'recharts'
 import { useStore, getXpPercent, getXpProgress, XP_PER_LEVEL } from '../store/useStore'
 
@@ -33,9 +34,15 @@ const RARITY_COLOR: Record<string, string> = {
 }
 
 // ─────────────────────────────────────────────────────────────
-// Stat Card  (Design.md: feature-card on cream, hairline border)
-// Optional trend: { delta, label } shows a green/red pill below
-// the value comparing this period vs last period.
+// Helpers
+// ─────────────────────────────────────────────────────────────
+function toLocalDate(iso: string): string {
+  const d = new Date(iso)
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`
+}
+
+// ─────────────────────────────────────────────────────────────
+// Stat Card
 // ─────────────────────────────────────────────────────────────
 function StatCard({
   icon, label, value, accent = 'var(--coral)', trend,
@@ -46,59 +53,51 @@ function StatCard({
   accent?: string
   trend?:  { delta: number; label: string }
 }) {
-  const trendUp    = trend && trend.delta > 0
-  const trendDown  = trend && trend.delta < 0
-  const trendFlat  = trend && trend.delta === 0
-  const trendColor = trendUp
-    ? 'var(--accent-success)'
-    : trendDown
-      ? 'var(--accent-danger)'
-      : 'var(--muted)'
+  const trendColor = !trend
+    ? ''
+    : trend.delta > 0
+      ? 'var(--accent-success)'
+      : trend.delta < 0
+        ? 'var(--accent-danger)'
+        : 'var(--muted)'
 
   return (
-    <div style={{
-      flex:          1,
-      minWidth:      0,
-      background:    'var(--canvas)',
-      border:        '1px solid var(--hairline)',
-      borderRadius:  'var(--radius-lg)',
-      padding:       '20px 22px',
-      display:       'flex',
-      alignItems:    'center',
-      gap:           16,
-      boxShadow:     'var(--shadow-sm)',
-      transition:    'box-shadow var(--transition-fast), border-color var(--transition-fast)',
-    }}
-    onMouseEnter={e => {
-      e.currentTarget.style.boxShadow   = 'var(--shadow-md)'
-      e.currentTarget.style.borderColor = accent
-    }}
-    onMouseLeave={e => {
-      e.currentTarget.style.boxShadow   = 'var(--shadow-sm)'
-      e.currentTarget.style.borderColor = 'var(--hairline)'
-    }}
+    <div
+      style={{
+        flex: 1, minWidth: 0,
+        background: 'var(--canvas)',
+        border: '1px solid var(--hairline)',
+        borderRadius: 'var(--radius-lg)',
+        padding: '20px 22px',
+        display: 'flex', alignItems: 'center', gap: 16,
+        boxShadow: 'var(--shadow-sm)',
+        transition: 'box-shadow var(--transition-fast), border-color var(--transition-fast)',
+      }}
+      onMouseEnter={e => {
+        e.currentTarget.style.boxShadow   = 'var(--shadow-md)'
+        e.currentTarget.style.borderColor = accent
+      }}
+      onMouseLeave={e => {
+        e.currentTarget.style.boxShadow   = 'var(--shadow-sm)'
+        e.currentTarget.style.borderColor = 'var(--hairline)'
+      }}
     >
       <div style={{
-        width:          44,
-        height:         44,
-        borderRadius:   'var(--radius-md)',
-        background:     `${accent}18`,
-        border:         `1px solid ${accent}30`,
-        display:        'flex',
-        alignItems:     'center',
-        justifyContent: 'center',
-        flexShrink:     0,
+        width: 44, height: 44,
+        borderRadius: 'var(--radius-md)',
+        background: `${accent}18`,
+        border: `1px solid ${accent}30`,
+        display: 'flex', alignItems: 'center', justifyContent: 'center',
+        flexShrink: 0,
       }}>
         {icon}
       </div>
+
       <div>
         <div style={{
-          fontFamily:    'var(--font-display)',
-          fontWeight:    800,
-          fontSize:      '1.65rem',
-          color:         'var(--ink)',
-          lineHeight:    1,
-          letterSpacing: '-0.04em',
+          fontFamily: 'var(--font-display)', fontWeight: 800,
+          fontSize: '1.65rem', color: 'var(--ink)',
+          lineHeight: 1, letterSpacing: '-0.04em',
         }}>
           {value}
         </div>
@@ -106,47 +105,29 @@ function StatCard({
           {label}
         </div>
 
-        {/* Trend pill — only rendered when trend prop is passed */}
         {trend && (
           <div style={{
-            display:      'inline-flex',
-            alignItems:   'center',
-            gap:          3,
-            marginTop:    7,
-            padding:      '2px 8px',
+            display: 'inline-flex', alignItems: 'center', gap: 3,
+            marginTop: 7, padding: '2px 8px',
             borderRadius: 'var(--radius-full)',
-            background:   trendUp
+            background: trend.delta > 0
               ? 'rgba(93,184,114,0.12)'
-              : trendDown
+              : trend.delta < 0
                 ? 'rgba(239,68,68,0.10)'
                 : 'rgba(108,106,100,0.10)',
             border: `1px solid ${
-              trendUp   ? 'rgba(93,184,114,0.30)' :
-              trendDown ? 'rgba(239,68,68,0.25)'  :
-                          'rgba(108,106,100,0.20)'
+              trend.delta > 0 ? 'rgba(93,184,114,0.30)' :
+              trend.delta < 0 ? 'rgba(239,68,68,0.25)'  :
+                                'rgba(108,106,100,0.20)'
             }`,
           }}>
-            {/* Arrow */}
-            <span style={{
-              fontSize:   11,
-              color:      trendColor,
-              lineHeight: 1,
-            }}>
-              {trendUp ? '↑' : trendDown ? '↓' : '→'}
+            <span style={{ fontSize: 11, color: trendColor, lineHeight: 1 }}>
+              {trend.delta > 0 ? '↑' : trend.delta < 0 ? '↓' : '→'}
             </span>
-            {/* Delta number */}
-            <span style={{
-              fontSize:   11,
-              fontWeight: 700,
-              color:      trendColor,
-            }}>
-              {trendUp ? '+' : ''}{trend.delta}
+            <span style={{ fontSize: 11, fontWeight: 700, color: trendColor }}>
+              {trend.delta > 0 ? '+' : ''}{trend.delta}
             </span>
-            {/* Context label */}
-            <span style={{
-              fontSize: 11,
-              color:    'var(--muted)',
-            }}>
+            <span style={{ fontSize: 11, color: 'var(--muted)' }}>
               {trend.label}
             </span>
           </div>
@@ -173,16 +154,14 @@ function HabitRow({
       onClick={() => !completed && onComplete(habit.id)}
       onKeyDown={e => e.key === 'Enter' && !completed && onComplete(habit.id)}
       style={{
-        display:      'flex',
-        alignItems:   'center',
-        gap:          14,
-        padding:      '12px 14px',
+        display: 'flex', alignItems: 'center', gap: 14,
+        padding: '12px 14px',
         borderRadius: 'var(--radius-md)',
-        background:   completed ? 'var(--surface-soft)' : 'var(--canvas)',
-        border:       '1px solid var(--hairline)',
-        cursor:       completed ? 'default' : 'pointer',
-        transition:   'all var(--transition-fast)',
-        opacity:      completed ? 0.6 : 1,
+        background: completed ? 'var(--surface-soft)' : 'var(--canvas)',
+        border: '1px solid var(--hairline)',
+        cursor: completed ? 'default' : 'pointer',
+        transition: 'all var(--transition-fast)',
+        opacity: completed ? 0.6 : 1,
       }}
       onMouseEnter={e => {
         if (!completed) {
@@ -196,29 +175,22 @@ function HabitRow({
       }}
     >
       <div style={{
-        width:          36,
-        height:         36,
-        borderRadius:   'var(--radius-md)',
-        background:     `${habit.color}18`,
-        border:         `1px solid ${habit.color}35`,
-        display:        'flex',
-        alignItems:     'center',
-        justifyContent: 'center',
-        fontSize:       17,
-        flexShrink:     0,
+        width: 36, height: 36,
+        borderRadius: 'var(--radius-md)',
+        background: `${habit.color}18`,
+        border: `1px solid ${habit.color}35`,
+        display: 'flex', alignItems: 'center', justifyContent: 'center',
+        fontSize: 17, flexShrink: 0,
       }}>
         {habit.icon}
       </div>
 
       <div style={{ flex: 1, minWidth: 0 }}>
         <div style={{
-          fontSize:       14,
-          fontWeight:     600,
-          color:          completed ? 'var(--muted)' : 'var(--ink)',
+          fontSize: 14, fontWeight: 600,
+          color: completed ? 'var(--muted)' : 'var(--ink)',
           textDecoration: completed ? 'line-through' : 'none',
-          whiteSpace:     'nowrap',
-          overflow:       'hidden',
-          textOverflow:   'ellipsis',
+          whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis',
         }}>
           {habit.name}
         </div>
@@ -229,14 +201,12 @@ function HabitRow({
 
       {!completed && (
         <div style={{
-          fontSize:      11,
-          fontWeight:    700,
-          color:         'var(--coral)',
-          background:    'rgba(204,120,92,0.10)',
-          border:        '1px solid rgba(204,120,92,0.25)',
-          borderRadius:  'var(--radius-full)',
-          padding:       '2px 9px',
-          flexShrink:    0,
+          fontSize: 11, fontWeight: 700,
+          color: 'var(--coral)',
+          background: 'rgba(204,120,92,0.10)',
+          border: '1px solid rgba(204,120,92,0.25)',
+          borderRadius: 'var(--radius-full)',
+          padding: '2px 9px', flexShrink: 0,
           letterSpacing: '0.02em',
         }}>
           +10 XP
@@ -254,28 +224,255 @@ function HabitRow({
 }
 
 // ─────────────────────────────────────────────────────────────
-// Chart Tooltip — dark surface (Design.md code-window-card)
+// Weekly chart tooltip
 // ─────────────────────────────────────────────────────────────
-function ChartTooltip({ active, payload, label }: any) {
+function WeekTooltip({ active, payload, label }: any) {
   if (!active || !payload?.length) return null
   return (
     <div style={{
-      background:   'var(--surface-dark)',
-      border:       '1px solid rgba(255,255,255,0.10)',
+      background: 'var(--surface-dark)',
+      border: '1px solid rgba(255,255,255,0.10)',
       borderRadius: 'var(--radius-md)',
-      padding:      '8px 14px',
-      fontSize:     13,
-      color:        'var(--on-dark)',
-      boxShadow:    'var(--shadow-md)',
+      padding: '8px 14px', fontSize: 13,
+      color: 'var(--on-dark)', boxShadow: 'var(--shadow-md)',
     }}>
       <div style={{ color: 'var(--on-dark-soft)', marginBottom: 3, fontSize: 11 }}>{label}</div>
-      <div style={{
-        color:         '#e8a55a',
-        fontWeight:    700,
-        fontFamily:    'var(--font-display)',
-        letterSpacing: '-0.02em',
-      }}>
+      <div style={{ color: '#e8a55a', fontWeight: 700, fontFamily: 'var(--font-display)' }}>
         {payload[0].value} completions
+      </div>
+    </div>
+  )
+}
+
+// ─────────────────────────────────────────────────────────────
+// Monthly chart tooltip
+// ─────────────────────────────────────────────────────────────
+function MonthTooltip({ active, payload }: any) {
+  if (!active || !payload?.length) return null
+  const entry = payload[0].payload
+  return (
+    <div style={{
+      background: 'var(--surface-dark-elevated)',
+      border: '1px solid rgba(255,255,255,0.12)',
+      borderRadius: 'var(--radius-md)',
+      padding: '8px 14px', fontSize: 13,
+      color: 'var(--on-dark)', boxShadow: 'var(--shadow-md)',
+    }}>
+      <div style={{ color: 'var(--on-dark-soft)', fontSize: 11, marginBottom: 3 }}>
+        {entry.date}
+      </div>
+      <div style={{ color: '#e8a55a', fontWeight: 700 }}>
+        {entry.count} completion{entry.count !== 1 ? 's' : ''}
+      </div>
+    </div>
+  )
+}
+
+// ─────────────────────────────────────────────────────────────
+// Monthly Graph Panel
+// Hidden by default, toggled open. Shows a 30-day area chart
+// of daily completions + per-habit breakdown.
+// ─────────────────────────────────────────────────────────────
+function MonthlyGraph({
+  open, logs, habits,
+}: {
+  open:   boolean
+  logs:   Array<{ habitId: number; completedAt: string }>
+  habits: Array<{
+    id: number; name: string; icon: string
+    color: string; targetDaysPerWeek: number
+  }>
+}) {
+  const monthData = useMemo(() => {
+    return Array.from({ length: 30 }, (_, i) => {
+      const d = new Date()
+      d.setDate(d.getDate() - (29 - i))
+      const dateStr = toLocalDate(d.toISOString())
+      const count   = logs.filter(l => toLocalDate(l.completedAt) === dateStr).length
+      const label   = i % 5 === 0 ? `${d.getMonth() + 1}/${d.getDate()}` : ''
+      return { date: dateStr, label, count }
+    })
+  }, [logs])
+
+  const habitMonthStats = useMemo(() => {
+    const monthAgo = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000)
+    return habits.map(habit => {
+      const count  = logs.filter(l =>
+        l.habitId === habit.id && new Date(l.completedAt) >= monthAgo
+      ).length
+      const target = Math.max(1, Math.round(habit.targetDaysPerWeek * 4.3))
+      const pct    = Math.min(100, Math.round((count / target) * 100))
+      return { habit, count, target, pct }
+    })
+  }, [logs, habits])
+
+  const monthTotal = useMemo(
+    () => monthData.reduce((s, d) => s + d.count, 0),
+    [monthData]
+  )
+
+  const prevMonthTotal = useMemo(() => {
+    const start = new Date(Date.now() - 60 * 24 * 60 * 60 * 1000)
+    const end   = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000)
+    return logs.filter(l => {
+      const d = new Date(l.completedAt)
+      return d >= start && d < end
+    }).length
+  }, [logs])
+
+  const monthDelta = monthTotal - prevMonthTotal
+
+  return (
+    <div style={{
+      overflow:   'hidden',
+      maxHeight:  open ? '700px' : '0px',
+      opacity:    open ? 1 : 0,
+      transition: 'max-height 420ms cubic-bezier(0.4, 0, 0.2, 1), opacity 280ms ease',
+    }}>
+      {/* Spacer so card doesn't snap against button */}
+      <div style={{ height: 4 }} />
+
+      <div style={{
+        background:   'var(--surface-dark)',
+        border:       '1px solid rgba(255,255,255,0.07)',
+        borderRadius: 'var(--radius-xl)',
+        padding:      '28px 32px',
+      }}>
+
+        {/* Header */}
+        <div style={{ marginBottom: 24 }}>
+          <h2 style={{
+            margin: 0, fontSize: '1rem',
+            color: 'var(--on-dark)',
+            display: 'flex', alignItems: 'center', gap: 7,
+          }}>
+            <TrendingUp size={15} color="#e8a55a" />
+            Monthly Habit Tracking
+          </h2>
+          <p style={{ margin: '5px 0 0', fontSize: 13, color: 'var(--on-dark-soft)' }}>
+            {monthTotal} completions in the last 30 days
+            {monthDelta !== 0 && (
+              <span style={{
+                marginLeft: 8, fontWeight: 600,
+                color: monthDelta > 0 ? 'var(--accent-success)' : 'var(--accent-danger)',
+              }}>
+                {monthDelta > 0 ? '↑' : '↓'} {Math.abs(monthDelta)} vs prev month
+              </span>
+            )}
+          </p>
+        </div>
+
+        {/* Area chart */}
+        <ResponsiveContainer width="100%" height={180}>
+          <AreaChart data={monthData} margin={{ top: 4, right: 4, bottom: 0, left: -20 }}>
+            <defs>
+              <linearGradient id="monthGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="5%"  stopColor="#cc785c" stopOpacity={0.35} />
+                <stop offset="95%" stopColor="#cc785c" stopOpacity={0.02} />
+              </linearGradient>
+            </defs>
+            <CartesianGrid
+              strokeDasharray="3 3"
+              stroke="rgba(255,255,255,0.05)"
+              vertical={false}
+            />
+            <XAxis
+              dataKey="label"
+              tick={{ fill: '#a09d96', fontSize: 11 }}
+              axisLine={false} tickLine={false}
+              interval={0}
+            />
+            <YAxis
+              tick={{ fill: '#a09d96', fontSize: 11 }}
+              axisLine={false} tickLine={false}
+              allowDecimals={false}
+            />
+            <Tooltip
+              content={<MonthTooltip />}
+              cursor={{ stroke: 'rgba(255,255,255,0.12)', strokeWidth: 1 }}
+            />
+            <Area
+              type="monotone"
+              dataKey="count"
+              stroke="#cc785c"
+              strokeWidth={2}
+              fill="url(#monthGrad)"
+              dot={false}
+              activeDot={{ r: 4, fill: '#cc785c', strokeWidth: 0 }}
+            />
+          </AreaChart>
+        </ResponsiveContainer>
+
+        {/* Per-habit breakdown */}
+        {habitMonthStats.length > 0 && (
+          <div style={{
+            marginTop: 28, paddingTop: 24,
+            borderTop: '1px solid rgba(255,255,255,0.07)',
+          }}>
+            <div style={{
+              fontSize: 11, fontWeight: 600,
+              color: 'var(--on-dark-soft)',
+              letterSpacing: '0.08em', textTransform: 'uppercase',
+              marginBottom: 16,
+            }}>
+              Per habit — last 30 days
+            </div>
+
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+              {habitMonthStats.map(({ habit, count, target, pct }) => (
+                <div key={habit.id}>
+                  <div style={{
+                    display: 'flex', alignItems: 'center',
+                    justifyContent: 'space-between',
+                    marginBottom: 6,
+                  }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                      <span style={{ fontSize: 15 }}>{habit.icon}</span>
+                      <span style={{ fontSize: 13, fontWeight: 600, color: 'var(--on-dark)' }}>
+                        {habit.name}
+                      </span>
+                    </div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                      <span style={{ fontSize: 12, color: 'var(--on-dark-soft)' }}>
+                        {count} / {target}
+                      </span>
+                      <span style={{
+                        fontSize: 11, fontWeight: 700,
+                        color: pct >= 80
+                          ? 'var(--accent-success)'
+                          : pct >= 50 ? '#e8a55a' : 'var(--accent-danger)',
+                        background: pct >= 80
+                          ? 'rgba(93,184,114,0.15)'
+                          : pct >= 50
+                            ? 'rgba(232,165,90,0.15)'
+                            : 'rgba(239,68,68,0.12)',
+                        borderRadius: 'var(--radius-full)',
+                        padding: '2px 8px',
+                      }}>
+                        {pct}%
+                      </span>
+                    </div>
+                  </div>
+
+                  <div style={{
+                    height: 6, borderRadius: 'var(--radius-full)',
+                    background: 'rgba(255,255,255,0.07)', overflow: 'hidden',
+                  }}>
+                    <div style={{
+                      height: '100%',
+                      width: `${pct}%`,
+                      borderRadius: 'var(--radius-full)',
+                      background: pct >= 80
+                        ? 'var(--accent-success)'
+                        : pct >= 50 ? '#e8a55a' : habit.color,
+                      transition: 'width 0.8s cubic-bezier(0.34, 1.56, 0.64, 1)',
+                    }} />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   )
@@ -293,13 +490,14 @@ export default function Dashboard() {
 
   useEffect(() => { loadAll(DEMO_USER_ID) }, [])
 
+  const [showGraph, setShowGraph] = useState(false)
+
   const weekLogs = getWeekLogs()
 
-  // Last week (14–7 days ago) for week-over-week trend comparison
+  // Last week (14–7 days ago) for week-over-week trend
   const lastWeekLogs = useMemo(() => {
-    const now         = new Date()
-    const twoWeeksAgo = new Date(now.getTime() - 14 * 24 * 60 * 60 * 1000)
-    const oneWeekAgo  = new Date(now.getTime() -  7 * 24 * 60 * 60 * 1000)
+    const twoWeeksAgo = new Date(Date.now() - 14 * 24 * 60 * 60 * 1000)
+    const oneWeekAgo  = new Date(Date.now() -  7 * 24 * 60 * 60 * 1000)
     return logs.filter(l => {
       const d = new Date(l.completedAt)
       return d >= twoWeeksAgo && d < oneWeekAgo
@@ -336,7 +534,7 @@ export default function Dashboard() {
   const hour     = new Date().getHours()
   const greeting = hour < 12 ? 'Good morning' : hour < 18 ? 'Good afternoon' : 'Good evening'
 
-  // Loading
+  // ── Loading ──────────────────────────────────────────────
   if (loading) {
     return (
       <div style={{
@@ -370,19 +568,15 @@ export default function Dashboard() {
 
       {/* ── 1. Hero band ── */}
       <div style={{
-        background:    'var(--canvas)',
-        border:        '1px solid var(--hairline)',
-        borderRadius:  'var(--radius-xl)',
-        padding:       '32px 36px',
-        display:       'flex',
-        alignItems:    'center',
-        justifyContent:'space-between',
-        gap:           24,
-        boxShadow:     'var(--shadow-sm)',
-        position:      'relative',
-        overflow:      'hidden',
+        background: 'var(--canvas)',
+        border: '1px solid var(--hairline)',
+        borderRadius: 'var(--radius-xl)',
+        padding: '32px 36px',
+        display: 'flex', alignItems: 'center',
+        justifyContent: 'space-between', gap: 24,
+        boxShadow: 'var(--shadow-sm)',
+        position: 'relative', overflow: 'hidden',
       }}>
-        {/* Warm coral glow — very subtle, top-right */}
         <div style={{
           position: 'absolute', top: -60, right: -60,
           width: 200, height: 200, borderRadius: '50%',
@@ -390,7 +584,6 @@ export default function Dashboard() {
           pointerEvents: 'none',
         }} />
 
-        {/* Greeting */}
         <div style={{ position: 'relative', zIndex: 1 }}>
           <div style={{
             fontSize: 11, fontWeight: 600, letterSpacing: '0.10em',
@@ -406,8 +599,6 @@ export default function Dashboard() {
               ? '🎉 All habits done for today — outstanding!'
               : `${completedCount} of ${habits.length} habits completed today`}
           </p>
-
-          {/* Streak chip — the ONE coral element in this band */}
           {user.currentStreak > 0 && (
             <div style={{
               display: 'inline-flex', alignItems: 'center', gap: 5,
@@ -423,7 +614,6 @@ export default function Dashboard() {
           )}
         </div>
 
-        {/* Level card — dark surface */}
         <div style={{
           minWidth: 196,
           background: 'var(--surface-dark)',
@@ -498,10 +688,55 @@ export default function Dashboard() {
         />
       </div>
 
-      {/* ── 3. Two-column grid ── */}
+      {/* ── 3. Monthly graph toggle ── */}
+      <div>
+        <button
+          onClick={() => setShowGraph(v => !v)}
+          style={{
+            display: 'flex', alignItems: 'center', gap: 7,
+            padding: '8px 18px',
+            borderRadius: 'var(--radius-md)',
+            border: `1px solid ${showGraph ? 'var(--coral)' : 'var(--hairline)'}`,
+            background: showGraph ? 'rgba(204,120,92,0.08)' : 'var(--canvas)',
+            color: showGraph ? 'var(--coral)' : 'var(--muted)',
+            fontFamily: 'var(--font-body)',
+            fontSize: 13, fontWeight: 600,
+            cursor: 'pointer',
+            boxShadow: 'var(--shadow-sm)',
+            transition: 'all var(--transition-fast)',
+          }}
+          onMouseEnter={e => {
+            if (!showGraph) {
+              e.currentTarget.style.borderColor = 'var(--coral)'
+              e.currentTarget.style.color       = 'var(--ink)'
+            }
+          }}
+          onMouseLeave={e => {
+            if (!showGraph) {
+              e.currentTarget.style.borderColor = 'var(--hairline)'
+              e.currentTarget.style.color       = 'var(--muted)'
+            }
+          }}
+        >
+          <TrendingUp size={14} />
+          Monthly Tracking
+          <ChevronDown
+            size={14}
+            style={{
+              transform:  showGraph ? 'rotate(180deg)' : 'rotate(0deg)',
+              transition: 'transform var(--transition-normal)',
+            }}
+          />
+        </button>
+
+        {/* Monthly graph panel — slides open */}
+        <MonthlyGraph open={showGraph} logs={logs} habits={habits} />
+      </div>
+
+      {/* ── 4. Two-column grid ── */}
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20 }}>
 
-        {/* Today's Habits — cream canvas card */}
+        {/* Today's Habits */}
         <div style={{
           background: 'var(--canvas)',
           border: '1px solid var(--hairline)',
@@ -534,7 +769,6 @@ export default function Dashboard() {
             </div>
           </div>
 
-          {/* Thin progress bar */}
           <div className="xp-bar" style={{ height: 3, marginBottom: 4 }}>
             <div className="xp-bar-fill" style={{
               width: `${completionRate}%`,
@@ -566,7 +800,7 @@ export default function Dashboard() {
         {/* Right column */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
 
-          {/* Weekly chart — dark surface */}
+          {/* Weekly chart */}
           <div style={{
             background: 'var(--surface-dark)',
             border: '1px solid rgba(255,255,255,0.07)',
@@ -599,7 +833,7 @@ export default function Dashboard() {
                   allowDecimals={false}
                 />
                 <Tooltip
-                  content={<ChartTooltip />}
+                  content={<WeekTooltip />}
                   cursor={{ fill: 'rgba(255,255,255,0.04)' }}
                 />
                 <Bar dataKey="count" radius={[5, 5, 0, 0]}>
@@ -607,7 +841,7 @@ export default function Dashboard() {
                     <Cell
                       key={i}
                       fill={
-                        entry.isToday  ? '#cc785c' :
+                        entry.isToday   ? '#cc785c' :
                         entry.count > 0 ? '#e8a55a' :
                         '#252320'
                       }
@@ -638,7 +872,7 @@ export default function Dashboard() {
             </div>
           </div>
 
-          {/* Recent badges — cream card */}
+          {/* Recent badges */}
           <div style={{
             background: 'var(--canvas)',
             border: '1px solid var(--hairline)',
