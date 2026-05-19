@@ -34,15 +34,27 @@ const RARITY_COLOR: Record<string, string> = {
 
 // ─────────────────────────────────────────────────────────────
 // Stat Card  (Design.md: feature-card on cream, hairline border)
+// Optional trend: { delta, label } shows a green/red pill below
+// the value comparing this period vs last period.
 // ─────────────────────────────────────────────────────────────
 function StatCard({
-  icon, label, value, accent = 'var(--coral)',
+  icon, label, value, accent = 'var(--coral)', trend,
 }: {
-  icon: React.ReactNode
-  label: string
-  value: string | number
+  icon:    React.ReactNode
+  label:   string
+  value:   string | number
   accent?: string
+  trend?:  { delta: number; label: string }
 }) {
+  const trendUp    = trend && trend.delta > 0
+  const trendDown  = trend && trend.delta < 0
+  const trendFlat  = trend && trend.delta === 0
+  const trendColor = trendUp
+    ? 'var(--accent-success)'
+    : trendDown
+      ? 'var(--accent-danger)'
+      : 'var(--muted)'
+
   return (
     <div style={{
       flex:          1,
@@ -93,6 +105,52 @@ function StatCard({
         <div style={{ fontSize: 12, color: 'var(--muted)', marginTop: 5, fontWeight: 500 }}>
           {label}
         </div>
+
+        {/* Trend pill — only rendered when trend prop is passed */}
+        {trend && (
+          <div style={{
+            display:      'inline-flex',
+            alignItems:   'center',
+            gap:          3,
+            marginTop:    7,
+            padding:      '2px 8px',
+            borderRadius: 'var(--radius-full)',
+            background:   trendUp
+              ? 'rgba(93,184,114,0.12)'
+              : trendDown
+                ? 'rgba(239,68,68,0.10)'
+                : 'rgba(108,106,100,0.10)',
+            border: `1px solid ${
+              trendUp   ? 'rgba(93,184,114,0.30)' :
+              trendDown ? 'rgba(239,68,68,0.25)'  :
+                          'rgba(108,106,100,0.20)'
+            }`,
+          }}>
+            {/* Arrow */}
+            <span style={{
+              fontSize:   11,
+              color:      trendColor,
+              lineHeight: 1,
+            }}>
+              {trendUp ? '↑' : trendDown ? '↓' : '→'}
+            </span>
+            {/* Delta number */}
+            <span style={{
+              fontSize:   11,
+              fontWeight: 700,
+              color:      trendColor,
+            }}>
+              {trendUp ? '+' : ''}{trend.delta}
+            </span>
+            {/* Context label */}
+            <span style={{
+              fontSize: 11,
+              color:    'var(--muted)',
+            }}>
+              {trend.label}
+            </span>
+          </div>
+        )}
       </div>
     </div>
   )
@@ -236,6 +294,19 @@ export default function Dashboard() {
   useEffect(() => { loadAll(DEMO_USER_ID) }, [])
 
   const weekLogs = getWeekLogs()
+
+  // Last week (14–7 days ago) for week-over-week trend comparison
+  const lastWeekLogs = useMemo(() => {
+    const now         = new Date()
+    const twoWeeksAgo = new Date(now.getTime() - 14 * 24 * 60 * 60 * 1000)
+    const oneWeekAgo  = new Date(now.getTime() -  7 * 24 * 60 * 60 * 1000)
+    return logs.filter(l => {
+      const d = new Date(l.completedAt)
+      return d >= twoWeeksAgo && d < oneWeekAgo
+    })
+  }, [logs])
+
+  const weekTrend = weekLogs.length - lastWeekLogs.length
 
   const completedCount = useMemo(
     () => habits.filter(h => isCompletedToday(h.id)).length,
@@ -417,6 +488,7 @@ export default function Dashboard() {
           label="This Week"
           value={weekLogs.length}
           accent="var(--accent-info)"
+          trend={{ delta: weekTrend, label: 'vs last week' }}
         />
         <StatCard
           icon={<Star size={20} color="var(--accent-gold)" />}
