@@ -20,11 +20,9 @@ import { useStore } from '../store/useStore'
 const DEMO_USER_ID = 1
 
 // ── Cloudinary config ─────────────────────────────────────────
-const CLOUDINARY_CLOUD_NAME = 'dhrd2odvd'
-const CLOUDINARY_API_KEY    = '789357272728518'
-// Unsigned upload preset — create this in your Cloudinary dashboard:
-// Settings → Upload → Upload presets → Add unsigned preset
-// Name it "habitquest_avatars"
+// Unsigned upload — only cloud name + preset needed in the renderer.
+// Never put API secret in frontend code.
+const CLOUDINARY_CLOUD_NAME    = 'dhrd2odvd'
 const CLOUDINARY_UPLOAD_PRESET = 'habitquest_avatars'
 
 const GENDER_OPTIONS = [
@@ -50,10 +48,11 @@ const api = (window as any).api
 // ─────────────────────────────────────────────────────────────
 async function uploadToCloudinary(dataUri: string): Promise<string> {
   const formData = new FormData()
-  formData.append('file',           dataUri)
-  formData.append('upload_preset',  CLOUDINARY_UPLOAD_PRESET)
-  formData.append('api_key',        CLOUDINARY_API_KEY)
-  formData.append('folder',         'habitquest/avatars')
+  formData.append('file',          dataUri)
+  formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET)
+  formData.append('folder',        'habitquest/avatars')
+  // Do NOT append api_key here — unsigned presets don't need it
+  // and sending it actually causes Cloudinary to reject the request
 
   const res = await fetch(
     `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`,

@@ -591,8 +591,25 @@ export default function Dashboard() {
           }}>
             {greeting}
           </div>
-          <h1 style={{ margin: 0, color: 'var(--ink)' }}>
-            {user.avatar}&nbsp;{user.username}
+          <h1 style={{ margin: 0, color: 'var(--ink)', display: 'flex', alignItems: 'center', gap: 12 }}>
+            {/* Show Cloudinary photo if set, otherwise emoji avatar */}
+            {user.avatarUrl ? (
+              <img
+                src={user.avatarUrl}
+                alt={user.username}
+                style={{
+                  width:        48,
+                  height:       48,
+                  borderRadius: '50%',
+                  objectFit:    'cover',
+                  border:       '2px solid var(--hairline)',
+                  flexShrink:   0,
+                }}
+              />
+            ) : (
+              <span>{user.avatar ?? '🧙'}</span>
+            )}
+            {user.fullName || user.username}
           </h1>
           <p style={{ margin: '8px 0 0', color: 'var(--muted)', fontSize: 14 }}>
             {completedCount === habits.length && habits.length > 0
