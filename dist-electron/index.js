@@ -2,6 +2,11 @@
 // src/main/index.ts
 // Electron Main Process — creates the app window, bridges the database,
 // and runs the habit reminder scheduler.
+//
+// Changes from previous version:
+//   • badges:list now returns starReward + category fields (schema updated)
+//   • user:update handles the new `stars` field automatically (no change needed
+//     since we pass data through directly — listed here for clarity)
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -42,7 +47,7 @@ function createWindow() {
 }
 electron_1.app.whenReady().then(() => {
     createWindow();
-    startReminderScheduler(); // ← kick off the scheduler
+    startReminderScheduler();
     electron_1.app.on('activate', () => {
         if (electron_1.BrowserWindow.getAllWindows().length === 0)
             createWindow();
@@ -53,49 +58,32 @@ electron_1.app.on('window-all-closed', () => {
         electron_1.app.quit();
 });
 // ── Reminder Scheduler ────────────────────────────────────────
-// Checks every 60 seconds whether any active habit has a
-// reminderTime matching HH:MM of the current local time.
-// Fires a native OS notification when matched — once per habit
-// per day (tracked in firedToday).
 let schedulerTimer = null;
-// Key: `${habitId}-${YYYY-MM-DD}` → prevents double-firing same day
 const firedToday = new Set();
 async function checkReminders() {
     const now = new Date();
     const HH = String(now.getHours()).padStart(2, '0');
     const MM = String(now.getMinutes()).padStart(2, '0');
-    const timeNow = `${HH}:${MM}`; // "07:30"
-    const dateKey = now.toISOString().slice(0, 10); // "2026-05-16"
-    // Fetch all non-archived habits that have a reminder set
+    const timeNow = `${HH}:${MM}`;
+    const dateKey = now.toISOString().slice(0, 10);
     const habits = await prisma.habit.findMany({
-        where: {
-            isArchived: false,
-            reminderTime: { not: null },
-        },
-        select: {
-            id: true,
-            name: true,
-            icon: true,
-            reminderTime: true,
-        },
+        where: { isArchived: false, reminderTime: { not: null } },
+        select: { id: true, name: true, icon: true, reminderTime: true },
     });
     for (const habit of habits) {
         if (!habit.reminderTime)
             continue;
-        // Normalise stored time — strip seconds if present ("07:30:00" → "07:30")
         const stored = habit.reminderTime.slice(0, 5);
         if (stored !== timeNow)
             continue;
         const fireKey = `${habit.id}-${dateKey}`;
         if (firedToday.has(fireKey))
-            continue; // already fired today
+            continue;
         firedToday.add(fireKey);
-        // Clean up old keys (keep set small — only today's entries matter)
         for (const key of firedToday) {
             if (!key.endsWith(dateKey))
                 firedToday.delete(key);
         }
-        // Fire native notification
         if (electron_1.Notification.isSupported()) {
             new electron_1.Notification({
                 title: `${habit.icon}  Time for: ${habit.name}`,
@@ -106,16 +94,11 @@ async function checkReminders() {
     }
 }
 function startReminderScheduler() {
-    // Run immediately on launch (catches any reminders set for "right now")
     checkReminders().catch(console.error);
-    // Then poll every 60 seconds
     schedulerTimer = setInterval(() => {
         checkReminders().catch(console.error);
     }, 60_000);
 }
-// ── IPC: renderer tells main to refresh reminders immediately ──
-// Called after the user adds / edits / deletes a habit so the
-// next scheduler tick picks up the new state right away.
 electron_1.ipcMain.handle('reminders:refresh', async () => {
     await checkReminders();
     return { ok: true };
@@ -142,7 +125,8 @@ electron_1.ipcMain.handle('logs:listByUser', async (_, userId) => prisma.habitLo
     take: 100,
 }));
 // BADGES
-electron_1.ipcMain.handle('badges:list', async () => prisma.badge.findMany({ orderBy: { pointValue: 'asc' } }));
+// Returns all badges including starReward + category fields
+electron_1.ipcMain.handle('badges:list', async () => prisma.badge.findMany({ orderBy: { starReward: 'asc' } }));
 electron_1.ipcMain.handle('badges:userBadges', async (_, userId) => prisma.userBadge.findMany({
     where: { userId },
     include: { badge: true },
@@ -170,9 +154,7 @@ electron_1.ipcMain.handle('challenges:list', async () => prisma.challenge.findMa
     orderBy: { startDate: 'asc' },
 }));
 electron_1.ipcMain.handle('challenges:join', async (_, userId, challengeId) => prisma.userChallenge.create({ data: { userId, challengeId } }));
-// DIALOG — open native file picker for image selection
-// Returns the file as a base64 data URI so the renderer can
-// upload it to Cloudinary without needing Node fs access.
+// DIALOG — native file picker for image selection
 electron_1.ipcMain.handle('dialog:openImage', async () => {
     const { canceled, filePaths } = await electron_1.dialog.showOpenDialog({
         title: 'Choose profile photo',

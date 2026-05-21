@@ -1,6 +1,11 @@
 // src/main/index.ts
 // Electron Main Process — creates the app window, bridges the database,
 // and runs the habit reminder scheduler.
+//
+// Changes from previous version:
+//   • badges:list now returns starReward + category fields (schema updated)
+//   • user:update handles the new `stars` field automatically (no change needed
+//     since we pass data through directly — listed here for clarity)
 
 import { app, BrowserWindow, ipcMain, Notification, shell, dialog } from 'electron'
 import path from 'path'
@@ -42,7 +47,7 @@ function createWindow() {
 
 app.whenReady().then(() => {
   createWindow()
-  startReminderScheduler()        // ← kick off the scheduler
+  startReminderScheduler()
   app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) createWindow()
   })
@@ -53,55 +58,34 @@ app.on('window-all-closed', () => {
 })
 
 // ── Reminder Scheduler ────────────────────────────────────────
-// Checks every 60 seconds whether any active habit has a
-// reminderTime matching HH:MM of the current local time.
-// Fires a native OS notification when matched — once per habit
-// per day (tracked in firedToday).
-
 let schedulerTimer: ReturnType<typeof setInterval> | null = null
-
-// Key: `${habitId}-${YYYY-MM-DD}` → prevents double-firing same day
 const firedToday = new Set<string>()
 
 async function checkReminders() {
-  const now    = new Date()
-  const HH     = String(now.getHours()).padStart(2, '0')
-  const MM     = String(now.getMinutes()).padStart(2, '0')
-  const timeNow = `${HH}:${MM}`                         // "07:30"
-  const dateKey = now.toISOString().slice(0, 10)        // "2026-05-16"
+  const now     = new Date()
+  const HH      = String(now.getHours()).padStart(2, '0')
+  const MM      = String(now.getMinutes()).padStart(2, '0')
+  const timeNow = `${HH}:${MM}`
+  const dateKey = now.toISOString().slice(0, 10)
 
-  // Fetch all non-archived habits that have a reminder set
   const habits = await prisma.habit.findMany({
-    where: {
-      isArchived:   false,
-      reminderTime: { not: null },
-    },
-    select: {
-      id:           true,
-      name:         true,
-      icon:         true,
-      reminderTime: true,
-    },
+    where: { isArchived: false, reminderTime: { not: null } },
+    select: { id: true, name: true, icon: true, reminderTime: true },
   })
 
   for (const habit of habits) {
     if (!habit.reminderTime) continue
-
-    // Normalise stored time — strip seconds if present ("07:30:00" → "07:30")
-    const stored = habit.reminderTime.slice(0, 5)
+    const stored  = habit.reminderTime.slice(0, 5)
     if (stored !== timeNow) continue
 
     const fireKey = `${habit.id}-${dateKey}`
-    if (firedToday.has(fireKey)) continue   // already fired today
-
+    if (firedToday.has(fireKey)) continue
     firedToday.add(fireKey)
 
-    // Clean up old keys (keep set small — only today's entries matter)
     for (const key of firedToday) {
       if (!key.endsWith(dateKey)) firedToday.delete(key)
     }
 
-    // Fire native notification
     if (Notification.isSupported()) {
       new Notification({
         title:  `${habit.icon}  Time for: ${habit.name}`,
@@ -113,18 +97,12 @@ async function checkReminders() {
 }
 
 function startReminderScheduler() {
-  // Run immediately on launch (catches any reminders set for "right now")
   checkReminders().catch(console.error)
-
-  // Then poll every 60 seconds
   schedulerTimer = setInterval(() => {
     checkReminders().catch(console.error)
   }, 60_000)
 }
 
-// ── IPC: renderer tells main to refresh reminders immediately ──
-// Called after the user adds / edits / deletes a habit so the
-// next scheduler tick picks up the new state right away.
 ipcMain.handle('reminders:refresh', async () => {
   await checkReminders()
   return { ok: true }
@@ -133,9 +111,9 @@ ipcMain.handle('reminders:refresh', async () => {
 // ── IPC Handlers — Database Bridge ───────────────────────────
 
 // USER
-ipcMain.handle('user:get',    async (_, id: number)           => prisma.user.findUnique({ where: { id } }))
-ipcMain.handle('user:create', async (_, data)                  => prisma.user.create({ data }))
-ipcMain.handle('user:update', async (_, id: number, data)      => prisma.user.update({ where: { id }, data }))
+ipcMain.handle('user:get',    async (_, id: number)        => prisma.user.findUnique({ where: { id } }))
+ipcMain.handle('user:create', async (_, data)               => prisma.user.create({ data }))
+ipcMain.handle('user:update', async (_, id: number, data)   => prisma.user.update({ where: { id }, data }))
 
 // HABITS
 ipcMain.handle('habits:list',   async (_, userId: number) =>
@@ -144,18 +122,18 @@ ipcMain.handle('habits:list',   async (_, userId: number) =>
     orderBy: { createdAt: 'asc' },
   })
 )
-ipcMain.handle('habits:create', async (_, data)                => prisma.habit.create({ data }))
-ipcMain.handle('habits:update', async (_, id: number, data)    => prisma.habit.update({ where: { id }, data }))
-ipcMain.handle('habits:delete', async (_, id: number)          =>
+ipcMain.handle('habits:create', async (_, data)              => prisma.habit.create({ data }))
+ipcMain.handle('habits:update', async (_, id: number, data)  => prisma.habit.update({ where: { id }, data }))
+ipcMain.handle('habits:delete', async (_, id: number)        =>
   prisma.habit.update({ where: { id }, data: { isArchived: true } })
 )
 
 // HABIT LOGS
-ipcMain.handle('logs:create',     async (_, data)              => prisma.habitLog.create({ data }))
-ipcMain.handle('logs:list',       async (_, habitId: number)   =>
+ipcMain.handle('logs:create',     async (_, data)             => prisma.habitLog.create({ data }))
+ipcMain.handle('logs:list',       async (_, habitId: number)  =>
   prisma.habitLog.findMany({ where: { habitId }, orderBy: { completedAt: 'desc' } })
 )
-ipcMain.handle('logs:listByUser', async (_, userId: number)    =>
+ipcMain.handle('logs:listByUser', async (_, userId: number)   =>
   prisma.habitLog.findMany({
     where:   { userId },
     orderBy: { completedAt: 'desc' },
@@ -164,28 +142,31 @@ ipcMain.handle('logs:listByUser', async (_, userId: number)    =>
 )
 
 // BADGES
-ipcMain.handle('badges:list',      async ()                              => prisma.badge.findMany({ orderBy: { pointValue: 'asc' } }))
-ipcMain.handle('badges:userBadges',async (_, userId: number)             =>
+// Returns all badges including starReward + category fields
+ipcMain.handle('badges:list', async () =>
+  prisma.badge.findMany({ orderBy: { starReward: 'asc' } })
+)
+ipcMain.handle('badges:userBadges', async (_, userId: number) =>
   prisma.userBadge.findMany({
     where:   { userId },
     include: { badge: true },
     orderBy: { earnedAt: 'desc' },
   })
 )
-ipcMain.handle('badges:award',     async (_, userId: number, badgeId: number) =>
+ipcMain.handle('badges:award', async (_, userId: number, badgeId: number) =>
   prisma.userBadge.create({ data: { userId, badgeId } })
 )
 
 // AI INSIGHTS
-ipcMain.handle('insights:list',    async (_, userId: number)  =>
+ipcMain.handle('insights:list',     async (_, userId: number) =>
   prisma.aIInsight.findMany({
     where:   { userId },
     orderBy: { generatedAt: 'desc' },
     take:    20,
   })
 )
-ipcMain.handle('insights:create',  async (_, data)            => prisma.aIInsight.create({ data }))
-ipcMain.handle('insights:markRead',async (_, id: number)      =>
+ipcMain.handle('insights:create',   async (_, data)           => prisma.aIInsight.create({ data }))
+ipcMain.handle('insights:markRead', async (_, id: number)     =>
   prisma.aIInsight.update({ where: { id }, data: { isRead: true } })
 )
 
@@ -210,9 +191,7 @@ ipcMain.handle('challenges:join', async (_, userId: number, challengeId: number)
   prisma.userChallenge.create({ data: { userId, challengeId } })
 )
 
-// DIALOG — open native file picker for image selection
-// Returns the file as a base64 data URI so the renderer can
-// upload it to Cloudinary without needing Node fs access.
+// DIALOG — native file picker for image selection
 ipcMain.handle('dialog:openImage', async () => {
   const { canceled, filePaths } = await dialog.showOpenDialog({
     title:       'Choose profile photo',
@@ -226,9 +205,9 @@ ipcMain.handle('dialog:openImage', async () => {
   const filePath = filePaths[0]
   const buffer   = fs.readFileSync(filePath)
   const ext      = path.extname(filePath).toLowerCase().replace('.', '')
-  const mime     = ext === 'png' ? 'image/png'
-                 : ext === 'gif' ? 'image/gif'
-                 : ext === 'webp'? 'image/webp'
+  const mime     = ext === 'png'  ? 'image/png'
+                 : ext === 'gif'  ? 'image/gif'
+                 : ext === 'webp' ? 'image/webp'
                  : 'image/jpeg'
 
   return `data:${mime};base64,${buffer.toString('base64')}`

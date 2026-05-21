@@ -1,5 +1,6 @@
 // src/renderer/components/shared/AppShell.tsx
 // Persistent sidebar + main content wrapper
+// BadgeToast is mounted here so it renders over every page.
 // Design.md: cream canvas, coral accent, hairline borders, Syne display
 
 import { NavLink } from 'react-router-dom'
@@ -9,6 +10,8 @@ import {
 } from 'lucide-react'
 import { useStore, getXpPercent, getXpProgress, XP_PER_LEVEL } from '../../store/useStore'
 import { useEffect } from 'react'
+import BadgeToast from './BadgeToast'
+import { Star } from 'lucide-react'
 
 const NAV = [
   { to: '/dashboard',    icon: LayoutDashboard, label: 'Dashboard'  },
@@ -32,22 +35,22 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
 
   return (
     <div style={{
-      display:         'flex',
-      height:          '100vh',
-      background:      'var(--canvas)',
-      fontFamily:      'var(--font-body)',
+      display:    'flex',
+      height:     '100vh',
+      background: 'var(--canvas)',
+      fontFamily: 'var(--font-body)',
     }}>
 
       {/* ── Sidebar ── */}
       <aside style={{
-        width:          220,
-        flexShrink:     0,
-        background:     'var(--canvas)',
-        borderRight:    '1px solid var(--hairline)',
-        display:        'flex',
-        flexDirection:  'column',
-        padding:        '20px 12px',
-        gap:            2,
+        width:         220,
+        flexShrink:    0,
+        background:    'var(--canvas)',
+        borderRight:   '1px solid var(--hairline)',
+        display:       'flex',
+        flexDirection: 'column',
+        padding:       '20px 12px',
+        gap:           2,
       }}>
 
         {/* Wordmark / Logo */}
@@ -56,27 +59,27 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
           alignItems:  'center',
           gap:         10,
           padding:     '8px 14px',
-          marginBottom:24,
+          marginBottom: 24,
         }}>
           <div style={{
-            width:           34,
-            height:          34,
-            borderRadius:    'var(--radius-md)',
-            background:      'var(--coral)',
-            display:         'flex',
-            alignItems:      'center',
-            justifyContent:  'center',
-            fontSize:        17,
-            flexShrink:      0,
-            boxShadow:       '0 2px 8px rgba(204,120,92,0.35)',
+            width:          34,
+            height:         34,
+            borderRadius:   'var(--radius-md)',
+            background:     'var(--coral)',
+            display:        'flex',
+            alignItems:     'center',
+            justifyContent: 'center',
+            fontSize:       17,
+            flexShrink:     0,
+            boxShadow:      '0 2px 8px rgba(204,120,92,0.35)',
           }}>
             ⚡
           </div>
           <span style={{
-            fontFamily:  'var(--font-display)',
-            fontWeight:  800,
-            fontSize:    17,
-            color:       'var(--ink)',
+            fontFamily:    'var(--font-display)',
+            fontWeight:    800,
+            fontSize:      17,
+            color:         'var(--ink)',
             letterSpacing: '-0.03em',
           }}>
             HabitQuest
@@ -108,12 +111,12 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
               padding:        '9px 14px',
               borderRadius:   'var(--radius-md)',
               textDecoration: 'none',
-              color:           isActive ? 'var(--ink)'          : 'var(--muted)',
-              background:      isActive ? 'var(--surface-card)' : 'transparent',
-              fontWeight:      isActive ? 600                    : 400,
-              fontSize:        14,
-              transition:      'all var(--transition-fast)',
-              borderLeft:      isActive
+              color:          isActive ? 'var(--ink)'          : 'var(--muted)',
+              background:     isActive ? 'var(--surface-card)' : 'transparent',
+              fontWeight:     isActive ? 600                    : 400,
+              fontSize:       14,
+              transition:     'all var(--transition-fast)',
+              borderLeft:     isActive
                 ? '2px solid var(--coral)'
                 : '2px solid transparent',
             })}
@@ -125,6 +128,34 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
 
         {/* Spacer */}
         <div style={{ flex: 1 }} />
+
+        {/* Stars balance chip */}
+        {user && (
+          <div style={{
+            display:      'flex',
+            alignItems:   'center',
+            gap:          6,
+            padding:      '8px 14px',
+            borderRadius: 'var(--radius-md)',
+            background:   'rgba(232,165,90,0.10)',
+            border:       '1px solid rgba(232,165,90,0.22)',
+            marginBottom: 8,
+          }}>
+            <Star size={13} color="#e8a55a" fill="#e8a55a" />
+            <span style={{
+              fontFamily: 'var(--font-display)',
+              fontWeight: 700,
+              fontSize:   14,
+              color:      '#e8a55a',
+              letterSpacing: '-0.01em',
+            }}>
+              {user.stars ?? 0}
+            </span>
+            <span style={{ fontSize: 11, color: 'rgba(232,165,90,0.65)', marginLeft: 2 }}>
+              Stars
+            </span>
+          </div>
+        )}
 
         {/* XP / Level widget */}
         <div style={{
@@ -147,7 +178,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
               color:      'var(--ink)',
               display:    'flex',
               alignItems: 'center',
-              gap:         5,
+              gap:        5,
             }}>
               <Zap size={13} color="var(--accent-gold)" />
               Level {user?.level ?? 1}
@@ -165,23 +196,23 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
           {/* User info */}
           {user && (
             <div style={{
-              marginTop:   10,
-              display:     'flex',
-              alignItems:  'center',
-              gap:         8,
+              marginTop:  10,
+              display:    'flex',
+              alignItems: 'center',
+              gap:        8,
             }}>
               <div style={{
-                width:        28,
-                height:       28,
-                borderRadius: '50%',
-                overflow:     'hidden',
-                flexShrink:   0,
-                background:   'rgba(204,120,92,0.15)',
-                border:       '1px solid rgba(204,120,92,0.30)',
-                display:      'flex',
-                alignItems:   'center',
-                justifyContent:'center',
-                fontSize:     16,
+                width:          28,
+                height:         28,
+                borderRadius:   '50%',
+                overflow:       'hidden',
+                flexShrink:     0,
+                background:     'rgba(204,120,92,0.15)',
+                border:         '1px solid rgba(204,120,92,0.30)',
+                display:        'flex',
+                alignItems:     'center',
+                justifyContent: 'center',
+                fontSize:       16,
               }}>
                 {user.avatarUrl ? (
                   <img
@@ -195,8 +226,12 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
               </div>
               <div style={{ minWidth: 0 }}>
                 <div style={{
-                  fontSize: 12, fontWeight: 600, color: 'var(--ink)',
-                  whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis',
+                  fontSize:     12,
+                  fontWeight:   600,
+                  color:        'var(--ink)',
+                  whiteSpace:   'nowrap',
+                  overflow:     'hidden',
+                  textOverflow: 'ellipsis',
                 }}>
                   {user.fullName ? user.fullName : `@${user.username}`}
                 </div>
@@ -219,6 +254,9 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
       }}>
         {children}
       </main>
+
+      {/* ── Badge Toast — rendered over everything ── */}
+      <BadgeToast />
     </div>
   )
 }
