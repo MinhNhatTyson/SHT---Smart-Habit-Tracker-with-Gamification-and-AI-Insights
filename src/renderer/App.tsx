@@ -1,15 +1,14 @@
 // src/renderer/App.tsx
 import { Routes, Route, Navigate } from 'react-router-dom'
 
-// Pages (we'll build these one by one)
-import Dashboard   from './pages/Dashboard'
-import Habits      from './pages/Habits'
+import Dashboard    from './pages/Dashboard'
+import Habits       from './pages/Habits'
 import Gamification from './pages/Gamification'
-import Insights    from './pages/Insights'
-import Social      from './pages/Social'
-import Settings    from './pages/Settings'
+import Insights     from './pages/Insights'
+import Social       from './pages/Social'
+import Settings     from './pages/Settings'
+import CalendarPage from './pages/Calendar'
 
-// Shared layout
 import AppShell from './components/shared/AppShell'
 
 export default function App() {
@@ -22,6 +21,7 @@ export default function App() {
         <Route path="/gamification" element={<Gamification />} />
         <Route path="/insights"     element={<Insights />} />
         <Route path="/social"       element={<Social />} />
+        <Route path="/calendar"     element={<CalendarPage />} />
         <Route path="/settings"     element={<Settings />} />
       </Routes>
     </AppShell>

@@ -5,7 +5,7 @@
 import { NavLink } from 'react-router-dom'
 import {
   LayoutDashboard, Flame, Trophy, Sparkles,
-  Users, Settings, Zap,
+  Users, Settings, Zap, CalendarDays,
 } from 'lucide-react'
 import { useStore, getXpPercent, getXpProgress, XP_PER_LEVEL } from '../../store/useStore'
 import { useEffect } from 'react'
@@ -16,13 +16,13 @@ const NAV = [
   { to: '/gamification', icon: Trophy,          label: 'Rewards'    },
   { to: '/insights',     icon: Sparkles,        label: 'Insights'   },
   { to: '/social',       icon: Users,           label: 'Social'     },
+  { to: '/calendar',     icon: CalendarDays,    label: 'Calendar'   },
   { to: '/settings',     icon: Settings,        label: 'Settings'   },
 ]
 
 export default function AppShell({ children }: { children: React.ReactNode }) {
   const { user, loadAll } = useStore()
 
-  // Bootstrap user on first mount
   useEffect(() => {
     if (!user) loadAll(1)
   }, [])
@@ -58,7 +58,6 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
           padding:     '8px 14px',
           marginBottom:24,
         }}>
-          {/* Coral spike-mark inspired logo */}
           <div style={{
             width:           34,
             height:          34,
@@ -109,9 +108,9 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
               padding:        '9px 14px',
               borderRadius:   'var(--radius-md)',
               textDecoration: 'none',
-              color:           isActive ? 'var(--ink)'        : 'var(--muted)',
+              color:           isActive ? 'var(--ink)'          : 'var(--muted)',
               background:      isActive ? 'var(--surface-card)' : 'transparent',
-              fontWeight:      isActive ? 600                  : 400,
+              fontWeight:      isActive ? 600                    : 400,
               fontSize:        14,
               transition:      'all var(--transition-fast)',
               borderLeft:      isActive
@@ -171,7 +170,6 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
               alignItems:  'center',
               gap:         8,
             }}>
-              {/* Show Cloudinary photo if set, otherwise emoji */}
               <div style={{
                 width:        28,
                 height:       28,
