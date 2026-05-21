@@ -1,11 +1,6 @@
 // src/main/index.ts
 // Electron Main Process — creates the app window, bridges the database,
 // and runs the habit reminder scheduler.
-//
-// Changes from previous version:
-//   • badges:list now returns starReward + category fields (schema updated)
-//   • user:update handles the new `stars` field automatically (no change needed
-//     since we pass data through directly — listed here for clarity)
 
 import { app, BrowserWindow, ipcMain, Notification, shell, dialog } from 'electron'
 import path from 'path'
@@ -111,29 +106,29 @@ ipcMain.handle('reminders:refresh', async () => {
 // ── IPC Handlers — Database Bridge ───────────────────────────
 
 // USER
-ipcMain.handle('user:get',    async (_, id: number)        => prisma.user.findUnique({ where: { id } }))
-ipcMain.handle('user:create', async (_, data)               => prisma.user.create({ data }))
-ipcMain.handle('user:update', async (_, id: number, data)   => prisma.user.update({ where: { id }, data }))
+ipcMain.handle('user:get',    async (_, id: number)       => prisma.user.findUnique({ where: { id } }))
+ipcMain.handle('user:create', async (_, data)              => prisma.user.create({ data }))
+ipcMain.handle('user:update', async (_, id: number, data)  => prisma.user.update({ where: { id }, data }))
 
 // HABITS
-ipcMain.handle('habits:list',   async (_, userId: number) =>
+ipcMain.handle('habits:list', async (_, userId: number) =>
   prisma.habit.findMany({
     where:   { userId, isArchived: false },
     orderBy: { createdAt: 'asc' },
   })
 )
-ipcMain.handle('habits:create', async (_, data)              => prisma.habit.create({ data }))
-ipcMain.handle('habits:update', async (_, id: number, data)  => prisma.habit.update({ where: { id }, data }))
-ipcMain.handle('habits:delete', async (_, id: number)        =>
+ipcMain.handle('habits:create', async (_, data)             => prisma.habit.create({ data }))
+ipcMain.handle('habits:update', async (_, id: number, data) => prisma.habit.update({ where: { id }, data }))
+ipcMain.handle('habits:delete', async (_, id: number)       =>
   prisma.habit.update({ where: { id }, data: { isArchived: true } })
 )
 
 // HABIT LOGS
-ipcMain.handle('logs:create',     async (_, data)             => prisma.habitLog.create({ data }))
-ipcMain.handle('logs:list',       async (_, habitId: number)  =>
+ipcMain.handle('logs:create',     async (_, data)            => prisma.habitLog.create({ data }))
+ipcMain.handle('logs:list',       async (_, habitId: number) =>
   prisma.habitLog.findMany({ where: { habitId }, orderBy: { completedAt: 'desc' } })
 )
-ipcMain.handle('logs:listByUser', async (_, userId: number)   =>
+ipcMain.handle('logs:listByUser', async (_, userId: number)  =>
   prisma.habitLog.findMany({
     where:   { userId },
     orderBy: { completedAt: 'desc' },
@@ -142,7 +137,6 @@ ipcMain.handle('logs:listByUser', async (_, userId: number)   =>
 )
 
 // BADGES
-// Returns all badges including starReward + category fields
 ipcMain.handle('badges:list', async () =>
   prisma.badge.findMany({ orderBy: { starReward: 'asc' } })
 )
@@ -153,9 +147,19 @@ ipcMain.handle('badges:userBadges', async (_, userId: number) =>
     orderBy: { earnedAt: 'desc' },
   })
 )
-ipcMain.handle('badges:award', async (_, userId: number, badgeId: number) =>
-  prisma.userBadge.create({ data: { userId, badgeId } })
-)
+
+// ── badges:award — uses upsert so duplicate attempts are silently ignored ──
+// The badge engine in the renderer may race on fast actions (e.g. logging
+// a habit while loadAll is still running). Upsert means the second call
+// returns the existing row instead of throwing a unique-constraint error,
+// so the console stays clean and the renderer's try/catch is just a safety net.
+ipcMain.handle('badges:award', async (_, userId: number, badgeId: number) => {
+  return prisma.userBadge.upsert({
+    where:  { userId_badgeId: { userId, badgeId } },
+    update: {},          // already exists — return it unchanged
+    create: { userId, badgeId },
+  })
+})
 
 // AI INSIGHTS
 ipcMain.handle('insights:list',     async (_, userId: number) =>
@@ -171,7 +175,7 @@ ipcMain.handle('insights:markRead', async (_, id: number)     =>
 )
 
 // SOCIAL FEED
-ipcMain.handle('posts:list',   async () =>
+ipcMain.handle('posts:list', async () =>
   prisma.socialPost.findMany({
     include: { user: true, badge: true, habit: true },
     orderBy: { createdAt: 'desc' },

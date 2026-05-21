@@ -2,11 +2,6 @@
 // src/main/index.ts
 // Electron Main Process — creates the app window, bridges the database,
 // and runs the habit reminder scheduler.
-//
-// Changes from previous version:
-//   • badges:list now returns starReward + category fields (schema updated)
-//   • user:update handles the new `stars` field automatically (no change needed
-//     since we pass data through directly — listed here for clarity)
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -125,14 +120,24 @@ electron_1.ipcMain.handle('logs:listByUser', async (_, userId) => prisma.habitLo
     take: 100,
 }));
 // BADGES
-// Returns all badges including starReward + category fields
 electron_1.ipcMain.handle('badges:list', async () => prisma.badge.findMany({ orderBy: { starReward: 'asc' } }));
 electron_1.ipcMain.handle('badges:userBadges', async (_, userId) => prisma.userBadge.findMany({
     where: { userId },
     include: { badge: true },
     orderBy: { earnedAt: 'desc' },
 }));
-electron_1.ipcMain.handle('badges:award', async (_, userId, badgeId) => prisma.userBadge.create({ data: { userId, badgeId } }));
+// ── badges:award — uses upsert so duplicate attempts are silently ignored ──
+// The badge engine in the renderer may race on fast actions (e.g. logging
+// a habit while loadAll is still running). Upsert means the second call
+// returns the existing row instead of throwing a unique-constraint error,
+// so the console stays clean and the renderer's try/catch is just a safety net.
+electron_1.ipcMain.handle('badges:award', async (_, userId, badgeId) => {
+    return prisma.userBadge.upsert({
+        where: { userId_badgeId: { userId, badgeId } },
+        update: {}, // already exists — return it unchanged
+        create: { userId, badgeId },
+    });
+});
 // AI INSIGHTS
 electron_1.ipcMain.handle('insights:list', async (_, userId) => prisma.aIInsight.findMany({
     where: { userId },

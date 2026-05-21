@@ -1,20 +1,12 @@
 // src/renderer/store/useStore.ts
 // Global Zustand store — user, habits, logs, badges.
 //
-// STREAK LOGIC
-// ─────────────────────────────────────────────────────────────
-// Streaks are recalculated from scratch on every habit log using
-// the full log history. This is the only reliable approach —
-// incremental updates break when the user skips days or reopens
-// the app after a long absence.
-//
 // BADGE AWARDING
-// ─────────────────────────────────────────────────────────────
-// After every state-changing action (logHabit, addHabit, loadAll),
-// the badge engine scans all unearned badges and awards any that
-// now satisfy their condition. Awards stars to the user.
-// Newly awarded badges are pushed to `newlyEarnedBadges` for
-// the toast notification system to consume.
+// runBadgeCheck() evaluates all unearned badge conditions.
+// On loadAll it silently awards any missing badges (DB writes) but does NOT
+// push them to newlyEarnedBadges — those are DB-correction writes, not new
+// achievements. Toasts only fire for badges earned mid-session (logHabit,
+// addHabit), never on app startup.
 
 import { create } from 'zustand'
 import { checkBadges } from '../lib/badgeEngine'
@@ -87,7 +79,6 @@ export const getXpProgress = (totalPoints: number) => totalPoints % XP_PER_LEVEL
 export const getXpPercent  = (totalPoints: number) =>
   Math.round((getXpProgress(totalPoints) / XP_PER_LEVEL) * 100)
 
-// ── Rarity → star reward mapping (fallback) ──────────────────
 export const RARITY_STAR_REWARD: Record<string, number> = {
   common:    5,
   rare:      15,
@@ -179,7 +170,6 @@ interface AppState {
   loading:           boolean
   error:             string | null
 
-  // Badge toast notifications — components consume and clear these
   newlyEarnedBadges: Badge[]
   clearNewBadges:    () => void
 
@@ -197,25 +187,28 @@ interface AppState {
 
 const api = (window as any).api
 
-// ── Internal: run badge check and award any newly earned badges ─
+// ── Internal badge checker ────────────────────────────────────
+// showToast = false during loadAll (startup correction writes)
+// showToast = true  during logHabit / addHabit (real-time awards)
 async function runBadgeCheck(
   get: () => AppState,
   set: (partial: Partial<AppState>) => void,
   overrideState?: {
-    habits?:       Habit[]
-    logs?:         HabitLog[]
-    userBadges?:   UserBadge[]
+    habits?:        Habit[]
+    logs?:          HabitLog[]
+    userBadges?:    UserBadge[]
     currentStreak?: number
-    level?:        number
-  }
+    level?:         number
+  },
+  showToast = true,
 ) {
   const state         = get()
   const user          = state.user
   if (!user) return
 
-  const habits        = overrideState?.habits      ?? state.habits
-  const logs          = overrideState?.logs        ?? state.logs
-  const userBadges    = overrideState?.userBadges  ?? state.userBadges
+  const habits        = overrideState?.habits        ?? state.habits
+  const logs          = overrideState?.logs          ?? state.logs
+  const userBadges    = overrideState?.userBadges    ?? state.userBadges
   const currentStreak = overrideState?.currentStreak ?? user.currentStreak
   const level         = overrideState?.level         ?? user.level
 
@@ -230,30 +223,43 @@ async function runBadgeCheck(
 
   if (toAward.length === 0) return
 
-  // Award each badge sequentially
   const newUserBadges: UserBadge[] = []
   let totalStarsEarned = 0
 
   for (const badge of toAward) {
     try {
+      // upsert on server side — returns existing row if already present
       const ub = await api.badges.award(user.id, badge.id)
-      newUserBadges.push({ ...ub, badge })
-      totalStarsEarned += badge.starReward ?? RARITY_STAR_REWARD[badge.rarity] ?? 5
+
+      // Only count as "newly earned" if this is a fresh DB insert.
+      // Upsert returns the row regardless; we use earnedAt proximity to
+      // detect whether it was just created (within the last 5 seconds).
+      const earnedAt    = new Date(ub.earnedAt).getTime()
+      const isJustNow   = Date.now() - earnedAt < 5000
+      const alreadyInStore = userBadges.some(existing => existing.badgeId === badge.id)
+
+      if (!alreadyInStore) {
+        newUserBadges.push({ ...ub, badge })
+        totalStarsEarned += badge.starReward ?? RARITY_STAR_REWARD[badge.rarity] ?? 5
+      }
     } catch {
-      // Badge may already exist (race condition) — skip silently
+      // Silently skip any unexpected errors
     }
   }
 
   if (newUserBadges.length === 0) return
 
-  // Update stars on user
-  const newStars = (user.stars ?? 0) + totalStarsEarned
+  // Update stars balance
+  const newStars    = (get().user?.stars ?? 0) + totalStarsEarned
   const updatedUser = await api.user.update(user.id, { stars: newStars })
 
   set({
-    user:              updatedUser,
-    userBadges:        [...get().userBadges, ...newUserBadges],
-    newlyEarnedBadges: [...get().newlyEarnedBadges, ...toAward],
+    user:      updatedUser,
+    userBadges: [...get().userBadges, ...newUserBadges],
+    // Only push to toast queue when showToast is true (mid-session actions)
+    ...(showToast && newUserBadges.length > 0
+      ? { newlyEarnedBadges: [...get().newlyEarnedBadges, ...newUserBadges.map(ub => ub.badge)] }
+      : {}),
   })
 }
 
@@ -294,17 +300,16 @@ export const useStore = create<AppState>((set, get) => ({
         })
       }
 
-      set({
-        user: freshUser, habits, logs,
-        userBadges, allBadges, loading: false,
-      })
+      set({ user: freshUser, habits, logs, userBadges, allBadges, loading: false })
 
-      // Run badge check on load (catches welcome badges on first run)
+      // showToast = false — this is a startup correction pass, not a live award.
+      // Any badges found here are ones the user already earned but weren't in DB
+      // (e.g. first run after seed). Award them silently; no toast.
       await runBadgeCheck(get, set, {
         habits, logs, userBadges,
         currentStreak: freshUser.currentStreak,
         level:         freshUser.level,
-      })
+      }, false)
     } catch (e: any) {
       set({ error: e.message ?? 'Failed to load data', loading: false })
     }
@@ -316,7 +321,7 @@ export const useStore = create<AppState>((set, get) => ({
     if (alreadyDone) return
 
     try {
-      const newLog     = await api.logs.create({ habitId, userId })
+      const newLog      = await api.logs.create({ habitId, userId })
       const updatedLogs = [newLog, ...get().logs]
       set({ logs: updatedLogs })
 
@@ -337,12 +342,12 @@ export const useStore = create<AppState>((set, get) => ({
 
       set({ user: updated })
 
-      // Check for newly earned badges
+      // showToast = true — live action, fire the toast
       await runBadgeCheck(get, set, {
         logs:          updatedLogs,
         currentStreak: updated.currentStreak,
         level:         updated.level,
-      })
+      }, true)
     } catch (e: any) {
       set({ error: e.message ?? 'Failed to log habit' })
     }
@@ -351,13 +356,13 @@ export const useStore = create<AppState>((set, get) => ({
   // ── Add habit ───────────────────────────────────────────────
   addHabit: async (data) => {
     try {
-      const created    = await api.habits.create(data)
-      const newHabits  = [...get().habits, created]
+      const created   = await api.habits.create(data)
+      const newHabits = [...get().habits, created]
       set({ habits: newHabits })
       api.reminders.refresh().catch(() => {})
 
-      // Check variety / habit-count badges
-      await runBadgeCheck(get, set, { habits: newHabits })
+      // showToast = true — user just did something, show earned badges
+      await runBadgeCheck(get, set, { habits: newHabits }, true)
     } catch (e: any) {
       set({ error: e.message ?? 'Failed to create habit' })
     }
@@ -403,16 +408,13 @@ export const useStore = create<AppState>((set, get) => ({
   isCompletedToday: (habitId) => {
     const today = toLocalDateStr(new Date().toISOString())
     return get().logs.some(
-      l => l.habitId === habitId &&
-           toLocalDateStr(l.completedAt) === today
+      l => l.habitId === habitId && toLocalDateStr(l.completedAt) === today
     )
   },
 
   getTodayLogs: () => {
     const today = toLocalDateStr(new Date().toISOString())
-    return get().logs.filter(
-      l => toLocalDateStr(l.completedAt) === today
-    )
+    return get().logs.filter(l => toLocalDateStr(l.completedAt) === today)
   },
 
   getWeekLogs: () => {

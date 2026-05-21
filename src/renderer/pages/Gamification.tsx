@@ -289,9 +289,35 @@ function InProgressCard({
           </span>
         </div>
 
-        {/* Progress label */}
-        <div style={{ fontSize: 12, color: 'var(--muted)', marginBottom: 8 }}>
-          {progressInfo.label}
+        {/* Description */}
+        <div style={{
+          fontSize:   12,
+          color:      'var(--muted)',
+          lineHeight: 1.5,
+          marginBottom: 8,
+          display:    '-webkit-box',
+          WebkitLineClamp: 2,
+          WebkitBoxOrient: 'vertical',
+          overflow:   'hidden',
+        }}>
+          {badge.description}
+        </div>
+
+        {/* How-to-earn hint */}
+        <div style={{
+          display:      'inline-flex',
+          alignItems:   'center',
+          gap:          5,
+          marginBottom: 10,
+          padding:      '4px 10px',
+          borderRadius: 'var(--radius-full)',
+          background:   `${rarityColor}10`,
+          border:       `1px solid ${rarityColor}25`,
+        }}>
+          <span style={{ fontSize: 10 }}>🎯</span>
+          <span style={{ fontSize: 11, fontWeight: 600, color: rarityColor }}>
+            {progressInfo.label}
+          </span>
         </div>
 
         {/* Progress bar */}
