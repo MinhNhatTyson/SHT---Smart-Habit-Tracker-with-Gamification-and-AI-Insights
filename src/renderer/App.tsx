@@ -8,6 +8,7 @@ import Social       from './pages/Social'
 import Settings     from './pages/Settings'
 import CalendarPage from './pages/Calendar'
 import Store        from './pages/Store'
+import Quests       from './pages/Quests'
 import AppShell     from './components/shared/AppShell'
 
 export default function App() {
@@ -23,6 +24,7 @@ export default function App() {
         <Route path="/social"       element={<Social />} />
         <Route path="/calendar"     element={<CalendarPage />} />
         <Route path="/settings"     element={<Settings />} />
+        <Route path="/quests"       element={<Quests />} />
       </Routes>
     </AppShell>
   )

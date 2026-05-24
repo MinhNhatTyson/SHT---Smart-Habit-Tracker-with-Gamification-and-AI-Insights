@@ -1,6 +1,6 @@
 "use strict";
 // src/main/index.ts
-// Electron Main Process — window, database bridge, reminder scheduler, store IPC.
+// Electron Main Process — window, database bridge, reminder scheduler, store IPC, quests IPC.
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -65,7 +65,11 @@ async function checkReminders() {
                 firedToday.delete(key);
         }
         if (electron_1.Notification.isSupported()) {
-            new electron_1.Notification({ title: `${habit.icon}  Time for: ${habit.name}`, body: "Don't forget your habit — keep that streak alive! 🔥", silent: false }).show();
+            new electron_1.Notification({
+                title: `${habit.icon}  Time for: ${habit.name}`,
+                body: "Don't forget your habit — keep that streak alive! 🔥",
+                silent: false,
+            }).show();
         }
     }
 }
@@ -94,26 +98,16 @@ electron_1.ipcMain.handle('badges:award', async (_, userId, badgeId) => prisma.u
     where: { userId_badgeId: { userId, badgeId } }, update: {}, create: { userId, badgeId },
 }));
 // ── STORE ─────────────────────────────────────────────────────
-// List all active store items
 electron_1.ipcMain.handle('store:listItems', async () => prisma.storeItem.findMany({ where: { isActive: true }, orderBy: { sortOrder: 'asc' } }));
-// Get all purchases for a user
 electron_1.ipcMain.handle('store:userPurchases', async (_, userId) => prisma.userPurchase.findMany({ where: { userId }, orderBy: { purchasedAt: 'desc' } }));
-// Record a purchase — upsert so stackable items increment quantity
 electron_1.ipcMain.handle('store:purchase', async (_, userId, itemKey) => {
     const item = await prisma.storeItem.findUnique({ where: { key: itemKey } });
     if (!item)
         throw new Error(`Store item not found: ${itemKey}`);
     if (item.itemType === 'stackable') {
-        // Increment quantity if already purchased, else create
-        const existing = await prisma.userPurchase.findUnique({
-            where: { userId_itemKey: { userId, itemKey } },
-        });
-        if (existing) {
-            return prisma.userPurchase.update({
-                where: { userId_itemKey: { userId, itemKey } },
-                data: { quantity: { increment: 1 } },
-            });
-        }
+        const existing = await prisma.userPurchase.findUnique({ where: { userId_itemKey: { userId, itemKey } } });
+        if (existing)
+            return prisma.userPurchase.update({ where: { userId_itemKey: { userId, itemKey } }, data: { quantity: { increment: 1 } } });
     }
     return prisma.userPurchase.upsert({
         where: { userId_itemKey: { userId, itemKey } },
@@ -121,6 +115,68 @@ electron_1.ipcMain.handle('store:purchase', async (_, userId, itemKey) => {
         create: { userId, itemKey, quantity: 1 },
     });
 });
+// ── QUESTS ────────────────────────────────────────────────────
+// List all active quest definitions
+electron_1.ipcMain.handle('quests:list', async () => prisma.quest.findMany({ where: { isActive: true }, orderBy: { sortOrder: 'asc' } }));
+// Get all UserQuest rows for a user, with the quest definition included
+electron_1.ipcMain.handle('quests:userQuests', async (_, userId) => prisma.userQuest.findMany({
+    where: { userId },
+    include: { quest: true },
+    orderBy: { assignedAt: 'desc' },
+}));
+// Batch-assign quests to a user (called on refresh)
+electron_1.ipcMain.handle('quests:assignBatch', async (_, userId, items) => {
+    const results = [];
+    for (const item of items) {
+        // For epic quests: only create if not already existing
+        const existing = await prisma.userQuest.findFirst({
+            where: {
+                userId,
+                questId: item.questId,
+                // For epic (no expiry): check any record; for daily/weekly: allow duplicates across periods
+                ...(item.expiresAt === null ? {} : {}),
+            },
+        });
+        // Always create a new row for daily/weekly; for epic only if none exists
+        const quest = await prisma.quest.findUnique({ where: { id: item.questId } });
+        if (!quest)
+            continue;
+        if (quest.tier === 'epic' && existing)
+            continue; // Epic: only one ever
+        const created = await prisma.userQuest.create({
+            data: {
+                userId,
+                questId: item.questId,
+                expiresAt: item.expiresAt ? new Date(item.expiresAt) : null,
+                progress: 0,
+                completed: false,
+                claimed: false,
+            },
+            include: { quest: true },
+        });
+        results.push(created);
+    }
+    return results;
+});
+// Batch-update progress on multiple UserQuest rows
+electron_1.ipcMain.handle('quests:updateProgress', async (_, updates) => {
+    const results = [];
+    for (const u of updates) {
+        const updated = await prisma.userQuest.update({
+            where: { id: u.userQuestId },
+            data: { progress: u.progress, completed: u.completed },
+            include: { quest: true },
+        });
+        results.push(updated);
+    }
+    return results;
+});
+// Mark a UserQuest as claimed
+electron_1.ipcMain.handle('quests:claim', async (_, userQuestId) => prisma.userQuest.update({
+    where: { id: userQuestId },
+    data: { claimed: true, claimedAt: new Date() },
+    include: { quest: true },
+}));
 // ── AI INSIGHTS ───────────────────────────────────────────────
 electron_1.ipcMain.handle('insights:list', async (_, userId) => prisma.aIInsight.findMany({ where: { userId }, orderBy: { generatedAt: 'desc' }, take: 20 }));
 electron_1.ipcMain.handle('insights:create', async (_, data) => prisma.aIInsight.create({ data }));

@@ -1,10 +1,11 @@
 // src/renderer/store/useStore.ts
-// Global Zustand store — user, habits, logs, badges, store.
+// Global Zustand store — user, habits, logs, badges, store, quests.
 
 import { create } from 'zustand'
 import { checkBadges } from '../lib/badgeEngine'
 import { applyThemeFromPayload, resetTheme } from '../lib/themeEngine'
 import { playHabitSound, playBadgeSound, SoundNote } from '../lib/soundEngine'
+import { createQuestSlice, QuestSliceState, QuestRow, UserQuestRow } from './questStore'
 
 // ── Types ─────────────────────────────────────────────────────
 export interface User {
@@ -21,15 +22,14 @@ export interface User {
   avatarUrl:         string | null
   stars:             number
   createdAt:         string
-  // Store fields
   habitSlots:        number
   activeTheme:       string
   activeHabitSound:  string
   activeBadgeSound:  string
   streakShieldActive:boolean
   activeTitle:       string | null
-  unlockedTitles:    string   // JSON array string
-  unlockedAvatars:   string   // JSON array string
+  unlockedTitles:    string
+  unlockedAvatars:   string
 }
 
 export interface Habit {
@@ -84,8 +84,8 @@ export interface StoreItem {
   category:    string
   icon:        string
   starCost:    number
-  itemType:    string   // permanent | consumable | stackable
-  payload:     string   // JSON
+  itemType:    string
+  payload:     string
   sortOrder:   number
   isActive:    boolean
 }
@@ -97,6 +97,9 @@ export interface UserPurchase {
   purchasedAt: string
   quantity:    number
 }
+
+// Re-export quest types so pages can import from one place
+export type { QuestRow, UserQuestRow }
 
 // ── XP / Level helpers ────────────────────────────────────────
 export const XP_PER_LEVEL  = 100
@@ -136,7 +139,7 @@ export function calculateStreaks(logs: HabitLog[]): { currentStreak: number; lon
   const yesterdayStr = addDaysStr(todayStr, -1)
   const mostRecent   = days[days.length - 1]
   let anchor: string
-  if (mostRecent === todayStr)     anchor = todayStr
+  if (mostRecent === todayStr)          anchor = todayStr
   else if (mostRecent === yesterdayStr) anchor = yesterdayStr
   else return { currentStreak: 0, longestStreak: longest }
   let current = 1, cursor = anchor
@@ -148,7 +151,7 @@ export function calculateStreaks(logs: HabitLog[]): { currentStreak: number; lon
 }
 
 // ── Store interface ───────────────────────────────────────────
-interface AppState {
+interface AppState extends QuestSliceState {
   user:              User | null
   habits:            Habit[]
   logs:              HabitLog[]
@@ -178,15 +181,15 @@ interface AppState {
   equipCalSkin:    (skinKey: string) => Promise<void>
 
   // Helpers
-  isCompletedToday:  (habitId: number) => boolean
-  getTodayLogs:      () => HabitLog[]
-  getWeekLogs:       () => HabitLog[]
-  hasPurchased:      (itemKey: string) => boolean
-  getPurchase:       (itemKey: string) => UserPurchase | undefined
-  getUnlockedTitles: () => string[]
-  getUnlockedAvatars:() => string[]
+  isCompletedToday:    (habitId: number) => boolean
+  getTodayLogs:        () => HabitLog[]
+  getWeekLogs:         () => HabitLog[]
+  hasPurchased:        (itemKey: string) => boolean
+  getPurchase:         (itemKey: string) => UserPurchase | undefined
+  getUnlockedTitles:   () => string[]
+  getUnlockedAvatars:  () => string[]
   getActiveSkinColors: () => Record<string, string> | null
-  activeCalSkin:     string  // 'default' | skinKey
+  activeCalSkin:       string
 }
 
 const api = (window as any).api
@@ -215,8 +218,8 @@ async function runBadgeCheck(
 
   for (const badge of toAward) {
     try {
-      const ub              = await api.badges.award(user.id, badge.id)
-      const alreadyInStore  = userBadges.some(e => e.badgeId === badge.id)
+      const ub             = await api.badges.award(user.id, badge.id)
+      const alreadyInStore = userBadges.some(e => e.badgeId === badge.id)
       if (!alreadyInStore) {
         newUBs.push({ ...ub, badge })
         starsEarned += badge.starReward ?? RARITY_STAR_REWARD[badge.rarity] ?? 5
@@ -232,7 +235,6 @@ async function runBadgeCheck(
     ...(showToast ? { newlyEarnedBadges: [...get().newlyEarnedBadges, ...newUBs.map(u => u.badge)] } : {}),
   })
 
-  // Play badge sound if equipped
   if (showToast) {
     const currentUser = get().user
     if (currentUser) {
@@ -252,7 +254,6 @@ async function runBadgeCheck(
   }
 }
 
-// ── Helper: get active sound notes for habit ─────────────────
 function getHabitSoundNotes(state: AppState): SoundNote[] | null {
   const soundKey = state.user?.activeHabitSound
   if (!soundKey || soundKey === 'default') return null
@@ -263,6 +264,7 @@ function getHabitSoundNotes(state: AppState): SoundNote[] | null {
 }
 
 export const useStore = create<AppState>((set, get) => ({
+  // ── Core state ────────────────────────────────────────────
   user:              null,
   habits:            [],
   logs:              [],
@@ -275,9 +277,12 @@ export const useStore = create<AppState>((set, get) => ({
   newlyEarnedBadges: [],
   activeCalSkin:     'default',
 
+  // ── Quest slice (spread in) ───────────────────────────────
+  ...createQuestSlice(set as any, get as any),
+
   clearNewBadges: () => set({ newlyEarnedBadges: [] }),
 
-  // ── Load everything ─────────────────────────────────────────
+  // ── Load everything ──────────────────────────────────────
   loadAll: async (userId) => {
     set({ loading: true, error: null })
     try {
@@ -301,17 +306,6 @@ export const useStore = create<AppState>((set, get) => ({
         })
       }
 
-      // Determine active cal skin from purchases
-      const calSkinPurchase = userPurchases.find((p: UserPurchase) =>
-        p.itemKey.startsWith('cal_skin_') &&
-        storeItems.find((s: StoreItem) => s.key === p.itemKey)
-      )
-      // Use the user's equipped skin stored in a purchase flag — we track
-      // the active skin in local state (not DB) since it's a UI preference.
-      // On load, default to 'default' unless user previously set one.
-      // We store the active cal skin in user.activeTheme-like field — but
-      // since we don't have a DB field for it, we use the most recently
-      // purchased cal skin as the active one, or 'default'.
       const activeCalSkin = (freshUser as any).activeCalSkin ?? 'default'
 
       set({
@@ -321,7 +315,6 @@ export const useStore = create<AppState>((set, get) => ({
         loading: false,
       })
 
-      // Apply persisted theme on load
       if (freshUser.activeTheme && freshUser.activeTheme !== 'default') {
         const themeItem = storeItems.find((s: StoreItem) => s.key === freshUser.activeTheme)
         if (themeItem) applyThemeFromPayload(themeItem.key, themeItem.payload)
@@ -329,14 +322,22 @@ export const useStore = create<AppState>((set, get) => ({
         resetTheme()
       }
 
-      // Silent badge check on startup
       await runBadgeCheck(get, set, { habits, logs, userBadges, currentStreak: freshUser.currentStreak, level: freshUser.level }, false)
+
+      // Load + refresh quests after main data is ready
+      try {
+        await (get() as AppState).loadQuests(userId)
+        await (get() as AppState).refreshQuests(userId)
+        await (get() as AppState).evaluateAndSyncQuests()
+      } catch (qe) {
+        console.warn('Quest load failed (non-critical):', qe)
+      }
     } catch (e: any) {
       set({ error: e.message ?? 'Failed to load data', loading: false })
     }
   },
 
-  // ── Log a habit ──────────────────────────────────────────────
+  // ── Log a habit ──────────────────────────────────────────
   logHabit: async (habitId, userId) => {
     if (get().isCompletedToday(habitId)) return
     try {
@@ -354,14 +355,16 @@ export const useStore = create<AppState>((set, get) => ({
       const updated    = await api.user.update(user.id, { totalPoints: newPoints, level: newLevel, currentStreak, longestStreak: newLongest })
       set({ user: updated })
 
-      // Play habit sound
       playHabitSound(getHabitSoundNotes(get()))
 
       await runBadgeCheck(get, set, { logs: updatedLogs, currentStreak: updated.currentStreak, level: updated.level }, true)
+
+      // Re-evaluate quests after logging
+      try { await (get() as AppState).evaluateAndSyncQuests() } catch {}
     } catch (e: any) { set({ error: e.message ?? 'Failed to log habit' }) }
   },
 
-  // ── Add habit (with slot enforcement) ───────────────────────
+  // ── Add habit ────────────────────────────────────────────
   addHabit: async (data) => {
     const { user, habits } = get()
     const slots = user?.habitSlots ?? 5
@@ -375,6 +378,7 @@ export const useStore = create<AppState>((set, get) => ({
       set({ habits: newHabits })
       api.reminders.refresh().catch(() => {})
       await runBadgeCheck(get, set, { habits: newHabits }, true)
+      try { await (get() as AppState).evaluateAndSyncQuests() } catch {}
     } catch (e: any) { set({ error: e.message ?? 'Failed to create habit' }) }
   },
 
@@ -403,64 +407,44 @@ export const useStore = create<AppState>((set, get) => ({
     } catch (e: any) { set({ error: e.message ?? 'Failed to update profile' }) }
   },
 
-  // ── STORE ACTIONS ─────────────────────────────────────────────
-
+  // ── STORE ACTIONS ────────────────────────────────────────
   purchaseItem: async (itemKey) => {
     const { user, storeItems, userPurchases } = get()
     if (!user) return { success: false, message: 'Not logged in' }
-
     const item = storeItems.find(s => s.key === itemKey)
     if (!item) return { success: false, message: 'Item not found' }
-
-    // Check stars balance
     if (user.stars < item.starCost) {
       return { success: false, message: `Not enough Stars. Need ${item.starCost}⭐, you have ${user.stars}⭐` }
     }
-
-    // Permanent items: can only buy once
     if (item.itemType === 'permanent') {
       const existing = userPurchases.find(p => p.itemKey === itemKey)
       if (existing) return { success: false, message: 'Already owned' }
     }
-
     try {
-      // Deduct stars
       const newStars    = user.stars - item.starCost
       const updatedUser = await api.user.update(user.id, { stars: newStars })
-
-      // Record purchase
-      const purchase = await api.store.purchase(user.id, itemKey)
-
-      // Apply side effects immediately
+      const purchase    = await api.store.purchase(user.id, itemKey)
       let finalUser = updatedUser
       if (item.category === 'slot') {
-        // Increment habitSlots
         finalUser = await api.user.update(user.id, { habitSlots: updatedUser.habitSlots + 1 })
       } else if (item.category === 'shield') {
-        // Arm the streak shield
         finalUser = await api.user.update(user.id, { streakShieldActive: true })
       } else if (item.category === 'avatar') {
-        // Add avatars to unlocked list
-        const payload      = JSON.parse(item.payload) as { avatars: string[] }
-        const existing     = JSON.parse(updatedUser.unlockedAvatars || '[]') as string[]
-        const merged       = [...new Set([...existing, ...payload.avatars])]
+        const payload  = JSON.parse(item.payload) as { avatars: string[] }
+        const existing = JSON.parse(updatedUser.unlockedAvatars || '[]') as string[]
+        const merged   = [...new Set([...existing, ...payload.avatars])]
         finalUser = await api.user.update(user.id, { unlockedAvatars: JSON.stringify(merged) })
       } else if (item.category === 'title') {
-        // Add title to unlocked list
-        const payload      = JSON.parse(item.payload) as { title: string }
-        const existing     = JSON.parse(updatedUser.unlockedTitles || '[]') as string[]
+        const payload  = JSON.parse(item.payload) as { title: string }
+        const existing = JSON.parse(updatedUser.unlockedTitles || '[]') as string[]
         if (!existing.includes(payload.title)) {
-          const merged = [...existing, payload.title]
-          finalUser = await api.user.update(user.id, { unlockedTitles: JSON.stringify(merged) })
+          finalUser = await api.user.update(user.id, { unlockedTitles: JSON.stringify([...existing, payload.title]) })
         }
       }
-
-      // Update local state
       const existingPurchase = userPurchases.find(p => p.itemKey === itemKey)
       const newPurchases = existingPurchase
         ? userPurchases.map(p => p.itemKey === itemKey ? { ...p, quantity: p.quantity + 1 } : p)
         : [...userPurchases, purchase]
-
       set({ user: finalUser, userPurchases: newPurchases })
       return { success: true, message: `${item.name} purchased!` }
     } catch (e: any) {
@@ -471,13 +455,11 @@ export const useStore = create<AppState>((set, get) => ({
   equipTheme: async (itemKey) => {
     const { user, storeItems } = get()
     if (!user) return
-    const themeKey = itemKey === 'default' ? 'default' : itemKey
-    const updated  = await api.user.update(user.id, { activeTheme: themeKey })
+    const updated = await api.user.update(user.id, { activeTheme: itemKey })
     set({ user: updated })
-    if (themeKey === 'default') {
-      resetTheme()
-    } else {
-      const item = storeItems.find(s => s.key === themeKey)
+    if (itemKey === 'default') { resetTheme() }
+    else {
+      const item = storeItems.find(s => s.key === itemKey)
       if (item) applyThemeFromPayload(item.key, item.payload)
     }
   },
@@ -513,13 +495,11 @@ export const useStore = create<AppState>((set, get) => ({
   equipCalSkin: async (skinKey) => {
     const { user } = get()
     if (!user) return
-    // Persist skin preference via user update (store in activeTheme-adjacent field)
-    // We use a dedicated approach: store it as a local state + persist to user record
     await api.user.update(user.id, { activeCalSkin: skinKey } as any)
     set({ activeCalSkin: skinKey })
   },
 
-  // ── Helpers ───────────────────────────────────────────────────
+  // ── Helpers ───────────────────────────────────────────────
   isCompletedToday: (habitId) => {
     const today = toLocalDateStr(new Date().toISOString())
     return get().logs.some(l => l.habitId === habitId && toLocalDateStr(l.completedAt) === today)
@@ -532,8 +512,8 @@ export const useStore = create<AppState>((set, get) => ({
     const weekAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)
     return get().logs.filter(l => new Date(l.completedAt) >= weekAgo)
   },
-  hasPurchased: (itemKey) => get().userPurchases.some(p => p.itemKey === itemKey),
-  getPurchase:  (itemKey) => get().userPurchases.find(p => p.itemKey === itemKey),
+  hasPurchased:  (itemKey) => get().userPurchases.some(p => p.itemKey === itemKey),
+  getPurchase:   (itemKey) => get().userPurchases.find(p => p.itemKey === itemKey),
   getUnlockedTitles: () => {
     try { return JSON.parse(get().user?.unlockedTitles ?? '[]') as string[] }
     catch { return [] }

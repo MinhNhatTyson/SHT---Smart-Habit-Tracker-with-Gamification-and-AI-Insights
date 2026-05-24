@@ -24,11 +24,18 @@ electron_1.contextBridge.exposeInMainWorld('api', {
         userBadges: (userId) => electron_1.ipcRenderer.invoke('badges:userBadges', userId),
         award: (userId, badgeId) => electron_1.ipcRenderer.invoke('badges:award', userId, badgeId),
     },
-    // ── Store ──────────────────────────────────────────────────
     store: {
         listItems: () => electron_1.ipcRenderer.invoke('store:listItems'),
         userPurchases: (userId) => electron_1.ipcRenderer.invoke('store:userPurchases', userId),
         purchase: (userId, itemKey) => electron_1.ipcRenderer.invoke('store:purchase', userId, itemKey),
+    },
+    // ── Quests ────────────────────────────────────────────────
+    quests: {
+        list: () => electron_1.ipcRenderer.invoke('quests:list'),
+        userQuests: (userId) => electron_1.ipcRenderer.invoke('quests:userQuests', userId),
+        assignBatch: (userId, items) => electron_1.ipcRenderer.invoke('quests:assignBatch', userId, items),
+        updateProgress: (updates) => electron_1.ipcRenderer.invoke('quests:updateProgress', updates),
+        claim: (userQuestId) => electron_1.ipcRenderer.invoke('quests:claim', userQuestId),
     },
     insights: {
         list: (userId) => electron_1.ipcRenderer.invoke('insights:list', userId),

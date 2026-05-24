@@ -23,11 +23,18 @@ contextBridge.exposeInMainWorld('api', {
     userBadges: (userId: number)                      => ipcRenderer.invoke('badges:userBadges', userId),
     award:      (userId: number, badgeId: number)     => ipcRenderer.invoke('badges:award', userId, badgeId),
   },
-  // ── Store ──────────────────────────────────────────────────
   store: {
-    listItems:      ()                                  => ipcRenderer.invoke('store:listItems'),
-    userPurchases:  (userId: number)                    => ipcRenderer.invoke('store:userPurchases', userId),
-    purchase:       (userId: number, itemKey: string)   => ipcRenderer.invoke('store:purchase', userId, itemKey),
+    listItems:     ()                                  => ipcRenderer.invoke('store:listItems'),
+    userPurchases: (userId: number)                    => ipcRenderer.invoke('store:userPurchases', userId),
+    purchase:      (userId: number, itemKey: string)   => ipcRenderer.invoke('store:purchase', userId, itemKey),
+  },
+  // ── Quests ────────────────────────────────────────────────
+  quests: {
+    list:           ()                                                    => ipcRenderer.invoke('quests:list'),
+    userQuests:     (userId: number)                                      => ipcRenderer.invoke('quests:userQuests', userId),
+    assignBatch:    (userId: number, items: any[])                        => ipcRenderer.invoke('quests:assignBatch', userId, items),
+    updateProgress: (updates: any[])                                      => ipcRenderer.invoke('quests:updateProgress', updates),
+    claim:          (userQuestId: number)                                 => ipcRenderer.invoke('quests:claim', userQuestId),
   },
   insights: {
     list:     (userId: number) => ipcRenderer.invoke('insights:list', userId),
