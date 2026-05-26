@@ -1,94 +1,32 @@
 // src/renderer/store/questStore.ts
-// Standalone quest slice — merged into useStore via createQuestSlice().
-// IMPORTANT: No imports from useStore.ts to avoid circular dependencies.
-// All shared types are defined inline here.
+// Quest slice for Zustand. No TypeScript-only syntax at top level.
+// No imports from useStore.ts (prevents circular dependency).
 
-import { evaluateQuests, getDailyExpiry, getWeeklyExpiry, QuestDef } from '../lib/questEngine'
+import { evaluateQuests, getDailyExpiry, getWeeklyExpiry } from '../lib/questEngine'
 
-// ── Inline types (avoid importing from useStore to prevent circular deps) ──
-interface UserLike {
-  id: number
-  currentStreak: number
-  stars: number
-}
-interface HabitLike {
-  id: number
-  isArchived: boolean
-  category?: string
-}
-interface LogLike {
-  habitId: number
-  completedAt: string
-}
-
-// ── Exported types (imported by pages) ───────────────────────
-export interface QuestRow {
-  id:          number
-  key:         string
-  title:       string
-  description: string
-  flavour:     string
-  tier:        'daily' | 'weekly' | 'epic'
-  icon:        string
-  starReward:  number
-  condition:   string
-  target:      number
-  sortOrder:   number
-  isActive:    boolean
-}
-
-export interface UserQuestRow {
-  id:         number
-  userId:     number
-  questId:    number
-  assignedAt: string
-  expiresAt:  string | null
-  progress:   number
-  completed:  boolean
-  claimed:    boolean
-  claimedAt:  string | null
-  quest:      QuestRow
-}
-
-// ── Slice state interface ─────────────────────────────────────
-export interface QuestSliceState {
-  allQuests:    QuestRow[]
-  userQuests:   UserQuestRow[]
-  questsLoading: boolean
-
-  loadQuests:              (userId: number) => Promise<void>
-  refreshQuests:           (userId: number) => Promise<void>
-  evaluateAndSyncQuests:   () => Promise<void>
-  claimQuest:              (userQuestId: number) => Promise<{ success: boolean; stars: number }>
-  getActiveUserQuests:     () => UserQuestRow[]
-  getClaimableQuests:      () => UserQuestRow[]
-}
-
-// ── Date helpers ──────────────────────────────────────────────
-function toLocalStr(d: Date): string {
-  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`
-}
-
-function weekStartStr(): string {
-  const d = new Date()
-  d.setDate(d.getDate() - d.getDay())
-  return toLocalStr(d)
-}
-
-// ── Factory ───────────────────────────────────────────────────
-export function createQuestSlice(
-  set: (partial: Partial<any>) => void,
-  get: () => any,
-): QuestSliceState {
+export const createQuestSlice = (set, get) => {
   const api = (window as any).api
+
+  // Guard: prevent refreshQuests running concurrently
+  let refreshing = false
+
+  const toLocalStr = (d) => {
+    return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`
+  }
+
+  const weekStartStr = () => {
+    const d = new Date()
+    d.setDate(d.getDate() - d.getDay())
+    return toLocalStr(d)
+  }
 
   return {
     allQuests:     [],
     userQuests:    [],
     questsLoading: false,
 
-    // ── Load quest definitions + user's assigned quests ──────
-    loadQuests: async (userId: number) => {
+    // ── Load quest definitions + user's existing UserQuest rows ──
+    loadQuests: async (userId) => {
       set({ questsLoading: true })
       try {
         const [allQuests, userQuests] = await Promise.all([
@@ -102,66 +40,86 @@ export function createQuestSlice(
       }
     },
 
-    // ── Assign missing daily / weekly / epic quests ──────────
-    refreshQuests: async (userId: number) => {
-      const state = get()
-      const allQuests:  QuestRow[]     = state.allQuests  ?? []
-      const userQuests: UserQuestRow[] = state.userQuests ?? []
-
-      const now         = new Date()
-      const todayStr    = toLocalStr(now)
-      const thisWeekStr = weekStartStr()
-
-      const toAssign: Array<{ questId: number; expiresAt: string | null }> = []
-
-      for (const quest of allQuests.filter(q => q.isActive)) {
-        if (quest.tier === 'epic') {
-          const exists = userQuests.some(uq => uq.questId === quest.id)
-          if (!exists) toAssign.push({ questId: quest.id, expiresAt: null })
-
-        } else if (quest.tier === 'daily') {
-          const exists = userQuests.some(uq =>
-            uq.questId === quest.id &&
-            uq.expiresAt != null &&
-            toLocalStr(new Date(uq.expiresAt)) === todayStr
-          )
-          if (!exists) toAssign.push({ questId: quest.id, expiresAt: getDailyExpiry().toISOString() })
-
-        } else if (quest.tier === 'weekly') {
-          const weeklyExpiry = getWeeklyExpiry()
-          const exists = userQuests.some(uq => {
-            if (uq.questId !== quest.id || !uq.expiresAt) return false
-            const exp = new Date(uq.expiresAt)
-            const mon = new Date(exp)
-            mon.setDate(exp.getDate() - ((exp.getDay() + 6) % 7))
-            return toLocalStr(mon) >= thisWeekStr
-          })
-          if (!exists) toAssign.push({ questId: quest.id, expiresAt: weeklyExpiry.toISOString() })
-        }
-      }
-
-      if (toAssign.length === 0) return
+    // ── Assign missing quests for the current period ─────────────
+    // FIX: reads fresh DB rows (passed in) instead of possibly-stale get() state,
+    //      and uses a concurrency guard so double-calls don't duplicate rows.
+    refreshQuests: async (userId) => {
+      if (refreshing) return
+      refreshing = true
 
       try {
-        const newRows: UserQuestRow[] = await api.quests.assignBatch(userId, toAssign)
-        set((s: any) => ({ userQuests: [...s.userQuests, ...newRows] }))
+        // Always fetch fresh from DB so we don't rely on timing of set()
+        const [allQuests, freshUserQuests] = await Promise.all([
+          api.quests.list(),
+          api.quests.userQuests(userId),
+        ])
+
+        // Update local state with fresh data first
+        set({ allQuests, userQuests: freshUserQuests })
+
+        const now         = new Date()
+        const todayStr    = toLocalStr(now)
+        const thisWeekStr = weekStartStr()
+        const toAssign    = []
+
+        for (const quest of allQuests.filter(q => q.isActive)) {
+          if (quest.tier === 'epic') {
+            // Epic: only ever one row, ever
+            const exists = freshUserQuests.some(uq => uq.questId === quest.id)
+            if (!exists) toAssign.push({ questId: quest.id, expiresAt: null })
+
+          } else if (quest.tier === 'daily') {
+            // Daily: need exactly one row whose expiry date is today
+            const exists = freshUserQuests.some(uq =>
+              uq.questId === quest.id &&
+              uq.expiresAt != null &&
+              toLocalStr(new Date(uq.expiresAt)) === todayStr
+            )
+            if (!exists) toAssign.push({ questId: quest.id, expiresAt: getDailyExpiry().toISOString() })
+
+          } else if (quest.tier === 'weekly') {
+            // Weekly: need one row whose expiry falls in the current week (Mon–Sun)
+            const exists = freshUserQuests.some(uq => {
+              if (uq.questId !== quest.id || !uq.expiresAt) return false
+              const exp = new Date(uq.expiresAt)
+              // Find the Monday of the week this expiry belongs to
+              const mon = new Date(exp)
+              mon.setDate(exp.getDate() - ((exp.getDay() + 6) % 7))
+              mon.setHours(0, 0, 0, 0)
+              return toLocalStr(mon) >= thisWeekStr
+            })
+            if (!exists) toAssign.push({ questId: quest.id, expiresAt: getWeeklyExpiry().toISOString() })
+          }
+        }
+
+        if (toAssign.length === 0) return
+
+        const newRows = await api.quests.assignBatch(userId, toAssign)
+
+        // Merge new rows — but guard against duplicates in case of race
+        set((s) => {
+          const existingIds = new Set(s.userQuests.map(uq => uq.id))
+          const truly_new   = newRows.filter(r => !existingIds.has(r.id))
+          return { userQuests: [...s.userQuests, ...truly_new] }
+        })
       } catch (e) {
-        console.warn('refreshQuests assignBatch failed:', e)
+        console.warn('refreshQuests failed:', e)
+      } finally {
+        refreshing = false
       }
     },
 
-    // ── Evaluate progress and persist changes ────────────────
+    // ── Evaluate and persist progress for all active quests ──────
     evaluateAndSyncQuests: async () => {
-      const state = get()
-      const user:       UserLike        = state.user
-      const habits:     HabitLike[]     = state.habits     ?? []
-      const logs:       LogLike[]       = state.logs       ?? []
-      const userQuests: UserQuestRow[]  = state.userQuests ?? []
+      const state      = get()
+      const user       = state.user
+      const habits     = state.habits     ?? []
+      const logs       = state.logs       ?? []
+      const userQuests = state.userQuests ?? []
 
       if (!user) return
 
-      const now = new Date()
-
+      const now    = new Date()
       const active = userQuests.filter(uq => {
         if (uq.claimed) return false
         if (uq.expiresAt && new Date(uq.expiresAt) < now) return false
@@ -169,7 +127,7 @@ export function createQuestSlice(
       })
       if (active.length === 0) return
 
-      const defs: QuestDef[] = active.map(uq => ({
+      const defs = active.map(uq => ({
         id:        uq.quest.id,
         key:       uq.quest.key,
         condition: uq.quest.condition,
@@ -177,14 +135,9 @@ export function createQuestSlice(
         tier:      uq.quest.tier,
       }))
 
-      const results = evaluateQuests({
-        quests:        defs,
-        habits:        habits as any,
-        logs:          logs   as any,
-        currentStreak: user.currentStreak,
-      })
+      const results = evaluateQuests({ quests: defs, habits, logs, currentStreak: user.currentStreak })
 
-      const updates: Array<{ userQuestId: number; progress: number; completed: boolean }> = []
+      const updates = []
       for (const result of results) {
         const uq = active.find(u => u.questId === result.questId)
         if (!uq) continue
@@ -195,23 +148,23 @@ export function createQuestSlice(
       if (updates.length === 0) return
 
       try {
-        const updated: UserQuestRow[] = await api.quests.updateProgress(updates)
-        set((s: any) => ({
-          userQuests: s.userQuests.map((uq: UserQuestRow) => {
+        const updated = await api.quests.updateProgress(updates)
+        set((s) => ({
+          userQuests: s.userQuests.map(uq => {
             const u = updated.find(r => r.id === uq.id)
             return u ? { ...uq, progress: u.progress, completed: u.completed } : uq
           }),
         }))
       } catch (e) {
-        console.warn('evaluateAndSyncQuests updateProgress failed:', e)
+        console.warn('evaluateAndSyncQuests failed:', e)
       }
     },
 
-    // ── Claim a completed quest reward ───────────────────────
-    claimQuest: async (userQuestId: number) => {
-      const state = get()
-      const user:       UserLike        = state.user
-      const userQuests: UserQuestRow[]  = state.userQuests ?? []
+    // ── Claim reward for a completed quest ───────────────────────
+    claimQuest: async (userQuestId) => {
+      const state      = get()
+      const user       = state.user
+      const userQuests = state.userQuests ?? []
 
       if (!user) return { success: false, stars: 0 }
 
@@ -227,9 +180,9 @@ export function createQuestSlice(
           api.user.update(user.id, { stars: newStars }),
         ])
 
-        set((s: any) => ({
+        set((s) => ({
           user: updatedUser,
-          userQuests: s.userQuests.map((q: UserQuestRow) =>
+          userQuests: s.userQuests.map(q =>
             q.id === userQuestId
               ? { ...q, claimed: true, claimedAt: new Date().toISOString() }
               : q
@@ -243,9 +196,8 @@ export function createQuestSlice(
       }
     },
 
-    // ── Helpers ──────────────────────────────────────────────
     getActiveUserQuests: () => {
-      const { userQuests } = get() as { userQuests: UserQuestRow[] }
+      const { userQuests } = get()
       const now = new Date()
       return (userQuests ?? []).filter(uq => {
         if (uq.claimed) return false
@@ -255,7 +207,7 @@ export function createQuestSlice(
     },
 
     getClaimableQuests: () => {
-      const { userQuests } = get() as { userQuests: UserQuestRow[] }
+      const { userQuests } = get()
       const now = new Date()
       return (userQuests ?? []).filter(uq => {
         if (!uq.completed || uq.claimed) return false
@@ -264,4 +216,27 @@ export function createQuestSlice(
       })
     },
   }
+}
+
+// ── Type exports ──────────────────────────────────────────────
+export type QuestRow = {
+  id: number; key: string; title: string; description: string; flavour: string
+  tier: 'daily' | 'weekly' | 'epic'; icon: string; starReward: number
+  condition: string; target: number; sortOrder: number; isActive: boolean
+}
+
+export type UserQuestRow = {
+  id: number; userId: number; questId: number; assignedAt: string
+  expiresAt: string | null; progress: number; completed: boolean
+  claimed: boolean; claimedAt: string | null; quest: QuestRow
+}
+
+export type QuestSliceState = {
+  allQuests: QuestRow[]; userQuests: UserQuestRow[]; questsLoading: boolean
+  loadQuests: (userId: number) => Promise<void>
+  refreshQuests: (userId: number) => Promise<void>
+  evaluateAndSyncQuests: () => Promise<void>
+  claimQuest: (userQuestId: number) => Promise<{ success: boolean; stars: number }>
+  getActiveUserQuests: () => UserQuestRow[]
+  getClaimableQuests: () => UserQuestRow[]
 }

@@ -34,10 +34,12 @@ function QuestCard({
   uq,
   onClaim,
   claiming,
+  activeHabitsCount,
 }: {
-  uq:       UserQuestRow
-  onClaim:  (id: number) => void
-  claiming: number | null
+  uq:               UserQuestRow
+  onClaim:          (id: number) => void
+  claiming:         number | null
+  activeHabitsCount: number
 }) {
   const [hovered, setHovered] = useState(false)
   const now      = new Date()
@@ -48,8 +50,11 @@ function QuestCard({
                   : uq.quest.tier === 'weekly' ? '#3b82f6'
                   : '#e8a55a'
 
-  const pct = uq.quest.target > 0
-    ? Math.round((uq.progress / uq.quest.target) * 100)
+  // For perfect_day quests the DB target is 1 (boolean flag).
+  // Real target is the number of active habits — use activeHabitsCount.
+  const displayTarget = uq.quest.condition === 'perfect_day' ? activeHabitsCount : uq.quest.target
+  const pct = displayTarget > 0
+    ? Math.round((uq.progress / displayTarget) * 100)
     : 0
 
   const statusColor = uq.claimed
@@ -204,7 +209,7 @@ function QuestCard({
             Progress
           </span>
           <span style={{ fontSize: 11, fontWeight: 700, color: statusColor }}>
-            {uq.progress} / {uq.quest.target}
+            {uq.progress} / {displayTarget}
             {uq.completed && !uq.claimed && <span style={{ marginLeft: 6 }}>— Ready to claim!</span>}
           </span>
         </div>
@@ -289,10 +294,11 @@ function QuestCard({
 // ── Main Quests Page ───────────────────────────────────────────
 export default function Quests() {
   const {
-    user, loading, loadAll,
-    loadQuests, refreshQuests, evaluateAndSyncQuests,
+    user, habits, loading, loadAll,
+    evaluateAndSyncQuests,
     claimQuest, getActiveUserQuests, userQuests,
   } = useStore() as any
+  const activeHabitsCount = (habits ?? []).filter((h: any) => !h.isArchived).length
 
   const navigate  = useNavigate()
   const [tier, setTier]         = useState<Tier>('daily')
@@ -301,19 +307,17 @@ export default function Quests() {
   const [showClaimed, setShowClaimed] = useState(false)
 
   useEffect(() => {
+    // loadAll already runs loadQuests + refreshQuests + evaluateAndSyncQuests.
+    // Only call loadAll if store not yet loaded (e.g. direct nav to /quests).
     async function init() {
-      if (!user) await loadAll(DEMO_USER_ID)
-      await loadQuests(DEMO_USER_ID)
-      await refreshQuests(DEMO_USER_ID)
-      await evaluateAndSyncQuests()
+      if (!user) {
+        await loadAll(DEMO_USER_ID)
+      } else {
+        await evaluateAndSyncQuests()
+      }
     }
     init()
   }, [])
-
-  // Re-evaluate whenever logs change
-  useEffect(() => {
-    if (user) evaluateAndSyncQuests()
-  }, [user])
 
   const now     = new Date()
   const allUQs  = (userQuests as UserQuestRow[]) ?? []
@@ -337,8 +341,26 @@ export default function Quests() {
 
   // Claimed quests for current tier
   const claimedTierQuests = useMemo(() => {
+    const now2 = new Date()
     return allUQs
-      .filter(uq => uq.quest.tier === tier && uq.claimed)
+      .filter(uq => {
+        if (uq.quest.tier !== tier || !uq.claimed || !uq.claimedAt) return false
+        const claimedAt = new Date(uq.claimedAt)
+        if (tier === 'daily') {
+          // Only show quests claimed today
+          return claimedAt.toDateString() === now2.toDateString()
+        } else if (tier === 'weekly') {
+          // Only show quests claimed this calendar week (Sun–Sat)
+          const weekStart = new Date(now2)
+          weekStart.setDate(now2.getDate() - now2.getDay())
+          weekStart.setHours(0, 0, 0, 0)
+          return claimedAt >= weekStart
+        } else {
+          // Epic: show quests claimed this calendar month
+          return claimedAt.getFullYear() === now2.getFullYear() &&
+                 claimedAt.getMonth()    === now2.getMonth()
+        }
+      })
       .sort((a, b) => new Date(b.claimedAt ?? 0).getTime() - new Date(a.claimedAt ?? 0).getTime())
   }, [allUQs, tier])
 
@@ -537,7 +559,7 @@ export default function Quests() {
         ) : (
           <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
             {activeTierQuests.map(uq => (
-              <QuestCard key={uq.id} uq={uq} onClaim={handleClaim} claiming={claiming} />
+              <QuestCard key={uq.id} uq={uq} onClaim={handleClaim} claiming={claiming} activeHabitsCount={activeHabitsCount} />
             ))}
           </div>
         )}
@@ -568,7 +590,7 @@ export default function Quests() {
             {showClaimed && (
               <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
                 {claimedTierQuests.map(uq => (
-                  <QuestCard key={uq.id} uq={uq} onClaim={handleClaim} claiming={claiming} />
+                  <QuestCard key={uq.id} uq={uq} onClaim={handleClaim} claiming={claiming} activeHabitsCount={activeHabitsCount} />
                 ))}
               </div>
             )}

@@ -128,28 +128,50 @@ ipcMain.handle('quests:userQuests', async (_, userId: number) =>
 ipcMain.handle('quests:assignBatch', async (_, userId: number, items: Array<{ questId: number; expiresAt: string | null }>) => {
   const results = []
   for (const item of items) {
-    // For epic quests: only create if not already existing
-    const existing = await prisma.userQuest.findFirst({
-      where: {
-        userId,
-        questId: item.questId,
-        // For epic (no expiry): check any record; for daily/weekly: allow duplicates across periods
-        ...(item.expiresAt === null ? {} : {}),
-      },
-    })
-    // Always create a new row for daily/weekly; for epic only if none exists
     const quest = await prisma.quest.findUnique({ where: { id: item.questId } })
     if (!quest) continue
-    if (quest.tier === 'epic' && existing) continue  // Epic: only one ever
+
+    // ── Per-tier dedup check ──────────────────────────────────
+    if (quest.tier === 'epic') {
+      // Epic: only ever one row, no expiry
+      const exists = await prisma.userQuest.findFirst({ where: { userId, questId: item.questId } })
+      if (exists) continue
+
+    } else if (quest.tier === 'daily') {
+      // Daily: only one row per calendar day (match by expiry date = today)
+      const expiryDate = item.expiresAt ? new Date(item.expiresAt) : null
+      if (expiryDate) {
+        const startOfDay = new Date(expiryDate)
+        startOfDay.setHours(0, 0, 0, 0)
+        const exists = await prisma.userQuest.findFirst({
+          where: { userId, questId: item.questId, expiresAt: { gte: startOfDay, lte: expiryDate } },
+        })
+        if (exists) continue
+      }
+
+    } else if (quest.tier === 'weekly') {
+      // Weekly: only one row per week (expiry falls within Sun–Sat of current week)
+      const expiryDate = item.expiresAt ? new Date(item.expiresAt) : null
+      if (expiryDate) {
+        // Start of the week = last Sunday
+        const weekStart = new Date(expiryDate)
+        weekStart.setDate(expiryDate.getDate() - expiryDate.getDay())
+        weekStart.setHours(0, 0, 0, 0)
+        const exists = await prisma.userQuest.findFirst({
+          where: { userId, questId: item.questId, expiresAt: { gte: weekStart, lte: expiryDate } },
+        })
+        if (exists) continue
+      }
+    }
 
     const created = await prisma.userQuest.create({
       data: {
         userId,
-        questId:    item.questId,
-        expiresAt:  item.expiresAt ? new Date(item.expiresAt) : null,
-        progress:   0,
-        completed:  false,
-        claimed:    false,
+        questId:   item.questId,
+        expiresAt: item.expiresAt ? new Date(item.expiresAt) : null,
+        progress:  0,
+        completed: false,
+        claimed:   false,
       },
       include: { quest: true },
     })
