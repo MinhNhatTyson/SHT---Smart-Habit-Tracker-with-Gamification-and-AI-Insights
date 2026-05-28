@@ -29,6 +29,13 @@ electron_1.contextBridge.exposeInMainWorld('api', {
         userPurchases: (userId) => electron_1.ipcRenderer.invoke('store:userPurchases', userId),
         purchase: (userId, itemKey) => electron_1.ipcRenderer.invoke('store:purchase', userId, itemKey),
     },
+    // ── Goals ─────────────────────────────────────────────────
+    goals: {
+        list: (userId) => electron_1.ipcRenderer.invoke('goals:list', userId),
+        create: (data) => electron_1.ipcRenderer.invoke('goals:create', data),
+        update: (id, data) => electron_1.ipcRenderer.invoke('goals:update', id, data),
+        delete: (id) => electron_1.ipcRenderer.invoke('goals:delete', id),
+    },
     // ── Quests ────────────────────────────────────────────────
     quests: {
         list: () => electron_1.ipcRenderer.invoke('quests:list'),

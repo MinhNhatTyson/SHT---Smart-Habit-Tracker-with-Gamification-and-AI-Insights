@@ -1,11 +1,12 @@
 // src/renderer/store/useStore.ts
-// Global Zustand store — user, habits, logs, badges, store, quests.
+// Global Zustand store — user, habits, logs, badges, store, quests, goals.
 
 import { create } from 'zustand'
 import { checkBadges } from '../lib/badgeEngine'
 import { applyThemeFromPayload, resetTheme } from '../lib/themeEngine'
 import { playHabitSound, playBadgeSound, SoundNote } from '../lib/soundEngine'
 import { createQuestSlice, QuestSliceState, QuestRow, UserQuestRow } from './questStore'
+import { createGoalSlice, GoalSliceState, GoalRow } from './goalStore'
 
 // ── Types ─────────────────────────────────────────────────────
 export interface User {
@@ -98,8 +99,8 @@ export interface UserPurchase {
   quantity:    number
 }
 
-// Re-export quest types so pages can import from one place
-export type { QuestRow, UserQuestRow }
+// Re-export types
+export type { QuestRow, UserQuestRow, GoalRow }
 
 // ── XP / Level helpers ────────────────────────────────────────
 export const XP_PER_LEVEL  = 100
@@ -151,7 +152,7 @@ export function calculateStreaks(logs: HabitLog[]): { currentStreak: number; lon
 }
 
 // ── Store interface ───────────────────────────────────────────
-interface AppState extends QuestSliceState {
+interface AppState extends QuestSliceState, GoalSliceState {
   user:              User | null
   habits:            Habit[]
   logs:              HabitLog[]
@@ -277,8 +278,9 @@ export const useStore = create<AppState>((set, get) => ({
   newlyEarnedBadges: [],
   activeCalSkin:     'default',
 
-  // ── Quest slice (spread in) ───────────────────────────────
+  // ── Slices (spread in) ────────────────────────────────────
   ...createQuestSlice(set as any, get as any),
+  ...createGoalSlice(set as any, get as any),
 
   clearNewBadges: () => set({ newlyEarnedBadges: [] }),
 
@@ -324,6 +326,14 @@ export const useStore = create<AppState>((set, get) => ({
 
       await runBadgeCheck(get, set, { habits, logs, userBadges, currentStreak: freshUser.currentStreak, level: freshUser.level }, false)
 
+      // Load goals
+      try {
+        await (get() as AppState).loadGoals(userId)
+        ;(get() as AppState).refreshGoalProgress()
+      } catch (ge) {
+        console.warn('Goal load failed (non-critical):', ge)
+      }
+
       // Load + refresh quests after main data is ready
       try {
         await (get() as AppState).loadQuests(userId)
@@ -359,8 +369,9 @@ export const useStore = create<AppState>((set, get) => ({
 
       await runBadgeCheck(get, set, { logs: updatedLogs, currentStreak: updated.currentStreak, level: updated.level }, true)
 
-      // Re-evaluate quests after logging
+      // Re-evaluate quests + goals after logging
       try { await (get() as AppState).evaluateAndSyncQuests() } catch {}
+      try { (get() as AppState).refreshGoalProgress() } catch {}
     } catch (e: any) { set({ error: e.message ?? 'Failed to log habit' }) }
   },
 
@@ -379,6 +390,7 @@ export const useStore = create<AppState>((set, get) => ({
       api.reminders.refresh().catch(() => {})
       await runBadgeCheck(get, set, { habits: newHabits }, true)
       try { await (get() as AppState).evaluateAndSyncQuests() } catch {}
+      try { (get() as AppState).refreshGoalProgress() } catch {}
     } catch (e: any) { set({ error: e.message ?? 'Failed to create habit' }) }
   },
 

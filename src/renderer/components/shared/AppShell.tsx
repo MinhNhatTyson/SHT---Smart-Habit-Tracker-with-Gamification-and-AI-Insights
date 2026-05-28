@@ -1,9 +1,9 @@
 // src/renderer/components/shared/AppShell.tsx
 // Persistent sidebar + main content wrapper.
-// Changes: Store nav link added, Stars chip, streak shield auto-consumption on load.
+// Goals nav link added alongside Insights.
 
 import { NavLink } from 'react-router-dom'
-import { LayoutDashboard, Flame, Trophy, Sparkles, Users, Settings, Zap, CalendarDays, ShoppingBag } from 'lucide-react'
+import { LayoutDashboard, Flame, Trophy, Sparkles, Users, Settings, Zap, CalendarDays, ShoppingBag, Target } from 'lucide-react'
 import { useStore, getXpPercent, getXpProgress, XP_PER_LEVEL } from '../../store/useStore'
 import { useEffect, useRef } from 'react'
 import BadgeToast from './BadgeToast'
@@ -14,6 +14,7 @@ const NAV = [
   { to: '/habits',       icon: Flame,           label: 'Habits'     },
   { to: '/gamification', icon: Trophy,          label: 'Rewards'    },
   { to: '/store',        icon: ShoppingBag,     label: 'Store'      },
+  { to: '/goals',        icon: Target,          label: 'Goals'      },
   { to: '/insights',     icon: Sparkles,        label: 'Insights'   },
   { to: '/social',       icon: Users,           label: 'Social'     },
   { to: '/calendar',     icon: CalendarDays,    label: 'Calendar'   },
@@ -27,14 +28,10 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
   useEffect(() => { if (!user) loadAll(1) }, [])
 
   // ── Streak shield auto-consumption ───────────────────────────
-  // On every load, if the user has a shield armed and their streak
-  // dropped to 0 (missed a day), consume the shield and restore streak to 1.
   useEffect(() => {
     if (!user || shieldChecked.current) return
     shieldChecked.current = true
-
     if (user.streakShieldActive && user.currentStreak === 0) {
-      // Shield absorbs the missed day — restore streak to 1 and disarm shield
       updateProfile({ streakShieldActive: false, currentStreak: 1 }).catch(() => {})
     }
   }, [user?.id])
@@ -70,7 +67,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
           })}>
             <Icon size={16} />
             {label}
-            {/* Shield indicator */}
+            {/* Shield indicator on Dashboard */}
             {to === '/dashboard' && user?.streakShieldActive && (
               <span title="Streak Shield armed" style={{ marginLeft: 'auto', fontSize: 13 }}>🛡️</span>
             )}

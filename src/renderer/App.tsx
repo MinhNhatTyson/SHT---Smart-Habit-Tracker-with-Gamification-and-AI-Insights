@@ -9,6 +9,7 @@ import Settings     from './pages/Settings'
 import CalendarPage from './pages/Calendar'
 import Store        from './pages/Store'
 import Quests       from './pages/Quests'
+import Goals        from './pages/Goals'
 import AppShell     from './components/shared/AppShell'
 
 export default function App() {
@@ -21,6 +22,7 @@ export default function App() {
         <Route path="/gamification" element={<Gamification />} />
         <Route path="/store"        element={<Store />} />
         <Route path="/insights"     element={<Insights />} />
+        <Route path="/goals"        element={<Goals />} />
         <Route path="/social"       element={<Social />} />
         <Route path="/calendar"     element={<CalendarPage />} />
         <Route path="/settings"     element={<Settings />} />

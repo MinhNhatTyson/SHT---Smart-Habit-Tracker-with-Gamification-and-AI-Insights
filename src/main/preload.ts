@@ -28,6 +28,13 @@ contextBridge.exposeInMainWorld('api', {
     userPurchases: (userId: number)                    => ipcRenderer.invoke('store:userPurchases', userId),
     purchase:      (userId: number, itemKey: string)   => ipcRenderer.invoke('store:purchase', userId, itemKey),
   },
+  // ── Goals ─────────────────────────────────────────────────
+  goals: {
+    list:   (userId: number)          => ipcRenderer.invoke('goals:list', userId),
+    create: (data: any)               => ipcRenderer.invoke('goals:create', data),
+    update: (id: number, data: any)   => ipcRenderer.invoke('goals:update', id, data),
+    delete: (id: number)              => ipcRenderer.invoke('goals:delete', id),
+  },
   // ── Quests ────────────────────────────────────────────────
   quests: {
     list:           ()                                                    => ipcRenderer.invoke('quests:list'),

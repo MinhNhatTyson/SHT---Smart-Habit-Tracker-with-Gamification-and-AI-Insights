@@ -1,6 +1,7 @@
 "use strict";
 // src/main/index.ts
-// Electron Main Process — window, database bridge, reminder scheduler, store IPC, quests IPC.
+// Electron Main Process — window, database bridge, reminder scheduler,
+// store IPC, quests IPC, goals IPC.
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -115,31 +116,36 @@ electron_1.ipcMain.handle('store:purchase', async (_, userId, itemKey) => {
         create: { userId, itemKey, quantity: 1 },
     });
 });
+// ── GOALS ─────────────────────────────────────────────────────
+electron_1.ipcMain.handle('goals:list', async (_, userId) => prisma.goal.findMany({
+    where: { userId },
+    orderBy: { createdAt: 'desc' },
+}));
+electron_1.ipcMain.handle('goals:create', async (_, data) => prisma.goal.create({ data }));
+electron_1.ipcMain.handle('goals:update', async (_, id, data) => prisma.goal.update({
+    where: { id },
+    data: { ...data, updatedAt: new Date() },
+}));
+electron_1.ipcMain.handle('goals:delete', async (_, id) => prisma.goal.delete({ where: { id } }));
 // ── QUESTS ────────────────────────────────────────────────────
-// List all active quest definitions
 electron_1.ipcMain.handle('quests:list', async () => prisma.quest.findMany({ where: { isActive: true }, orderBy: { sortOrder: 'asc' } }));
-// Get all UserQuest rows for a user, with the quest definition included
 electron_1.ipcMain.handle('quests:userQuests', async (_, userId) => prisma.userQuest.findMany({
     where: { userId },
     include: { quest: true },
     orderBy: { assignedAt: 'desc' },
 }));
-// Batch-assign quests to a user (called on refresh)
 electron_1.ipcMain.handle('quests:assignBatch', async (_, userId, items) => {
     const results = [];
     for (const item of items) {
         const quest = await prisma.quest.findUnique({ where: { id: item.questId } });
         if (!quest)
             continue;
-        // ── Per-tier dedup check ──────────────────────────────────
         if (quest.tier === 'epic') {
-            // Epic: only ever one row, no expiry
             const exists = await prisma.userQuest.findFirst({ where: { userId, questId: item.questId } });
             if (exists)
                 continue;
         }
         else if (quest.tier === 'daily') {
-            // Daily: only one row per calendar day (match by expiry date = today)
             const expiryDate = item.expiresAt ? new Date(item.expiresAt) : null;
             if (expiryDate) {
                 const startOfDay = new Date(expiryDate);
@@ -152,10 +158,8 @@ electron_1.ipcMain.handle('quests:assignBatch', async (_, userId, items) => {
             }
         }
         else if (quest.tier === 'weekly') {
-            // Weekly: only one row per week (expiry falls within Sun–Sat of current week)
             const expiryDate = item.expiresAt ? new Date(item.expiresAt) : null;
             if (expiryDate) {
-                // Start of the week = last Sunday
                 const weekStart = new Date(expiryDate);
                 weekStart.setDate(expiryDate.getDate() - expiryDate.getDay());
                 weekStart.setHours(0, 0, 0, 0);
@@ -181,7 +185,6 @@ electron_1.ipcMain.handle('quests:assignBatch', async (_, userId, items) => {
     }
     return results;
 });
-// Batch-update progress on multiple UserQuest rows
 electron_1.ipcMain.handle('quests:updateProgress', async (_, updates) => {
     const results = [];
     for (const u of updates) {
@@ -194,14 +197,13 @@ electron_1.ipcMain.handle('quests:updateProgress', async (_, updates) => {
     }
     return results;
 });
-// Mark a UserQuest as claimed
 electron_1.ipcMain.handle('quests:claim', async (_, userQuestId) => prisma.userQuest.update({
     where: { id: userQuestId },
     data: { claimed: true, claimedAt: new Date() },
     include: { quest: true },
 }));
 // ── AI INSIGHTS ───────────────────────────────────────────────
-electron_1.ipcMain.handle('insights:list', async (_, userId) => prisma.aIInsight.findMany({ where: { userId }, orderBy: { generatedAt: 'desc' }, take: 20 }));
+electron_1.ipcMain.handle('insights:list', async (_, userId) => prisma.aIInsight.findMany({ where: { userId }, orderBy: { generatedAt: 'desc' }, take: 50 }));
 electron_1.ipcMain.handle('insights:create', async (_, data) => prisma.aIInsight.create({ data }));
 electron_1.ipcMain.handle('insights:markRead', async (_, id) => prisma.aIInsight.update({ where: { id }, data: { isRead: true } }));
 // ── SOCIAL ────────────────────────────────────────────────────
