@@ -183,7 +183,15 @@ export default function Insights() {
           habitId: l.habitId, 
           completedAt: typeof l.completedAt === 'string' ? l.completedAt : new Date(l.completedAt).toISOString()
         })),
-        goals: (goals ?? []).map((g: any) => ({ id: g.id, title: g.title, category: g.category, targetType: g.targetType, targetValue: g.targetValue, currentValue: g.currentValue, unit: g.unit, deadline: g.deadline, status: g.status, priority: g.priority })),
+        goals: (goals ?? []).map((g: any) => ({ 
+          id: g.id, title: g.title, category: g.category, 
+          targetType: g.targetType, targetValue: g.targetValue, 
+          currentValue: g.currentValue, unit: g.unit, 
+          deadline: g.deadline 
+            ? (typeof g.deadline === 'string' ? g.deadline : new Date(g.deadline).toISOString()) 
+            : null, 
+          status: g.status, priority: g.priority 
+        })),
         recentStats: stats,
       }
       const generated: GeneratedInsight[] = await generateInsights(req)

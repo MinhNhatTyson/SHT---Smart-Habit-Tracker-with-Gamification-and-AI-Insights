@@ -252,3 +252,41 @@ ipcMain.handle('dialog:openImage', async () => {
   const mime     = ext === 'png' ? 'image/png' : ext === 'gif' ? 'image/gif' : ext === 'webp' ? 'image/webp' : 'image/jpeg'
   return `data:${mime};base64,${buffer.toString('base64')}`
 })
+
+// ── AI INSIGHTS GENERATION ────────────────────────────────────
+ipcMain.handle('ai:generateInsights', async (_, { systemPrompt, userPrompt }) => {
+  const https = await import('https')
+  
+  return new Promise((resolve, reject) => {
+    const body = JSON.stringify({
+      model:      'claude-sonnet-4-20250514',
+      max_tokens: 1000,
+      system:     systemPrompt,
+      messages:   [{ role: 'user', content: userPrompt }],
+    })
+
+    const options = {
+      hostname: 'api.anthropic.com',
+      path:     '/v1/messages',
+      method:   'POST',
+      headers: {
+        'Content-Type':      'application/json',
+        'x-api-key':         process.env.ANTHROPIC_API_KEY ?? '',
+        'anthropic-version': '2023-06-01',
+      },
+    }
+
+    const req = https.request(options, (res) => {
+      let data = ''
+      res.on('data', chunk => data += chunk)
+      res.on('end', () => {
+        try { resolve(JSON.parse(data)) }
+        catch (e) { reject(new Error('Failed to parse response')) }
+      })
+    })
+
+    req.on('error', reject)
+    req.write(body)
+    req.end()
+  })
+})

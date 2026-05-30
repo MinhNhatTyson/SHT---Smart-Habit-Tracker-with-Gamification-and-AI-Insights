@@ -130,7 +130,7 @@ export async function generateInsights(req: InsightRequest): Promise<GeneratedIn
     ? 'No goals set yet.'
     : req.goals.map(g => {
         const pct  = g.targetValue > 0 ? Math.round((g.currentValue / g.targetValue) * 100) : 0
-        const dl   = g.deadline ? `deadline: ${g.deadline.slice(0, 10)}` : 'no deadline'
+        const dl   = g.deadline ? `deadline: ${typeof g.deadline === 'string' ? g.deadline.slice(0, 10) : new Date(g.deadline).toISOString().slice(0, 10)}` : 'no deadline'
         return `- ${g.title} (${g.category}, ${g.priority} priority): ${g.currentValue}/${g.targetValue} ${g.unit ?? ''} — ${pct}% — ${dl} — status: ${g.status}`
       }).join('\n')
 
@@ -176,23 +176,13 @@ ${goalSummary}
 
 Generate 4-6 personalised insights as a JSON array. Remember: ONLY the JSON array, nothing else.`
 
-  const response = await fetch('https://api.anthropic.com/v1/messages', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      model:      'claude-sonnet-4-20250514',
-      max_tokens: 1000,
-      system:     systemPrompt,
-      messages:   [{ role: 'user', content: userPrompt }],
-    }),
-  })
+  const api = (window as any).api
+  const data = await api.ai.generateInsights({ systemPrompt, userPrompt })
 
-  if (!response.ok) {
-    const err = await response.json().catch(() => ({}))
-    throw new Error(`Claude API error: ${(err as any)?.error?.message ?? response.status}`)
+  if (data.error) {
+    throw new Error(`Claude API error: ${data.error.message ?? 'Unknown error'}`)
   }
 
-  const data = await response.json()
   const rawText = (data.content as Array<{ type: string; text?: string }>)
     .filter(b => b.type === 'text')
     .map(b => b.text ?? '')

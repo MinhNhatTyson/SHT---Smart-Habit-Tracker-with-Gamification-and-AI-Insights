@@ -62,4 +62,8 @@ contextBridge.exposeInMainWorld('api', {
   dialog: {
     openImage: () => ipcRenderer.invoke('dialog:openImage'),
   },
+  ai: {
+    generateInsights: (payload: { systemPrompt: string; userPrompt: string }) =>
+      ipcRenderer.invoke('ai:generateInsights', payload),
+  },
 })
