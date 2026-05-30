@@ -121,11 +121,26 @@ electron_1.ipcMain.handle('goals:list', async (_, userId) => prisma.goal.findMan
     where: { userId },
     orderBy: { createdAt: 'desc' },
 }));
-electron_1.ipcMain.handle('goals:create', async (_, data) => prisma.goal.create({ data }));
-electron_1.ipcMain.handle('goals:update', async (_, id, data) => prisma.goal.update({
-    where: { id },
-    data: { ...data, updatedAt: new Date() },
-}));
+electron_1.ipcMain.handle('goals:create', async (_, data) => {
+    const sanitized = {
+        ...data,
+        deadline: data.deadline && data.deadline !== '' ? new Date(data.deadline) : null,
+        description: data.description && data.description !== '' ? data.description : null,
+    };
+    return prisma.goal.create({ data: sanitized });
+});
+electron_1.ipcMain.handle('goals:update', async (_, id, data) => {
+    const sanitized = { ...data, updatedAt: new Date() };
+    if ('deadline' in sanitized) {
+        sanitized.deadline = sanitized.deadline && sanitized.deadline !== ''
+            ? new Date(sanitized.deadline)
+            : null;
+    }
+    if ('description' in sanitized && sanitized.description === '') {
+        sanitized.description = null;
+    }
+    return prisma.goal.update({ where: { id }, data: sanitized });
+});
 electron_1.ipcMain.handle('goals:delete', async (_, id) => prisma.goal.delete({ where: { id } }));
 // ── QUESTS ────────────────────────────────────────────────────
 electron_1.ipcMain.handle('quests:list', async () => prisma.quest.findMany({ where: { isActive: true }, orderBy: { sortOrder: 'asc' } }));

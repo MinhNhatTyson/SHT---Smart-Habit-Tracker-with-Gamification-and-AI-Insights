@@ -60,18 +60,20 @@ export function computeInsightStats(
   const todayStr    = now.toISOString().slice(0, 10)
   const weekAgo     = new Date(Date.now() - 7  * 24 * 60 * 60 * 1000)
   const thirtyAgo   = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000)
-
+  
+const toStr = (val: string | Date): string =>
+    typeof val === 'string' ? val.slice(0, 10) : val.toISOString().slice(0, 10)
   const activeHabits     = habits.filter(h => !h.isArchived)
   const activeHabitIds   = new Set(activeHabits.map(h => h.id))
 
   // Week completion rate
   const weekLogs         = logs.filter(l => new Date(l.completedAt) >= weekAgo)
-  const weekDaySet       = new Set(weekLogs.filter(l => activeHabitIds.has(l.habitId)).map(l => l.completedAt.slice(0, 10)))
+  const weekDaySet       = new Set(weekLogs.filter(l => activeHabitIds.has(l.habitId)).map(l => toStr(l.completedAt)))
   const completionRateThisWeek = Math.round((weekDaySet.size / 7) * 100)
 
   // 30-day completion rate
   const thirtyLogs       = logs.filter(l => new Date(l.completedAt) >= thirtyAgo)
-  const thirtyDaySet     = new Set(thirtyLogs.filter(l => activeHabitIds.has(l.habitId)).map(l => l.completedAt.slice(0, 10)))
+  const thirtyDaySet     = new Set(thirtyLogs.filter(l => activeHabitIds.has(l.habitId)).map(l => toStr(l.completedAt)))
   const completionRateLast30 = Math.round((thirtyDaySet.size / 30) * 100)
 
   // Category analysis — last 30 days
@@ -90,7 +92,7 @@ export function computeInsightStats(
   }, activeCats[0] ?? 'None')
 
   // Streak at risk — no logs today
-  const todayLogs    = logs.filter(l => l.completedAt.slice(0, 10) === todayStr)
+  const todayLogs    = logs.filter(l => toStr(l.completedAt) === todayStr)
   const streakAtRisk = todayLogs.length === 0
 
   // Perfect days this week
@@ -98,7 +100,7 @@ export function computeInsightStats(
   for (let i = 0; i < 7; i++) {
     const d = new Date(weekAgo); d.setDate(d.getDate() + i + 1)
     const ds = d.toISOString().slice(0, 10)
-    const dayIds = new Set(logs.filter(l => l.completedAt.slice(0, 10) === ds).map(l => l.habitId))
+    const dayIds = new Set(logs.filter(l => toStr(l.completedAt) === ds).map(l => l.habitId))
     if (activeHabits.length > 0 && activeHabits.every(h => dayIds.has(h.id))) perfectDaysThisWeek++
   }
 

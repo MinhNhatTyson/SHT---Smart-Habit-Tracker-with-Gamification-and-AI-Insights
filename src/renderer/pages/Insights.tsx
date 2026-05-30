@@ -179,7 +179,10 @@ export default function Insights() {
       const req = {
         user: { level: user.level, currentStreak: user.currentStreak, longestStreak: user.longestStreak, totalPoints: user.totalPoints },
         habits: habits.map((h: any) => ({ id: h.id, name: h.name, category: h.category, frequency: h.frequency, targetDaysPerWeek: h.targetDaysPerWeek, isArchived: h.isArchived })),
-        logs: logs.map((l: any) => ({ habitId: l.habitId, completedAt: l.completedAt })),
+        logs: logs.map((l: any) => ({ 
+          habitId: l.habitId, 
+          completedAt: typeof l.completedAt === 'string' ? l.completedAt : new Date(l.completedAt).toISOString()
+        })),
         goals: (goals ?? []).map((g: any) => ({ id: g.id, title: g.title, category: g.category, targetType: g.targetType, targetValue: g.targetValue, currentValue: g.currentValue, unit: g.unit, deadline: g.deadline, status: g.status, priority: g.priority })),
         recentStats: stats,
       }

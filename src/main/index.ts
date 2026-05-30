@@ -117,16 +117,27 @@ ipcMain.handle('goals:list', async (_, userId: number) =>
   })
 )
 
-ipcMain.handle('goals:create', async (_, data: any) =>
-  prisma.goal.create({ data })
-)
+ipcMain.handle('goals:create', async (_, data: any) => {
+  const sanitized = {
+    ...data,
+    deadline:    data.deadline    && data.deadline    !== '' ? new Date(data.deadline)    : null,
+    description: data.description && data.description !== '' ? data.description : null,
+  }
+  return prisma.goal.create({ data: sanitized })
+})
 
-ipcMain.handle('goals:update', async (_, id: number, data: any) =>
-  prisma.goal.update({
-    where: { id },
-    data:  { ...data, updatedAt: new Date() },
-  })
-)
+ipcMain.handle('goals:update', async (_, id: number, data: any) => {
+  const sanitized: any = { ...data, updatedAt: new Date() }
+  if ('deadline' in sanitized) {
+    sanitized.deadline = sanitized.deadline && sanitized.deadline !== ''
+      ? new Date(sanitized.deadline)
+      : null
+  }
+  if ('description' in sanitized && sanitized.description === '') {
+    sanitized.description = null
+  }
+  return prisma.goal.update({ where: { id }, data: sanitized })
+})
 
 ipcMain.handle('goals:delete', async (_, id: number) =>
   prisma.goal.delete({ where: { id } })
