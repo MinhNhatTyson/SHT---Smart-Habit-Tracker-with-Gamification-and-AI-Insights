@@ -252,7 +252,7 @@ export default function Habits() {
             {atCap && <span style={{ fontSize: 11, color: 'var(--accent-danger)', fontWeight: 600 }}>· Limit reached</span>}
           </div>
           {atCap && (
-            <button onClick={() => navigate('/store')} style={{ display: 'flex', alignItems: 'center', gap: 5, padding: '5px 12px', borderRadius: 'var(--radius-full)', border: '1px solid var(--coral)', background: 'rgba(204,120,92,0.10)', color: 'var(--coral)', fontSize: 12, fontWeight: 600, cursor: 'pointer' }}>
+            <button onClick={() => navigate('/store?category=slot')} style={{ display: 'flex', alignItems: 'center', gap: 5, padding: '5px 12px', borderRadius: 'var(--radius-full)', border: '1px solid var(--coral)', background: 'rgba(204,120,92,0.10)', color: 'var(--coral)', fontSize: 12, fontWeight: 600, cursor: 'pointer' }}>
               <ShoppingBag size={11} /> Buy more slots
             </button>
           )}
@@ -262,7 +262,7 @@ export default function Habits() {
         {error && error.includes('slot') && (
           <div style={{ padding: '12px 16px', borderRadius: 'var(--radius-md)', background: 'rgba(239,68,68,0.08)', border: '1px solid rgba(239,68,68,0.25)', color: 'var(--accent-danger)', fontSize: 13, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
             <span>{error}</span>
-            <button onClick={() => navigate('/store')} style={{ padding: '4px 12px', borderRadius: 'var(--radius-full)', border: '1px solid rgba(239,68,68,0.4)', background: 'transparent', color: 'var(--accent-danger)', fontSize: 12, fontWeight: 600, cursor: 'pointer' }}>Open Store</button>
+            <button onClick={() => navigate('/store?category=slot')} style={{ padding: '4px 12px', borderRadius: 'var(--radius-full)', border: '1px solid rgba(239,68,68,0.4)', background: 'transparent', color: 'var(--accent-danger)', fontSize: 12, fontWeight: 600, cursor: 'pointer' }}>Open Store</button>
           </div>
         )}
 

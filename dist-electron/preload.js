@@ -63,4 +63,7 @@ electron_1.contextBridge.exposeInMainWorld('api', {
     dialog: {
         openImage: () => electron_1.ipcRenderer.invoke('dialog:openImage'),
     },
+    ai: {
+        generateInsights: (payload) => electron_1.ipcRenderer.invoke('ai:generateInsights', payload),
+    },
 });

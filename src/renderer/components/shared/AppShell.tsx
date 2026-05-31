@@ -7,6 +7,7 @@ import { LayoutDashboard, Flame, Trophy, Sparkles, Users, Settings, Zap, Calenda
 import { useStore, getXpPercent, getXpProgress, XP_PER_LEVEL } from '../../store/useStore'
 import { useEffect, useRef } from 'react'
 import BadgeToast from './BadgeToast'
+import MotivationCenter from './MotivationCenter'
 import { Star } from 'lucide-react'
 
 const NAV = [
@@ -121,6 +122,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
       </main>
 
       <BadgeToast />
+      <MotivationCenter />
     </div>
   )
 }

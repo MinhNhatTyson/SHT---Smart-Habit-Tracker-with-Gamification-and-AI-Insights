@@ -10,6 +10,7 @@
 // Design.md: dark navy hero, cream canvas cards, coral CTAs, Syne display
 
 import { useEffect, useState, useMemo } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import { Star, ShoppingBag, Check, Volume2, Palette, Shield, Plus,
          Calendar, User, Sparkles, Play } from 'lucide-react'
 import { useStore, StoreItem, UserPurchase } from '../store/useStore'
@@ -376,7 +377,8 @@ export default function Store() {
   const { user, storeItems, userPurchases, loading, loadAll, purchaseItem, hasPurchased, getPurchase } = useStore()
   useEffect(() => { if (!user) loadAll(DEMO_USER_ID) }, [])
 
-  const [activeCategory, setActiveCategory] = useState('all')
+  const [searchParams] = useSearchParams()
+  const [activeCategory, setActiveCategory] = useState(() => searchParams.get('category') ?? 'all')
   const [purchasing, setPurchasing]         = useState<string | null>(null)
   const [toast, setToast]                   = useState<{ message: string; success: boolean } | null>(null)
 
