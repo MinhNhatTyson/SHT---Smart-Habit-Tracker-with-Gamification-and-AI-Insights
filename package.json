@@ -5,13 +5,14 @@
   "main": "dist-electron/index.js",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build && electron-builder",
     "preview": "vite preview",
     "compile:main": "tsc -p tsconfig.electron.json",
     "electron:dev": "npm run compile:main && concurrently \"vite\" \"wait-on tcp:5173 && cross-env NODE_ENV=development electron .\"",
+    "build": "npm run compile:main && vite build && electron-builder",
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev",
-    "prisma:studio": "prisma studio"
+    "prisma:studio": "prisma studio",
+    "seed:all": "npx ts-node prisma/seed.ts && npx ts-node prisma/seed_store.ts && npx ts-node prisma/seed_quests.ts"
   },
   "keywords": ["habit", "tracker", "gamification", "electron", "streak"],
   "author": "HabitQuest",
@@ -19,17 +20,14 @@
   "build": {
     "appId": "com.habitquest.sht",
     "productName": "SHT",
-    "copyright": "Copyright © 2026 HabitQuest",
-    "directories": {
-      "output": "dist-app",
-      "buildResources": "resources"
-    },
-    "files": [
-      "dist-renderer/**/*",
-      "dist-electron/**/*",
-      "prisma/**/*",
-      "node_modules/**/*",
-      "package.json"
+    "asar": true,
+    "asarUnpack": [
+      "node_modules/@prisma/engines/**",
+      "node_modules/@prisma/client/**",
+      "node_modules/prisma/**",
+      "node_modules/@libsql/**",
+      "node_modules/libsql/**",
+      "prisma/**"
     ],
     "extraResources": [
       {
@@ -40,41 +38,15 @@
     ],
     "win": {
       "target": [
-        {
-          "target": "nsis",
-          "arch": ["x64"]
-        },
-        {
-          "target": "portable",
-          "arch": ["x64"]
-        }
+        { "target": "nsis", "arch": ["x64"] }
       ],
-      "icon": "resources/icon.ico",
-      "executableName": "SHT",
-      "artifactName": "SHT-Setup-${version}.${ext}"
+      "icon": "resources/icon.ico"
     },
     "nsis": {
       "oneClick": false,
       "allowToChangeInstallationDirectory": true,
-      "installerIcon": "resources/icon.ico",
-      "uninstallerIcon": "resources/icon.ico",
-      "installerHeaderIcon": "resources/icon.ico",
       "createDesktopShortcut": true,
-      "createStartMenuShortcut": true,
-      "shortcutName": "SHT — Habit Tracker",
-      "license": "LICENSE.txt"
-    },
-    "mac": {
-      "target": ["dmg", "zip"],
-      "icon": "resources/icon.png",
-      "category": "public.app-category.productivity",
-      "artifactName": "SHT-${version}-mac.${ext}"
-    },
-    "linux": {
-      "target": ["AppImage", "deb"],
-      "icon": "resources/icon.png",
-      "category": "Utility",
-      "artifactName": "SHT-${version}.${ext}"
+      "createStartMenuShortcut": true
     }
   },
   "dependencies": {
